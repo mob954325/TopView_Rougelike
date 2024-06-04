@@ -23,6 +23,11 @@ public class Player_InputSettings : MonoBehaviour
     /// </summary>
     public Action<bool> onSprint;
 
+    /// <summary>
+    /// 플레이어가 공격할 때 호출되는 델리게이트
+    /// </summary>
+    public Action onAttack;
+
     void Awake()
     {
         playerInputAction = new PlayerInputActions();
@@ -36,10 +41,12 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Player.Look.performed += OnLookInput;
         playerInputAction.Player.Sprint.performed += OnSprintInput;
         playerInputAction.Player.Sprint.canceled += OnSprintInput;
+        playerInputAction.Player.Attack.performed += OnAttackInput;
     }
 
     void OnDisable()
     {
+        playerInputAction.Player.Attack.performed -= OnAttackInput;
         playerInputAction.Player.Sprint.canceled -= OnSprintInput;
         playerInputAction.Player.Sprint.performed -= OnSprintInput;
         playerInputAction.Player.Look.performed -= OnLookInput;
@@ -48,14 +55,21 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Disable();
     }
 
+    private void OnAttackInput(InputAction.CallbackContext context)
+    {
+        onAttack?.Invoke();
+    }
+
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         onMove?.Invoke(context.ReadValue<Vector2>());
     }
+
     private void OnLookInput(InputAction.CallbackContext context)
     {
         onLook?.Invoke(context.ReadValue<Vector2>());
     }
+
     private void OnSprintInput(InputAction.CallbackContext context)
     {
         onSprint?.Invoke(context.performed);

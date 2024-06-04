@@ -79,6 +79,10 @@ public class Player_Movement : MonoBehaviour
         animator.SetFloat(hashToSpeed, moveVector.magnitude * speed / sprintSpeed);
     }
 
+    /// <summary>
+    /// 플레이어 캐릭터 회전 함수 ( 마우스 위치 바라보기 )
+    /// </summary>
+    /// <param name="vector"></param>
     public void OnLook(Vector2 vector)
     {
         Vector2 screentCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 스크린 중앙을 (0, 0)으로 맞추기
@@ -87,6 +91,10 @@ public class Player_Movement : MonoBehaviour
         lookVector = new Vector3(mousePosition.x, 0, mousePosition.y);
     }
 
+    /// <summary>
+    /// 플레이어 달리기 함수
+    /// </summary>
+    /// <param name="isPressed">버튼을 눌렀으면 Ture 아니면 false</param>
     public void OnSprint(bool isPressed)
     {
         if (isPressed)
