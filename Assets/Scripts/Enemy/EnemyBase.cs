@@ -71,6 +71,11 @@ public class EnemyBase : MonoBehaviour
     public float tracingSpeed = 3f;
 
     /// <summary>
+    /// 공격할 목표 오브젝트
+    /// </summary>
+    protected GameObject traget;
+
+    /// <summary>
     /// 애니메이터 Speed 파라미터
     /// </summary>
     int HashToSpeed = Animator.StringToHash("Speed");
