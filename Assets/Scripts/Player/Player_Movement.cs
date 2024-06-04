@@ -11,9 +11,19 @@ public class Player_Movement : MonoBehaviour
     Animator animator;
 
     /// <summary>
-    /// 플레이어 스피드
+    /// 플레이어 현재 속도
     /// </summary>
     public float speed = 5.0f;
+
+    /// <summary>
+    /// 플레이어 걷는 속도 ( 게임 시작전 speed )
+    /// </summary>
+    private float walkSpeed = 5f;
+
+    /// <summary>
+    /// 달리기 속도
+    /// </summary>
+    public float sprintSpeed = 8f;
 
     /// <summary>
     /// 움직임 방향 벡터
@@ -34,11 +44,13 @@ public class Player_Movement : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        walkSpeed = speed;
     }
 
     private void FixedUpdate()
     {
-        OnMove();                       
+        Move();                       
         transform.LookAt(lookVector);   // 플레이어가 바라보는 방향
     }
 
@@ -54,7 +66,7 @@ public class Player_Movement : MonoBehaviour
     /// <summary>
     /// 플레이어 이동 실행 함수
     /// </summary>
-    void OnMove()
+    void Move()
     {
         // 월드 기준 상하좌우 움직임
         Vector3 verticalValue = moveVector.y * speed * Vector3.forward;         // 수직 벡터값
@@ -63,7 +75,8 @@ public class Player_Movement : MonoBehaviour
         Vector3 moveDir = verticalValue + horizontalValue;                      // 움직일 방향 값
 
         rigid.MovePosition(transform.position + Time.fixedDeltaTime * moveDir);
-        animator.SetFloat(hashToSpeed, moveVector.normalized.magnitude * speed);// 애니메이션 실행 
+
+        animator.SetFloat(hashToSpeed, moveVector.magnitude * speed / sprintSpeed);
     }
 
     public void OnLook(Vector2 vector)
@@ -72,5 +85,17 @@ public class Player_Movement : MonoBehaviour
         Vector2 mousePosition = vector - screentCenter;                                 // 스크린 중앙와 마우스의 방향 벡터값
 
         lookVector = new Vector3(mousePosition.x, 0, mousePosition.y);
+    }
+
+    public void OnSprint(bool isPressed)
+    {
+        if (isPressed)
+        {
+            speed = sprintSpeed;
+        }
+        else
+        {
+            speed = walkSpeed;
+        }
     }
 }

@@ -17,5 +17,6 @@ public class Player : MonoBehaviour
 
         playerInput.onMove += movement.OnMove;
         playerInput.onLook += movement.OnLook;
+        playerInput.onSprint += movement.OnSprint;
     }
 }

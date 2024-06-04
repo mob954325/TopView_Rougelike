@@ -18,6 +18,11 @@ public class Player_InputSettings : MonoBehaviour
     /// </summary>
     public Action<Vector2> onLook;
 
+    /// <summary>
+    /// 플레이어가 달리기를 시작할 때 호출되는 델리게이트
+    /// </summary>
+    public Action<bool> onSprint;
+
     void Awake()
     {
         playerInputAction = new PlayerInputActions();
@@ -29,10 +34,14 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Player.Move.performed += OnMoveInput;
         playerInputAction.Player.Move.canceled += OnMoveInput;
         playerInputAction.Player.Look.performed += OnLookInput;
+        playerInputAction.Player.Sprint.performed += OnSprintInput;
+        playerInputAction.Player.Sprint.canceled += OnSprintInput;
     }
 
     void OnDisable()
     {
+        playerInputAction.Player.Sprint.canceled -= OnSprintInput;
+        playerInputAction.Player.Sprint.performed -= OnSprintInput;
         playerInputAction.Player.Look.performed -= OnLookInput;
         playerInputAction.Player.Move.canceled -= OnMoveInput;
         playerInputAction.Player.Move.performed -= OnMoveInput;
@@ -46,5 +55,9 @@ public class Player_InputSettings : MonoBehaviour
     private void OnLookInput(InputAction.CallbackContext context)
     {
         onLook?.Invoke(context.ReadValue<Vector2>());
+    }
+    private void OnSprintInput(InputAction.CallbackContext context)
+    {
+        onSprint?.Invoke(context.performed);
     }
 }
