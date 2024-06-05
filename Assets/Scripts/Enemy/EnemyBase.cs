@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,33 +20,35 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// 적 현재 상태 ( 준비, 추격, 공격, 사망 )
     /// </summary>
-    [SerializeField] EnemyState state = EnemyState.Ready;
+    [SerializeField] EnemyState currentState = EnemyState.Ready;
 
     /// <summary>
     /// 상태 접근 및 수정 프로퍼티
     /// </summary>
-    EnemyState State
+    protected EnemyState CurrentState
     {
-        get => state;
+        get => currentState;
         set
         {
-            state = value;
+            currentState = value;
 
-            switch (state)
+            switch (currentState)
             {
                 case EnemyState.Ready:
+                    // 시작 초기화
+                    onAction = OnReady;
                     Speed = 0f;
                     break;
                 case EnemyState.Tracing:
                     Speed = tracingSpeed;
-                    OnTracing();
+                    onAction = OnTracing;
                     break;
                 case EnemyState.Attack:
-                    OnAttack();
                     Speed = 0f;
+                    onAction = OnAttack;
                     break;
                 case EnemyState.Dead:
-                    OnDead();
+                    // 사망처리때 초기화
                     Speed = 0f;
                     break;
             }
@@ -56,9 +59,14 @@ public class EnemyBase : MonoBehaviour
     protected Animator animator;
 
     /// <summary>
-    /// 배치후 대기 시간
+    /// 공격할 목표 오브젝트
     /// </summary>
-    float deployDelayTime = 1f;
+    protected GameObject traget;
+
+    /// <summary>
+    /// 대기 시간
+    /// </summary>
+    float delayTime = 1f;
 
     /// <summary>
     /// 현재 이동 속도
@@ -71,9 +79,14 @@ public class EnemyBase : MonoBehaviour
     public float tracingSpeed = 3f;
 
     /// <summary>
-    /// 공격할 목표 오브젝트
+    /// 공격 최대 사거리
     /// </summary>
-    protected GameObject traget;
+    public float range = 3f;
+
+    /// <summary>
+    /// 상태 머신이 실행할 델리게이트
+    /// </summary>
+    Action onAction;
 
     /// <summary>
     /// 애니메이터 Speed 파라미터
@@ -87,49 +100,55 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        OnReady(deployDelayTime);
+        OnReady();
     }
+
+    private void Update()
+    {
+        onAction?.Invoke();
+    }
+
+    // -> 밑 함수를 추상화로 뺄 수 있나?
 
     /// <summary>
     /// 배치 후 공격하기 전 대기하는 코루틴
     /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    IEnumerator DeployDelay(float time)
+    /// <param name="time"> 대기 시간</param>
+    protected virtual IEnumerator DeployDelay(float time)
     {
         yield return new WaitForSeconds(time);
-        State = EnemyState.Tracing;
+        CurrentState = EnemyState.Tracing;
     }
 
     /// <summary>
-    /// 스폰하고 실행되는 함수 (OnEnable)
+    /// 스폰하고 실행되는 함수 (한번만 호출)
     /// </summary>
-    protected virtual void OnReady(float delayTime)
+    protected virtual void OnReady()
     {
         StartCoroutine(DeployDelay(delayTime));
     }
 
     /// <summary>
-    /// 추적할 때 호출하는 함수
+    /// 추적할 때 호출하는 함수 (업데이트)
     /// </summary>
     protected virtual void OnTracing()
     {
-        
+        Debug.LogWarning($"{this.gameObject.name}의 추적 상태가 비어있습니다.");
     }
 
     /// <summary>
-    /// 공격할 때 호출하는 함수
+    /// 공격할 때 호출하는 함수 (업데이트)
     /// </summary>
     protected virtual void OnAttack()
     {
-
+        Debug.LogWarning($"{this.gameObject.name}의 공격 상태가 비어있습니다.");
     }
 
     /// <summary>
-    /// 사망했을 때 호출하는 함수
+    /// 사망했을 때 호출하는 함수 (한번만 호출)
     /// </summary>
     protected virtual void OnDead()
     {
-
+        Debug.LogWarning($"{this.gameObject.name}의 사망 상태가 비어있습니다.");
     }
 }
