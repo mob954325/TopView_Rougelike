@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Enemy_Warrior : EnemyBase
+public class Enemy_Mage : EnemyBase
 {
     Rigidbody rigid;
 
@@ -47,10 +47,10 @@ public class Enemy_Warrior : EnemyBase
 
     protected override void OnAttack()
     {
-        if (dirVec.sqrMagnitude > range * range) // 공격 범위에 벗어나면
-        {
-            CurrentState = EnemyState.Tracing; // 추격 상태로 변환
-        }
+        //if (dirVec.sqrMagnitude > range * range) // 공격 범위에 벗어나면
+        //{
+        //    CurrentState = EnemyState.Tracing; // 추격 상태로 변환
+        //}
 
         if (!isAttack)  // 공격을 하지 않는 상태면
         {

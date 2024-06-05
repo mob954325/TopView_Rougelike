@@ -15,6 +15,8 @@ public enum EnemyState
 }
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class EnemyBase : MonoBehaviour
 {
     /// <summary>
@@ -123,8 +125,8 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// 스폰하고 실행되는 함수 (한번만 호출)
     /// </summary>
-    protected virtual void OnReady()
-    {
+    protected virtual void OnReady()    {
+        
         StartCoroutine(DeployDelay(delayTime));
     }
 

@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 171702025721344590}
   - component: {fileID: 2566167444205856646}
   m_Layer: 0
-  m_Name: Skeleton_Warrior
+  m_Name: Enemy_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
