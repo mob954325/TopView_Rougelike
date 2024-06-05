@@ -19,6 +19,7 @@ public enum EnemyState
 [RequireComponent(typeof(Collider))]
 public class EnemyBase : MonoBehaviour
 {
+    [Header("Enemy Base Settings")]
     /// <summary>
     /// 적 현재 상태 ( 준비, 추격, 공격, 사망 )
     /// </summary>

@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Enemy_Mage : EnemyBase
+public class Enemy_Normal : EnemyBase
 {
+    public enum Type
+    {
+        None = 0, // 정의되지않음
+        Warrior,
+        Mage
+    }
+
+    [Header("Enemy Normal Settings")]
+    public Type type;
+
     Rigidbody rigid;
 
     /// <summary>
@@ -47,10 +57,10 @@ public class Enemy_Mage : EnemyBase
 
     protected override void OnAttack()
     {
-        //if (dirVec.sqrMagnitude > range * range) // 공격 범위에 벗어나면
-        //{
-        //    CurrentState = EnemyState.Tracing; // 추격 상태로 변환
-        //}
+        if (dirVec.sqrMagnitude > range * range) // 공격 범위에 벗어나면
+        {
+            CurrentState = EnemyState.Tracing; // 추격 상태로 변환
+        }
 
         if (!isAttack)  // 공격을 하지 않는 상태면
         {
@@ -70,6 +80,8 @@ public class Enemy_Mage : EnemyBase
         isAttack = false;   // 공격 종료
         CurrentState = EnemyState.Ready; // 공격 후 대기 상태로 변환
     }
+
+    // 에디터 ==============================================================================================
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
