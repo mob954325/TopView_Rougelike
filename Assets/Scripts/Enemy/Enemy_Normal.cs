@@ -51,7 +51,7 @@ public class Enemy_Normal : EnemyBase
         else                                        // 범위 밖에 있으면
         {
             // 플레이어 쪽으로 이동
-            rigid.MovePosition(transform.position + Time.fixedDeltaTime * dirVec * tracingSpeed);
+            rigid.MovePosition(transform.position + Time.fixedDeltaTime * dirVec.normalized * tracingSpeed);
         }
     }
 

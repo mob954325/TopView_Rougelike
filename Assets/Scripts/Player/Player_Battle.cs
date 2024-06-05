@@ -1,34 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
+[RequireComponent(typeof(Player))]
 public class Player_Battle : MonoBehaviour
 {
-    Animator animator;
+    /// <summary>
+    /// 플레이어
+    /// </summary>
+    Player player;
+
+    /// <summary>
+    /// 공격 받을 대상
+    /// </summary>
+    IBattler target;
+
+    Sword_1H sword; // 나중에 WeaponBase로 바꿀 예정
 
     bool isAttacking = false;
 
-    /// <summary>
-    /// 공격 시작 확인 파라미터 ( true : 공격, false : 공격 안함 ) 
-    /// </summary>
-    int HashToAttack = Animator.StringToHash("Attack");
-
-    /// <summary>
-    /// 공격을 하는 중인지 확인하는 프로퍼티 ( true : 공격중, false : 공격안하고있음 )
-    /// </summary>
-    int HashToIsAttacking = Animator.StringToHash("IsAttacking");
-
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
+        sword = GetComponentInChildren<Sword_1H>();
     }
 
-    public void OnAttack()
+    private void Start()
     {
-        animator.SetBool(HashToAttack, true);   // 공격 시작
+        player.playerInput.onAttack += OnAttack;        
+    }
+
+    /// <summary>
+    /// 공격키 입력시 호출되는 함수
+    /// </summary>
+    private void OnAttack()
+    {
+        player.Attack(sword.GetTarget());
     }
 
     // 애니메이션 함수 =============================================================
+    public void BeginAttack()
+    {
+        isAttacking = true; // 공격 진행중 true로 설정
+
+        //player.BeginAttack(isAttacking);
+        sword.ActiveCollider();
+    }
 
     /// <summary>
     /// 공격이 종료되면 호출되는 애니메이션 이벤트 함수
@@ -37,14 +56,7 @@ public class Player_Battle : MonoBehaviour
     {
         isAttacking = false;
 
-        animator.SetBool(HashToIsAttacking, isAttacking);
-    }
-
-    public void BeginAttack()
-    {
-        isAttacking = true; // 공격 진행중 true로 설정
-
-        animator.SetBool(HashToAttack, false);
-        animator.SetBool(HashToIsAttacking, isAttacking);
+        //player.EndAttack(isAttacking);
+        sword.InactiveCollider();
     }
 }
