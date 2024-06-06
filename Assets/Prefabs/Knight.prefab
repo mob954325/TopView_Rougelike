@@ -1421,7 +1421,7 @@ GameObject:
   - component: {fileID: 8286477672435217812}
   m_Layer: 0
   m_Name: Knight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1460,6 +1460,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347d4daa93613e54687d41ad91177d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  attackPower: 2
+  defencePower: 1
+  speed: 5
+  sprintSpeed: 8
 --- !u!114 &4257832682531170654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,10 +1489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0565dd0e95dbeea478426c8d824d14b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  sprintSpeed: 8
-  moveVector: {x: 0, y: 0}
-  lookVector: {x: 0, y: 0, z: 0}
+  moveInputVector: {x: 0, y: 0}
+  mouseInputVector: {x: 0, y: 0}
 --- !u!114 &2391853034959067016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2809,6 +2812,8 @@ GameObject:
   - component: {fileID: 3016443298264808882}
   - component: {fileID: 572153308114449517}
   - component: {fileID: 3661797751606176162}
+  - component: {fileID: 2426585233370267051}
+  - component: {fileID: 8044919385782638410}
   m_Layer: 0
   m_Name: 1H_Sword
   m_TagString: Untagged
@@ -2882,6 +2887,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2426585233370267051
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8870487888375932802}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 1.2, z: 0.3}
+  m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &8044919385782638410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8870487888375932802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91af4022a83375f4d8be1364afc42646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8940463216672193328
 GameObject:
   m_ObjectHideFlags: 0

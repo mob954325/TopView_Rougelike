@@ -159,8 +159,9 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// 공격 시작 시 호출되는 함수 ( 애니메이션 이벤트 함수 )
     /// </summary>
     /// <param name="isAttacking">공격 중이면 true 아니면 false</param>
-    public void BeginAttack(bool isAttacking)
+    public void BeginAttackAnim(bool isAttacking)
     {
+        animator.SetBool(HashToAttack, false);
         animator.SetBool(HashToIsAttacking, isAttacking);
     }
 
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// 공격이 끝나면 호출되는 함수 ( 애니메이션 이벤트 함수 )
     /// </summary>
     /// <param name="isAttacking">공격 중이면 true 아니면 false</param>
-    public void EndAttack(bool isAttacking)
+    public void EndAttackAnim(bool isAttacking)
     {
         animator.SetBool(HashToAttack, false);
         animator.SetBool(HashToIsAttacking, isAttacking);

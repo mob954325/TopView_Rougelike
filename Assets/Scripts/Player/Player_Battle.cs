@@ -45,18 +45,18 @@ public class Player_Battle : MonoBehaviour
     {
         isAttacking = true; // 공격 진행중 true로 설정
 
-        //player.BeginAttack(isAttacking);
+        player.BeginAttackAnim(isAttacking);
         sword.ActiveCollider();
     }
 
     /// <summary>
     /// 공격이 종료되면 호출되는 애니메이션 이벤트 함수
     /// </summary>
-    public void EndAttackAnimation()
+    public void EndAttack()
     {
         isAttacking = false;
 
-        //player.EndAttack(isAttacking);
+        player.EndAttackAnim(isAttacking);
         sword.InactiveCollider();
     }
 }

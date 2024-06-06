@@ -40,6 +40,7 @@ public class Sword_1H : MonoBehaviour
         if (target != null) // 공격 대상이 존재한다
         {
             this.target = target;
+            Debug.Log($"플레이어 칼에 닿은 오브젝트 : {other.gameObject.name}");
         }
     }
 
