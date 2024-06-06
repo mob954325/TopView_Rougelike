@@ -132,7 +132,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// 플레이어 회전 함수
     /// </summary>
     /// <param name="lookVector">캐릭터가 바라보는 벡터값</param>
-    public void Look(Vector2 lookVector)
+    public void Look(Vector3 lookVector)
     {
         transform.LookAt(lookVector);   // 플레이어가 바라보는 방향
     }
@@ -140,19 +140,19 @@ public class Player : MonoBehaviour, IHealth, IBattler
     // Battle   =============================================================
 
     /// <summary>
-    /// 공격시 실행하는 함수
+    /// 플레이어 공격 시 실행하는 함수
     /// </summary>
-    /// <param name="isAttack">공격을 했으면 true 아니면 false</param>
     public void Attack(IBattler target)
     {
-        animator.SetBool(HashToAttack, true);   // 공격 시작
-
-        // 닿은 콜라이더의 오브젝트의 체력을 깎는다.
-        // IBattler
-        if(target != null)  // 공격 목표가 있으면 공격
+        if(target != null)
         {
-            target.Hit(AttackPower);    // attackPower값 만큼 타겟의 체력 감소
+            target.Hit(attackPower);
         }
+    }
+
+    public void OnAttack()
+    {
+        animator.SetBool(HashToAttack, true);   // 공격 애니메이션 시작
     }
 
     /// <summary>

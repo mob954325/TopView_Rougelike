@@ -12,11 +12,6 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     Player player;
 
-    /// <summary>
-    /// 공격 받을 대상
-    /// </summary>
-    IBattler target;
-
     Sword_1H sword; // 나중에 WeaponBase로 바꿀 예정
 
     bool isAttacking = false;
@@ -37,7 +32,8 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     private void OnAttack()
     {
-        player.Attack(sword.GetTarget());
+        // 공격 시 실행 내용
+        player.OnAttack();
     }
 
     // 애니메이션 함수 =============================================================

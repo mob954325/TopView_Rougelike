@@ -79,20 +79,24 @@ public class Player_Movement : MonoBehaviour
         mouseInputVector = inputValue;
     }
 
+
+    public Vector3 lookVec = Vector3.zero;
     /// <summary>
     /// 플레이어 캐릭터 회전 함수 ( 마우스 위치 바라보기 )
     /// </summary>
     /// <param name="vector"></param>
-    public Vector2 GetLookVector()
+    public Vector3 GetLookVector()
     {
-        Vector2 lookVector;
+        Vector3 lookVector;
 
         Vector2 screentCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 스크린 중앙을 (0, 0)으로 맞추기
-        Vector2 mousePosition = mouseInputVector - screentCenter;                                 // 스크린 중앙와 마우스의 방향 벡터값
+        Vector2 mousePosition = mouseInputVector - screentCenter;                       // 스크린 중앙와 마우스의 방향 벡터값
 
         lookVector = new Vector3(mousePosition.x, 0, mousePosition.y);
 
-        return lookVector;
+        lookVec = lookVector;
+        
+        return transform.position + lookVector.normalized;
     }
 
     /// <summary>

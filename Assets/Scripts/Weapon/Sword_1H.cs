@@ -5,16 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Sword_1H : MonoBehaviour
 {
-    Collider coll;
-
     /// <summary>
-    /// 감지한 공격 대상
+    /// 해당 무기를 사용하는 오브젝트의 IBattler
     /// </summary>
-    IBattler target; // 범위 공격 고려안함
+    IBattler Owner;
+
+    Collider coll;
 
     void Awake()
     {
-        coll = GetComponent<Collider>();    
+        Owner = GetComponentInParent<IBattler>();
+
+        coll = GetComponent<Collider>();  
         coll.enabled = false;   // 처음엔 비활성화
     }
 
@@ -34,22 +36,14 @@ public class Sword_1H : MonoBehaviour
         coll.enabled = false;
     }
 
+    //OnCollisionEnter
     void OnTriggerEnter(Collider other)
     {
-        IBattler target = other as IBattler;
-        if (target != null) // 공격 대상이 존재한다
+        if (other.gameObject.CompareTag("Enemy")) // 공격 대상이 존재한다
         {
-            this.target = target;
+            IBattler target = other.GetComponent<IBattler>();
             Debug.Log($"플레이어 칼에 닿은 오브젝트 : {other.gameObject.name}");
+            Owner.Attack(target);
         }
-    }
-
-    /// <summary>
-    /// 공격 대상을 반환하는 함수
-    /// </summary>
-    /// <returns></returns>
-    public IBattler GetTarget()
-    {
-        return target;
     }
 }
