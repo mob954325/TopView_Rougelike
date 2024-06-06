@@ -43,6 +43,7 @@ public class Enemy_Normal : EnemyBase
     {
         dirVec = traget.transform.position - transform.position;    // 추적할 방향        
         transform.LookAt(traget.transform.position);                // 바라보는 방향
+        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f); // 수평 회전 외 전부 막기
 
         if (dirVec.sqrMagnitude < range * range)    // 범위 안에 있으면
         {
@@ -52,6 +53,7 @@ public class Enemy_Normal : EnemyBase
         {
             // 플레이어 쪽으로 이동
             rigid.MovePosition(transform.position + Time.fixedDeltaTime * dirVec.normalized * tracingSpeed);
+            Debug.Log("플레이어 추격 중");
         }
     }
 

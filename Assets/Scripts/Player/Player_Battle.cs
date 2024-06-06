@@ -12,14 +12,14 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     Player player;
 
-    Sword_1H sword; // 나중에 WeaponBase로 바꿀 예정
+    WeaponBase sword; // 나중에 WeaponBase로 바꿀 예정
 
     bool isAttacking = false;
 
     private void Awake()
     {
         player = GetComponent<Player>();
-        sword = GetComponentInChildren<Sword_1H>();
+        sword = GetComponentInChildren<WeaponBase>();
     }
 
     private void Start()
