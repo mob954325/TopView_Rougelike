@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 현재 체력
     /// </summary>
-    float currnetHealth;
+    [SerializeField]float currnetHealth;
     public float CurrentHealth 
     { 
         get => currnetHealth;

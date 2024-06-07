@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Enemy_Normal : EnemyBase
+/// <summary>
+/// 기본적이 가지는 클래스
+/// </summary>
+public class Enemy_Normal : EnemyBase, IHealth, IBattler
 {
     public enum Type
     {
@@ -27,10 +30,61 @@ public class Enemy_Normal : EnemyBase
     /// </summary>
     bool isAttack = false;
 
+    [Header("전투")]
+    /// <summary>
+    /// 현재 공격력
+    /// </summary>
+    public float attackPower = 5f;
+
+    public float AttackPower 
+    { 
+        get => attackPower;
+        set => attackPower = value; 
+    }
+
+    /// <summary>
+    /// 방어력
+    /// </summary>
+    public float defencePower = 1f;
+    public float DefencePower 
+    {
+        get => defencePower; 
+        set => defencePower = value; 
+    }
+
+    [Header("체력")]
+    /// <summary>
+    /// 현재 체력
+    /// </summary>
+    public float currentHealth;
+    public float CurrentHealth 
+    { 
+        get => currentHealth; 
+        set
+        {
+            currentHealth = value;
+
+            if(currentHealth <= 0f)
+            {
+                onDie?.Invoke();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 최대체력
+    /// </summary>
+    public float maxHp = 20f;
+    public float MaxHealth => CurrentHealth;
+
+    public System.Action onDie { get; set; }
+
     protected override void Awake()
     {
         base.Awake();
         rigid = GetComponent<Rigidbody>();
+
+        currentHealth = maxHp;
     }
 
     protected override void OnReady()
@@ -53,7 +107,6 @@ public class Enemy_Normal : EnemyBase
         {
             // 플레이어 쪽으로 이동
             rigid.MovePosition(transform.position + Time.fixedDeltaTime * dirVec.normalized * tracingSpeed);
-            Debug.Log("플레이어 추격 중");
         }
     }
 
@@ -70,6 +123,17 @@ public class Enemy_Normal : EnemyBase
             animator.SetTrigger("Attack");
             isAttack = true;
         }
+    }
+
+    // IBattler 함수 ======================================================================================
+    public void Attack(IBattler target)
+    {
+        target.Hit(AttackPower);
+    }
+
+    public void Hit(float hitDamage)
+    {
+        CurrentHealth -= hitDamage - DefencePower;
     }
 
     // 애니메이션 함수 ======================================================================================

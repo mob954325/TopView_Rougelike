@@ -39,7 +39,16 @@ public class WeaponBase : MonoBehaviour
     //OnCollisionEnter
     void OnTriggerEnter(Collider other)
     {
+        // 임시 내용
+
         if (other.gameObject.CompareTag("Enemy")) // 공격 대상이 존재한다
+        {
+            IBattler target = other.GetComponent<IBattler>();
+            Debug.Log($"{gameObject.transform.parent.name}이 공격한 오브젝트 : {other.gameObject.name}");
+            Owner.Attack(target);
+        }
+
+        if (other.gameObject.CompareTag("Player")) // 공격 대상이 존재한다
         {
             IBattler target = other.GetComponent<IBattler>();
             Debug.Log($"{gameObject.transform.parent.name}이 공격한 오브젝트 : {other.gameObject.name}");

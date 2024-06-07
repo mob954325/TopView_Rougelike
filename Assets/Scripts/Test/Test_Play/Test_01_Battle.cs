@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test_01_Battle : TestBase, IHealth ,IBattler
+public class Test_01_Battle : TestBase, /*IHealth,*/ IBattler
 {
     public float maxHp = 100000;
     public float hp;
