@@ -64,7 +64,7 @@ public class EnemyBase : MonoBehaviour
     /// <summary>
     /// 공격할 목표 오브젝트
     /// </summary>
-    protected GameObject traget;
+    protected GameObject target;
 
     /// <summary>
     /// 대기 시간

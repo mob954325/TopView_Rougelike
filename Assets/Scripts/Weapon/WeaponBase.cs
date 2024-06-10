@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class WeaponBase : MonoBehaviour
 {
     /// <summary>
     /// 해당 무기를 사용하는 오브젝트의 IBattler
     /// </summary>
-    IBattler Owner;
+    protected IBattler Owner;
 
-    Collider coll;
+    protected Collider coll;
 
-    void Awake()
+    protected virtual void Awake()
     {
         Owner = GetComponentInParent<IBattler>();
 
@@ -21,23 +20,22 @@ public class WeaponBase : MonoBehaviour
     }
 
     /// <summary>
-    /// 칼 콜라이더 활성화 함수
+    /// 공격을 시작할 때 호출되는 함수
     /// </summary>
-    public void ActiveCollider()
+    public virtual void ActiveWeapon()
     {
         coll.enabled = true;
     }
 
     /// <summary>
-    /// 칼 콜라이더 비활성화 함수
+    /// 공격을 끝낼 때 호출되는 함수
     /// </summary>
-    public void InactiveCollider()
+    public virtual void InactiveWeapon()
     {
         coll.enabled = false;
     }
 
-    //OnCollisionEnter
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         // 임시 내용
 

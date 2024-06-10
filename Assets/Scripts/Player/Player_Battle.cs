@@ -42,7 +42,7 @@ public class Player_Battle : MonoBehaviour
         isAttacking = true; // 공격 진행중 true로 설정
 
         player.BeginAttackAnim(isAttacking);
-        sword.ActiveCollider();
+        sword.ActiveWeapon();
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class Player_Battle : MonoBehaviour
         isAttacking = false;
 
         player.EndAttackAnim(isAttacking);
-        sword.InactiveCollider();
+        sword.InactiveWeapon();
     }
 }

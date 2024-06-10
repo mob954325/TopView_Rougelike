@@ -103,13 +103,13 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     protected override void OnReady()
     {
         base.OnReady();
-        traget = FindAnyObjectByType<Player>().gameObject;   // 플레이어로 타겟지정
+        target = FindAnyObjectByType<Player>().gameObject;   // 플레이어로 타겟지정
     }
 
     protected override void OnTracing()
     {
-        dirVec = traget.transform.position - transform.position;    // 추적할 방향        
-        transform.LookAt(traget.transform.position);                // 바라보는 방향
+        dirVec = target.transform.position - transform.position;    // 추적할 방향        
+        transform.LookAt(target.transform.position);                // 바라보는 방향
         transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f); // 수평 회전 외 전부 막기
 
         if (dirVec.sqrMagnitude < range * range)    // 범위 안에 있으면
@@ -155,7 +155,19 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public void OnAttackStart()
     {
-        weapon.ActiveCollider();
+        if(type == Type.Mage) // 임시 추가 ( 적 타입별 공격 함수 )
+        {
+            Weapon_Staff currnetWeapon = weapon as Weapon_Staff;
+            if (currnetWeapon != null)
+            {
+                currnetWeapon.CastingSpell(target.transform.position);
+                Debug.Log(target.transform.position);
+            }
+        }
+        else
+        {
+            weapon.ActiveWeapon();
+        }
     }
 
     /// <summary>
@@ -163,7 +175,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public void OnAttackEnd()
     {
-        weapon.InactiveCollider();
+        weapon.InactiveWeapon();
 
         isAttack = false;   // 공격 종료
         CurrentState = EnemyState.Tracing; // 공격 후 대기 상태로 변환

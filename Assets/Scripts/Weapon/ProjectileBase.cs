@@ -11,14 +11,22 @@ public class ProjectileBase : MonoBehaviour
     /// <summary>
     /// 날라갈 지점
     /// </summary>
-    Vector3 destinationVec = Vector3.zero;
+    Vector3 targetVec = Vector3.zero;
 
+    /// <summary>
+    /// 맞고 난 뒤 생성될 이펙트 오브젝트
+    /// </summary>
     public GameObject EffecObject;
 
     /// <summary>
     /// 어딘가에 부딪혔을 때 실행되는 이펙트
     /// </summary>
     ParticleSystem HitEffect;    // Visual Effect 로 변환 고려 ( 성능 이슈 )
+
+    /// <summary>
+    /// 이 투사체의 공격력
+    /// </summary>
+    float damage;
 
     void Awake()
     {
@@ -28,12 +36,12 @@ public class ProjectileBase : MonoBehaviour
 
     void OnEnable()
     {
-        Destroy(this.gameObject, 100f); // 임시 함수
+        Destroy(this.gameObject, 5f); // 임시 함수
     }
 
     void Start()
     {
-        SetDestination(destinationVec);        
+        SetDestination(targetVec);        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -44,6 +52,12 @@ public class ProjectileBase : MonoBehaviour
         ParticleSystem particle = obj.GetComponent<ParticleSystem>();
         particle.Play();
 
+        IBattler battleTarget = collision.gameObject.GetComponent<IBattler>();  // 충돌된 오브젝트가 IBattler를 가진 오브젝트면
+        if (battleTarget != null)
+        {
+            battleTarget.Hit(damage);   // 공격
+        }
+
         Destroy(obj, particle.time + 1f);    // 이펙트 오브젝트 제거 예약
         Destroy(this.gameObject); // 현재 투사체 제거
     }
@@ -52,10 +66,14 @@ public class ProjectileBase : MonoBehaviour
     /// 투사체 목표 지점 설정 함수
     /// </summary>
     /// <param name="destinationVector">날라갈 위치값</param>
-    public void SetDestination(Vector3 destinationVector)
+    public void SetDestination(Vector3 destinationVector, float damage = 1f)
     {
+        targetVec = destinationVector;
         Vector3 dirVec = destinationVector - transform.position;
         rigid.AddForce(dirVec, ForceMode.Impulse);
+        transform.LookAt(targetVec);
+
+        this.damage = damage;
     }
 
     //float lifeTime = 2f;
@@ -65,17 +83,4 @@ public class ProjectileBase : MonoBehaviour
     //    yield return new WaitForSeconds(lifeTime);
     //    gameObject.SetActive(false);
     //}
-
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        float thiccness = 3f;
-        // 날라갈 방향 기즈모 표시
-        Handles.color = Color.red;
-        Vector3 p1 = transform.position; // 오브젝트 위치
-        Vector3 p2 = (destinationVec - transform.position).normalized; // 날라갈 방향
-        
-        Handles.DrawLine(p1, p2, thiccness);
-    }
-#endif
 }
