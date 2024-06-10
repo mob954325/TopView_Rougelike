@@ -15,10 +15,11 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         Mage
     }
 
+    Rigidbody rigid;
+    WeaponBase weapon;
+
     [Header("Enemy Normal Settings")]
     public Type type;
-
-    Rigidbody rigid;
 
     /// <summary>
     /// 추적 방향 벡터
@@ -83,8 +84,20 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     {
         base.Awake();
         rigid = GetComponent<Rigidbody>();
+        weapon = GetComponentInChildren<WeaponBase>();
 
         currentHealth = maxHp;
+
+        // 예외 처리 ===============================================
+        if(weapon == null)
+        {
+            // 무기 예외처리
+            GameObject obj = new GameObject();
+            obj.name = $"new WeaponBase Object( Created )";
+            obj.AddComponent<WeaponBase>();
+            
+            weapon = obj.GetComponent<WeaponBase>();
+        }
     }
 
     protected override void OnReady()
@@ -135,16 +148,25 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     {
         CurrentHealth -= hitDamage - DefencePower;
     }
-
     // 애니메이션 함수 ======================================================================================
+
+    /// <summary>
+    /// 공격 시작시 호출되는 애니메이션 이벤트 함수
+    /// </summary>
+    public void OnAttackStart()
+    {
+        weapon.ActiveCollider();
+    }
 
     /// <summary>
     /// 공격이 끝날 때 호출되는 애니메이션 이벤트 함수
     /// </summary>
     public void OnAttackEnd()
     {
+        weapon.InactiveCollider();
+
         isAttack = false;   // 공격 종료
-        CurrentState = EnemyState.Ready; // 공격 후 대기 상태로 변환
+        CurrentState = EnemyState.Tracing; // 공격 후 대기 상태로 변환
     }
 
     // 에디터 ==============================================================================================

@@ -3,34 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Test_01_Battle : TestBase, /*IHealth,*/ IBattler
+public class Test_01_Battle : TestBase
 {
-    public float maxHp = 100000;
-    public float hp;
+    public Player player;
+    public float value;
 
-    public float AttackPower { get; set; }
-    public float DefencePower { get; set; }
-    public float CurrentHealth { get; set; }
-
-    public float MaxHealth => maxHp;
-
-    public Action onDie { get; set; }
-
-    protected override void OnEnable()
+    protected override void OnTest1(InputAction.CallbackContext context)
     {
-        hp = maxHp;
-    }
-
-    public void Attack(IBattler target)
-    {
-        Debug.Log("공격");
-    }
-
-    public void Hit(float hitDamage)
-    {
-        Debug.Log($"{gameObject.name} : 피격 받음, 남은 체력 : {hp}");
-        hp -= hitDamage;
+        player.CurrentHealth = value;
     }
 }
 #endif
