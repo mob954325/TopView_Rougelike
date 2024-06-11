@@ -78,6 +78,9 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     public float maxHp = 20f;
     public float MaxHealth => CurrentHealth;
 
+    /// <summary>
+    /// 사망 시 호출되는 델리게이트
+    /// </summary>
     public System.Action onDie { get; set; }
 
     protected override void Awake()
@@ -88,8 +91,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
         currentHealth = maxHp;
 
-        // 예외 처리 ===============================================
-        if(weapon == null)
+        if(weapon == null) // 무기가 없을 때 임시 오브젝트 생성
         {
             // 무기 예외처리
             GameObject obj = new GameObject();
@@ -98,12 +100,13 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
             
             weapon = obj.GetComponent<WeaponBase>();
         }
+
+        onFindPlayer = OnFindTarget;
     }
 
     protected override void OnReady()
     {
         base.OnReady();
-        target = FindAnyObjectByType<Player>().gameObject;   // 플레이어로 타겟지정
     }
 
     protected override void OnTracing()
@@ -138,6 +141,15 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         }
     }
 
+    /// <summary>
+    /// 공격 목표를 설정하는 함수
+    /// </summary>
+    /// <param name="target">목표 오브젝트</param>
+    void OnFindTarget(GameObject targetObj)
+    {
+        target = targetObj;
+    }
+
     // IBattler 함수 ======================================================================================
     public void Attack(IBattler target)
     {
@@ -155,7 +167,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public void OnAttackStart()
     {
-        if(type == Type.Mage) // 임시 추가 ( 적 타입별 공격 함수 )
+        if(type == Type.Mage) // 마법사 공격 임시 추가 ( 적 타입별 공격 함수 )
         {
             Weapon_Staff currnetWeapon = weapon as Weapon_Staff;
             if (currnetWeapon != null)

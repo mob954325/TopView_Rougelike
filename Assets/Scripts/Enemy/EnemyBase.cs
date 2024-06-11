@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,7 @@ using UnityEngine;
 public enum EnemyState
 {
     Ready = 0,
+    Idle,
     Tracing,
     Attack,
     Dead
@@ -17,7 +19,7 @@ public enum EnemyState
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : PoolObject
 {
     [Header("Enemy Base Settings")]
     /// <summary>
@@ -40,6 +42,10 @@ public class EnemyBase : MonoBehaviour
                 case EnemyState.Ready:
                     // 시작 초기화
                     onAction = OnReady;
+                    Speed = 0f;
+                    break;
+                case EnemyState.Idle:
+                    onAction = OnIdle;
                     Speed = 0f;
                     break;
                 case EnemyState.Tracing:
@@ -86,15 +92,24 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     public float range = 3f;
 
+    // 기타 ================================================================
+
     /// <summary>
     /// 상태 머신이 실행할 델리게이트
     /// </summary>
     Action onAction;
 
     /// <summary>
+    /// 플레이어를 찾으면 호출되는 델리게이트
+    /// </summary>
+    public Action<GameObject> onFindPlayer;
+
+    /// <summary>
     /// 애니메이터 Speed 파라미터
     /// </summary>
     int HashToSpeed = Animator.StringToHash("Speed");
+
+    // 기본함수 ==============================================================
 
     protected virtual void Awake()
     {
@@ -120,7 +135,15 @@ public class EnemyBase : MonoBehaviour
     protected virtual IEnumerator DeployDelay(float time)
     {
         yield return new WaitForSeconds(time);
-        CurrentState = EnemyState.Tracing;
+
+        if(target != null)
+        {
+            CurrentState = EnemyState.Tracing;
+        }
+        else
+        {
+            CurrentState = EnemyState.Idle;
+        }
     }
 
     /// <summary>
@@ -132,11 +155,22 @@ public class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 대기 상태일 때 호출되는 함수 (업데이트)  
+    /// </summary>
+    protected virtual void OnIdle()
+    {
+        // target이 null이 아닐 때까지 계속 기다림
+        if(target != null)
+        {
+            CurrentState = EnemyState.Tracing;
+        }
+    }
+
+    /// <summary>
     /// 추적할 때 호출하는 함수 (업데이트)
     /// </summary>
     protected virtual void OnTracing()
     {
-        Debug.LogWarning($"{this.gameObject.name}의 추적 상태가 비어있습니다.");
     }
 
     /// <summary>
@@ -144,7 +178,6 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void OnAttack()
     {
-        Debug.LogWarning($"{this.gameObject.name}의 공격 상태가 비어있습니다.");
     }
 
     /// <summary>
@@ -152,6 +185,5 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void OnDead()
     {
-        Debug.LogWarning($"{this.gameObject.name}의 사망 상태가 비어있습니다.");
     }
 }

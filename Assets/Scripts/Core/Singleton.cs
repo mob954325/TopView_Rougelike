@@ -18,6 +18,14 @@ public class Singleton<T> : MonoBehaviour where T : Component
 {
     #region Fields
 
+    /// <summary>
+    /// 싱글톤 이름 (로그용)
+    /// </summary>
+    protected string singletonName;
+
+    /// <summary>
+    /// 해당 싱글톤 상태
+    /// </summary>
     SingletonState singletonState = SingletonState.UnInitialized;
 
     /// <summary>
@@ -47,7 +55,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
                 obj.name = "Sington";
 
                 obj.AddComponent<T>();                  // 싱글톤 생성
-                DontDestroyOnLoad(obj);                 // 파괴 불가능 오브젝트 설정
+                DontDestroyOnLoad(obj);                 // 파괴 불가능 오브젝트 설정                
             }
             return instance;
         }
@@ -58,7 +66,9 @@ public class Singleton<T> : MonoBehaviour where T : Component
     #region Unity LifeCycle
     private void Awake()
     {
-        Debug.Log("1. 로딩전 로그");
+        singletonName = this.gameObject.name;
+
+        Debug.Log($"{singletonName} : 1. 로딩전 로그");
         if(instance == null)
         {
             // 씬에서 배치된 싱글톤이 없다.
@@ -77,14 +87,14 @@ public class Singleton<T> : MonoBehaviour where T : Component
 
     private void OnEnable()
     {
-        Debug.Log("2. 씬 로딩 시작");
+        Debug.Log($"{singletonName} : 2. 씬 로딩 시작");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;        
-        Debug.Log("6. 씬 로딩 종료");
+        Debug.Log($"{singletonName} : 6. 씬 로딩 종료");
     }
 
     /// <summary>
@@ -94,7 +104,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// <param name="mode">로딩 씬 모드</param>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("3. 씬 로딩 진행 시작");
+        Debug.Log($"{singletonName} : 3. 씬 로딩 진행 시작");
         if(!isInitialized)
         {
             PreInitialize();
@@ -115,7 +125,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     protected virtual void PreInitialize()
     {
-        Debug.Log("4. 최초 초기화");
+        Debug.Log($"{singletonName} : 4. 최초 초기화");
         isInitialized = true;
     }
 
@@ -125,7 +135,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     protected virtual void Initializing()
     {
         singletonState = SingletonState.Initializing;   // 싱글톤 상태 변환
-        Debug.Log("4-1. 초기화 진행중");
+        Debug.Log($"{singletonName} : 4-1. 초기화 진행중");
 
 
     }
@@ -137,7 +147,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     {
 
         singletonState = SingletonState.Initialized;   // 싱글톤 상태 변환
-        Debug.Log("5. 초기화 완료");
+        Debug.Log($"{singletonName} : 5. 초기화 완료");
     }
     #endregion
 }
