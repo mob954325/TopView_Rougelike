@@ -16,6 +16,6 @@ public class Factory : Singleton<Factory>
 
     public GameObject GetTestItem(Vector3? position = null, Quaternion? rotation = null)
     {
-        return pool.GetObject(position, rotation);
+        return pool.GetObject(position, rotation).gameObject;
     }
 }

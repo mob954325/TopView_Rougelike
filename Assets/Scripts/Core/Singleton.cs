@@ -145,7 +145,6 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     protected virtual void Initialized()
     {
-
         singletonState = SingletonState.Initialized;   // 싱글톤 상태 변환
         Debug.Log($"{singletonName} : 5. 초기화 완료");
     }

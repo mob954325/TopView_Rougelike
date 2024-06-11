@@ -11,14 +11,14 @@ public class Weapon_Staff : WeaponBase
     public GameObject fireBall;
 
     /// <summary>
-    /// 부모 오브젝트
+    /// 이 스크립트를 가지고 있는 최상위 오브젝트 (root)
     /// </summary>
-    GameObject parent;
+    GameObject root;
 
     protected override void Awake()
     {
         Owner = GetComponentInParent<IBattler>(); // 재사용 중, 수정해야함
-        parent = transform.parent.gameObject;
+        root = transform.root.gameObject;
     }
 
     public override void ActiveWeapon()
@@ -37,7 +37,13 @@ public class Weapon_Staff : WeaponBase
     /// <param name="targetPosition">공격할 위치</param>
     public void CastingSpell(Vector3 targetPosition)
     {
-        Vector3 spawnPosition = parent.transform.position + transform.up * 1.5f;
+        if(fireBall == null)    // 소환할 프리팹이 비어있을 때 
+        {
+            Debug.LogError($"{root.name}의 소환 할 프리팹이 존재하지 않습니다.");
+            return; 
+        }
+
+        Vector3 spawnPosition = root.transform.position + transform.up * 1.5f;
         GameObject obj = Instantiate(fireBall);
         obj.transform.position = spawnPosition;
 
