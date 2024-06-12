@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e66cb01ca66b7646bfdd1aea987175c, type: 3}
+  m_Name: Item_02_Gold
+  m_EditorClassIdentifier: 
+  code: 2
+  itemName: "\uB3C8"
+  desc: "\uBB34\uC5C7\uC774\uB4E0 \uD560 \uC218 \uC788\uB294 \uBB3C\uAC74"
+  maxCount: 4294967295
+  count: 5000
+  dropPrefab: {fileID: 8951982109482398676, guid: 6b0cac12e1afb5e4787a2dda8f6d1150,
+    type: 3}

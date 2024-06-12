@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e66cb01ca66b7646bfdd1aea987175c, type: 3}
+  m_Name: Item_03_Bomb
+  m_EditorClassIdentifier: 
+  code: 3
+  itemName: "\uD3ED\uD0C4"
+  desc: "\uB208 \uC55E\uC5D0 \uC788\uB294 \uC801\uC744 \uB0A0\uB9B4 \uC218 \uC788\uB294
+    \uBB3C\uAC74"
+  maxCount: 50
+  count: 1
+  dropPrefab: {fileID: 7787708524649179189, guid: 6c6f8dd1ce269ec4aa50bda616a5b713,
+    type: 3}

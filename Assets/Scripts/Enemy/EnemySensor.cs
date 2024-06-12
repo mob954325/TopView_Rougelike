@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySensor : MonoBehaviour
+public class EnemySensor : Sensor
 {
     EnemyBase enemy;
 
@@ -11,7 +11,7 @@ public class EnemySensor : MonoBehaviour
         enemy = GetComponentInParent<EnemyBase>();
     }
 
-    void OnTriggerEnter(Collider other)
+    public override void DetectObject(Collider other)
     {
         if (enemy == null)
         {
@@ -19,7 +19,7 @@ public class EnemySensor : MonoBehaviour
             return;
         }
 
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             enemy.onFindPlayer?.Invoke(other.gameObject);
         }

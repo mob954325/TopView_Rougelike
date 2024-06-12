@@ -14,6 +14,22 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
     Rigidbody rigid;
     Animator animator;
+    // 가지고 있는 아이템 정보=============================================  
+
+    /// <summary>
+    /// 열쇠 개수
+    /// </summary>
+    [SerializeField] uint keyCount = 0;
+
+    /// <summary>
+    /// 골드 개수
+    /// </summary>
+    [SerializeField] uint goldAmount = 0;
+
+    /// <summary>
+    /// 폭탄 개수
+    /// </summary>
+    [SerializeField] uint bombCount = 0;
 
     // IHealth =========================================================
     /// <summary>
@@ -125,6 +141,15 @@ public class Player : MonoBehaviour, IHealth, IBattler
         onDie += OnDie;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        IUseable item = other as IUseable;
+        if(item != null) // 사용가능한 오브젝트에 접촉했다.
+        {
+            item.OnUse();
+        }
+    }
+
     // Movement =============================================================
 
     /// <summary>
@@ -174,6 +199,35 @@ public class Player : MonoBehaviour, IHealth, IBattler
     {
         animator.SetTrigger(HashToDeath);
         // 조작 막기 
+    }
+
+    // 아이템 관련 상호작용 함수 ================================================
+
+    /// <summary>
+    /// 열쇠 개수 증가 함수
+    /// </summary>
+    /// <param name="count">획득량</param>
+    public void GetKey(uint count)
+    {
+        keyCount += count;
+    }
+
+    /// <summary>
+    /// 골드 증가 함수
+    /// </summary>
+    /// <param name="amount">획득량</param>
+    public void GetGold(uint amount)
+    {
+        goldAmount += amount;
+    }
+
+    /// <summary>
+    /// 폭탄 개수 증가 함수 (획득)
+    /// </summary>
+    /// <param name="count">획득량</param>
+    public void GetBomb(uint count)
+    {
+        bombCount += count;
     }
 
     // 애니메이션 이벤트 함수 ==================================================
