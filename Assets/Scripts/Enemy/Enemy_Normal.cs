@@ -67,7 +67,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
             if(currentHealth <= 0f)
             {
-                onDie?.Invoke();
+                CurrentState = EnemyState.Dead; // 사망 상태로 변경
             }
         }
     }
@@ -77,6 +77,12 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public float maxHp = 20f;
     public float MaxHealth => CurrentHealth;
+
+
+    /// <summary>
+    /// 애니메이터 Hit 파라미터 ( 피격 )
+    /// </summary>
+    int HashToHit = Animator.StringToHash("Hit");
 
     /// <summary>
     /// 사망 시 호출되는 델리게이트
@@ -150,6 +156,12 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         target = targetObj;
     }
 
+    protected override void OnDead()
+    {
+        base.OnDead();
+        StartCoroutine(DisableObject(2f));
+    }
+
     // IBattler 함수 ======================================================================================
     public void Attack(IBattler target)
     {
@@ -159,6 +171,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     public void Hit(float hitDamage)
     {
         CurrentHealth -= hitDamage - DefencePower;
+        animator.SetTrigger(HashToHit);
     }
     // 애니메이션 함수 ======================================================================================
 

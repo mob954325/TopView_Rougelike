@@ -58,6 +58,7 @@ public class EnemyBase : PoolObject
                     break;
                 case EnemyState.Dead:
                     // 사망처리때 초기화
+                    OnDead();
                     Speed = 0f;
                     break;
             }
@@ -108,6 +109,11 @@ public class EnemyBase : PoolObject
     /// 애니메이터 Speed 파라미터
     /// </summary>
     int HashToSpeed = Animator.StringToHash("Speed");
+
+    /// <summary>
+    /// 애니메이터 Death 파라미터 ( 사망 bool )
+    /// </summary>
+    int HashToDeath = Animator.StringToHash("Death");
 
     // 기본함수 ==============================================================
 
@@ -185,5 +191,6 @@ public class EnemyBase : PoolObject
     /// </summary>
     protected virtual void OnDead()
     {
+        animator.SetTrigger(HashToDeath);    // 사망 애니메이션 활성화
     }
 }

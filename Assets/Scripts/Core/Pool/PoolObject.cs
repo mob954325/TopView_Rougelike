@@ -18,4 +18,14 @@ public class PoolObject : MonoBehaviour
         transform.position = Vector3.zero;  // 위치 초기화
         onDisable?.Invoke();                // 비활성화
     }
+
+    /// <summary>
+    /// 오브젝트 비활성화 코루틴
+    /// </summary>
+    /// <param name="time">비활성화 딜레이 타임</param>
+    protected IEnumerator DisableObject(float time)
+    {
+        yield return new WaitForSeconds(time);
+        this.gameObject.SetActive(false);
+    }
 }

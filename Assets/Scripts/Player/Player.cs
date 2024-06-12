@@ -95,6 +95,16 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// </summary>
     int HashToIsAttacking = Animator.StringToHash("IsAttacking");
 
+    /// <summary>
+    /// 애니메이션 피격 파라미터 ( trigger )
+    /// </summary>
+    int HashToHit = Animator.StringToHash("Hit");
+
+    /// <summary>
+    /// 애니메이션 Death 파라미터 ( bool )
+    /// </summary>
+    int HashToDeath = Animator.StringToHash("Death");
+
     void Awake()
     {
         playerInput = GetComponent<Player_InputSettings>();
@@ -111,6 +121,8 @@ public class Player : MonoBehaviour, IHealth, IBattler
     {
         maxHealth = startHealth;
         CurrentHealth = MaxHealth;
+
+        onDie += OnDie;
     }
 
     // Movement =============================================================
@@ -156,6 +168,17 @@ public class Player : MonoBehaviour, IHealth, IBattler
     }
 
     /// <summary>
+    /// 사망시 실행되는 함수
+    /// </summary>
+    public void OnDie()
+    {
+        animator.SetTrigger(HashToDeath);
+        // 조작 막기 
+    }
+
+    // 애니메이션 이벤트 함수 ==================================================
+
+    /// <summary>
     /// 공격 시작 시 호출되는 함수 ( 애니메이션 이벤트 함수 )
     /// </summary>
     /// <param name="isAttacking">공격 중이면 true 아니면 false</param>
@@ -182,5 +205,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
     public void Hit(float hitDamage)
     {
         CurrentHealth -= hitDamage - DefencePower;
+        animator.SetTrigger(HashToHit);
     }
 }
