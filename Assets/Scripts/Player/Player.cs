@@ -69,13 +69,21 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// 캐릭터 현재 공격력
     /// </summary>
     public float attackPower = 2f;
-    public float AttackPower { get; set; }
+    public float AttackPower
+    {
+        get => attackPower;
+        set => attackPower = value;
+    }
 
     /// <summary>
     /// 캐릭터 현재 방어력 ( 가진 방어력만큼 데미지가 덜 들어감)
     /// </summary>
     public float defencePower = 1f;
-    public float DefencePower { get; set; }
+    public float DefencePower 
+    {
+        get => defencePower;
+        set => defencePower = value;
+    }
 
 
     // Movement =========================================================
