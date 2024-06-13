@@ -11,7 +11,7 @@ public class EnemySensor : Sensor
         enemy = GetComponentInParent<EnemyBase>();
     }
 
-    public override void DetectObject(Collider other)
+    public override void OnDetectObject(Collider other)
     {
         if (enemy == null)
         {

@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class Player_Sensor : Sensor
 {
-    public override void DetectObject(Collider other)
+    public override void OnObjectStay(Collider other)
     {
-        base.DetectObject(other);
+        base.OnObjectStay(other);
 
-        // 획득 가능한 오브젝트
         IGetable getable = other.GetComponent<IGetable>();
 
         if (getable != null)
         {
-            getable.OnGet(transform.root.gameObject);
+            if ((other.gameObject.transform.position - transform.position).magnitude < 1.5f)
+            {
+                detectedObjects.Remove(other.gameObject);
+                getable.OnGet(transform.root.gameObject);
+            }
         }
     }
 }
+
+// 주변 아이템이 플레이어로 다가와야함
+// 플레이어 콜라이더랑 닿으면 onget 실행
