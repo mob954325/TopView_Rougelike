@@ -8,14 +8,14 @@ public class Player_Sensor : Sensor
     {
         base.OnObjectStay(other);
 
-        IGetable getable = other.GetComponent<IGetable>();
+        ItemObject item = other.GetComponent<ItemObject>();
 
-        if (getable != null)
+        if (item != null)
         {
             if ((other.gameObject.transform.position - transform.position).magnitude < 1.5f)
             {
                 detectedObjects.Remove(other.gameObject);
-                getable.OnGet(transform.root.gameObject);
+                item.GetItem(transform.root.gameObject);
             }
         }
     }

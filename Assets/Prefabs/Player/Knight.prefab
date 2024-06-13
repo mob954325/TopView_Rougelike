@@ -1462,6 +1462,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
+  keyCount: 0
+  goldAmount: 0
+  bombCount: 0
   currnetHealth: 0
   attackPower: 2
   defencePower: 1
@@ -2963,6 +2966,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sensor(Player)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384199319777447289, guid: 352be84d492ac9e4ab90b0a43bed28f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384199319777447289, guid: 352be84d492ac9e4ab90b0a43bed28f4,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5596303513119174940, guid: 352be84d492ac9e4ab90b0a43bed28f4,
         type: 3}

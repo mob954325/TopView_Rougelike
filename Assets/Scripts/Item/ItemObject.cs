@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour, IGetable
+public class ItemObject : MonoBehaviour
 {
     [SerializeField] ItemData itemData;
 
@@ -76,27 +76,13 @@ public class ItemObject : MonoBehaviour, IGetable
         itemData = data;
     }
 
-    public void OnGet(GameObject owner)
+    public void GetItem(GameObject owner)
     {
-        this.gameObject.SetActive(false);
-        Debug.Log($"{itemData.itemName} 획득");
-        // 타입에 따라 아이템 획득량 증가
+        IGetable getableItem = itemData as IGetable;
 
-        Player player = owner.GetComponent<Player>();
-        if( player != null )
+        if (getableItem != null)
         {
-            switch(itemData.code)
-            {
-                case ItemCodes.Key:
-                    player.GetKey(itemData.count);
-                    break;
-                case ItemCodes.Gold:
-                    player.GetGold(itemData.count);
-                    break;
-                case ItemCodes.Bomb:
-                    player.GetBomb(itemData.count);
-                    break;
-            }
+            getableItem.OnGet(owner);
         }
     }
 }

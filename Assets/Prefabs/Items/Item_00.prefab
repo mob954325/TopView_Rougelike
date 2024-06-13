@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: f9ae1f73f5bc83c4cb5930aaed91a3a5, type: 2}
   spinSpeed: 360
+  moveSpeed: 3.5
 --- !u!135 &657657013817542973
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -178,5 +179,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
