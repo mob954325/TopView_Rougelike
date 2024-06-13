@@ -11,7 +11,7 @@ public class Test_02_ObjectPooling : TestBase
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         t = transform.GetChild(0);
-        Factory.Instance.GetTestItem(t.position);
+        Factory.Instance.GetBomb(t.position);
     }
 }
 #endif
