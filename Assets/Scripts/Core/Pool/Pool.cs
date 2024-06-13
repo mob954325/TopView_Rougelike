@@ -77,6 +77,8 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
             comp = readyQueue.Peek();    // 큐에서 오브젝트 가져오기
             readyQueue.Dequeue();       // 레디큐에서 제거
             comp.gameObject.SetActive(true);        // 오브젝트 활성화
+            comp.transform.position = position.GetValueOrDefault();
+            comp.transform.rotation = rotation.GetValueOrDefault();
 
             result = comp;
         }
