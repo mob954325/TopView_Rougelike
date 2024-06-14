@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -935,6 +935,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
+  keyCount: 0
+  coinAmount: 0
+  bombCount: 0
   currnetHealth: 0
   attackPower: 2
   defencePower: 1
@@ -1146,6 +1149,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6221136440227922078, guid: b4062ae9bea86544a8ef7c6511512af6,
+        type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6875389992133720193, guid: b4062ae9bea86544a8ef7c6511512af6,
         type: 3}
       propertyPath: m_Name
@@ -1695,10 +1703,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 5171129496862306305, guid: 7ac3d1e9e9449de4bb5fdea2e16cf2af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5544472538374652603, guid: 7ac3d1e9e9449de4bb5fdea2e16cf2af,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.000003161629
+      objectReference: {fileID: 0}
+    - target: {fileID: 6212887800331048821, guid: 7ac3d1e9e9449de4bb5fdea2e16cf2af,
+        type: 3}
+      propertyPath: type
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6262749668545508642, guid: 7ac3d1e9e9449de4bb5fdea2e16cf2af,
         type: 3}
