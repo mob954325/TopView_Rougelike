@@ -14,6 +14,6 @@ public class Test_03_Key : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        //Factory.Instance
+        Factory.Instance.GetItem(ItemCodes.Key, target.position);
     }
 }

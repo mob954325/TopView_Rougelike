@@ -16,7 +16,7 @@ public class ItemData_Key : ItemData, IGetable, IUseable
         player.GetKey(count);
     }
 
-    public void OnUse()
+    public void OnUse(GameObject owner)
     {
         // 열쇠 사용
     }

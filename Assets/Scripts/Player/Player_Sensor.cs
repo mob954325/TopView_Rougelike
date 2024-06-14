@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class Player_Sensor : Sensor
 {
+    /// <summary>
+    /// 센서에 닿은 오브젝트를 사용하는 최대 거리
+    /// </summary>
+    public float range = 2f;
+
     public override void OnObjectStay(Collider other)
     {
         base.OnObjectStay(other);
 
         ItemObject item = other.GetComponent<ItemObject>();
+        IUseable useable = other.GetComponent<IUseable>();
 
+        // 감지된 오브젝트
         if (item != null)
         {
-            if ((other.gameObject.transform.position - transform.position).magnitude < 2f)
+            // 아이템
+            if ((other.gameObject.transform.position - transform.position).magnitude < range)
             {
                 detectedObjects.Remove(other.gameObject);
                 item.GetItem(transform.root.gameObject);
-                Debug.Log((other.gameObject.transform.position - transform.position).magnitude);
+            }
+        }
+        else if (useable != null) 
+        {
+            // 사용가능한 오브젝트 (IUsable 인터페이스 상속)
+            if ((other.gameObject.transform.position - transform.position).magnitude < range)
+            {
+                useable.OnUse(this.transform.root.gameObject);
             }
         }
     }

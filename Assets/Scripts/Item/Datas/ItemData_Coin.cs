@@ -13,6 +13,6 @@ public class ItemData_Coin : ItemData, IGetable
     {
         Player player = owner.GetComponent<Player>();
 
-        player.GetGold(count);
+        player.GetCoin(count);
     }
 }

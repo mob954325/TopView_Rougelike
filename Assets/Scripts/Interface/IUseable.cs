@@ -10,5 +10,5 @@ public interface IUseable
     /// <summary>
     /// 오브젝트를 사용할 때 호출되는 함수
     /// </summary>
-    public void OnUse();
+    public void OnUse(GameObject owner);
 }

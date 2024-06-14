@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 골드 개수
     /// </summary>
-    [SerializeField] uint goldAmount = 0;
+    [SerializeField] uint coinAmount = 0;
 
     /// <summary>
     /// 폭탄 개수
@@ -149,15 +149,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
         onDie += OnDie;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        IUseable item = other as IUseable;
-        if(item != null) // 사용가능한 오브젝트에 접촉했다.
-        {
-            item.OnUse();
-        }
-    }
-
     // Movement =============================================================
 
     /// <summary>
@@ -221,12 +212,30 @@ public class Player : MonoBehaviour, IHealth, IBattler
     }
 
     /// <summary>
+    /// 열쇠를 사용할 때 개수 감소하는 함수
+    /// </summary>
+    /// <param name="count">감소시킬 열쇠 개수</param>
+    public void UseKey(uint count = 1)
+    {
+        keyCount -= count;
+    }
+
+    /// <summary>
     /// 골드 증가 함수
     /// </summary>
     /// <param name="amount">획득량</param>
-    public void GetGold(uint amount)
+    public void GetCoin(uint amount)
     {
-        goldAmount += amount;
+        coinAmount += amount;
+    }
+
+    /// <summary>
+    /// 코인를 사용할 때 개수 감소하는 함수
+    /// </summary>
+    /// <param name="count">감소시킬 코인 개수</param>
+    public void UseCoin(uint count)
+    {
+        coinAmount -= count;
     }
 
     /// <summary>
@@ -237,6 +246,16 @@ public class Player : MonoBehaviour, IHealth, IBattler
     {
         bombCount += count;
     }
+
+    /// <summary>
+    /// 폭탄 사용할 때 개수 감소하는 함수
+    /// </summary>
+    /// <param name="count">감소시킬 폭탄 개수</param>
+    public void UseBomb(uint count = 1)
+    {
+        bombCount -= count;
+    }
+
 
     // 애니메이션 이벤트 함수 ==================================================
 

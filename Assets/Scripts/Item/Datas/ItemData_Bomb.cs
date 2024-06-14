@@ -16,7 +16,7 @@ public class ItemData_Bomb : ItemData, IGetable, IUseable
         player.GetBomb(count);
     }
 
-    public void OnUse()
+    public void OnUse(GameObject owner)
     {
         // 폭탄 터지는 내용
     }

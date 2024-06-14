@@ -1463,7 +1463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
   keyCount: 0
-  goldAmount: 0
+  coinAmount: 0
   bombCount: 0
   currnetHealth: 0
   attackPower: 2
@@ -2970,7 +2970,7 @@ PrefabInstance:
     - target: {fileID: 3384199319777447289, guid: 352be84d492ac9e4ab90b0a43bed28f4,
         type: 3}
       propertyPath: m_Radius
-      value: 0.8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3384199319777447289, guid: 352be84d492ac9e4ab90b0a43bed28f4,
         type: 3}
