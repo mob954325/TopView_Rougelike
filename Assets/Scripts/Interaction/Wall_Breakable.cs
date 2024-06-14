@@ -33,5 +33,6 @@ public class Wall_Breakable : MonoBehaviour, IBreakable
             obj.AddForce((obj.transform.position - startPoint.position).normalized * 3f, ForceMode.Impulse);
             obj.gameObject.GetComponent<Brick>().ActiveDisable();
         }
+        isBreak = true;
     }
 }
