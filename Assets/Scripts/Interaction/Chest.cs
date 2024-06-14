@@ -28,9 +28,8 @@ public class Chest : MonoBehaviour, IUseable
 
         Player player = owner.GetComponent<Player>();
 
-        if(player != null) // 작동 대상이 플레이어이다.
+        if(player != null && player.UseKey()) // 작동 대상이 플레이어이다.
         {
-            player.UseKey();
             animator.SetTrigger(HashToOpen); // 상자 열기
             isOpen = true;
 

@@ -20,7 +20,7 @@ public class Player_Sensor : Sensor
         if (item != null)
         {
             // 아이템
-            if ((other.gameObject.transform.position - transform.position).magnitude < range)
+            if ((other.gameObject.transform.position - transform.position).magnitude < range * 1.5f)
             {
                 detectedObjects.Remove(other.gameObject);
                 item.GetItem(transform.root.gameObject);
@@ -29,7 +29,7 @@ public class Player_Sensor : Sensor
         else if (useable != null) 
         {
             // 사용가능한 오브젝트 (IUsable 인터페이스 상속)
-            if ((other.gameObject.transform.position - transform.position).magnitude < range)
+            if ((other.gameObject.transform.position - transform.position).magnitude < range * 1.5f)
             {
                 useable.OnUse(this.transform.root.gameObject);
             }

@@ -22,14 +22,50 @@ public class Player : MonoBehaviour, IHealth, IBattler
     [SerializeField] uint keyCount = 0;
 
     /// <summary>
-    /// 골드 개수
+    /// 열쇠 개수 접근 및 수정 프로퍼티
+    /// </summary>
+    private uint KeyCount
+    {
+        get => keyCount;
+        set
+        {
+            keyCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Key].maxCount);
+        }
+    }
+
+    /// <summary>
+    /// 코인 개수
     /// </summary>
     [SerializeField] uint coinAmount = 0;
+
+    /// <summary>
+    /// 코인 개수 접근 및 수정 프로퍼티
+    /// </summary>
+    private uint CoinAmount
+    {
+        get => coinAmount;
+        set
+        {
+            coinAmount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Coin].maxCount);
+        }
+    }
 
     /// <summary>
     /// 폭탄 개수
     /// </summary>
     [SerializeField] uint bombCount = 0;
+
+    /// <summary>
+    /// 폭탄 개수 접근 및 수정 프로퍼티
+    /// </summary>
+    private uint BombCount
+    {
+        get => bombCount;
+        set
+        {
+            bombCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Bomb].maxCount);
+        }
+    }
 
     // IHealth =========================================================
     /// <summary>
@@ -208,16 +244,28 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="count">획득량</param>
     public void GetKey(uint count)
     {
-        keyCount += count;
+        KeyCount += count;
     }
 
     /// <summary>
     /// 열쇠를 사용할 때 개수 감소하는 함수
     /// </summary>
     /// <param name="count">감소시킬 열쇠 개수</param>
-    public void UseKey(uint count = 1)
+    /// <returns>사용 성공 여부 (true : 성공적으로 사용함, false : 개수 부족)</returns>
+    public bool UseKey(uint count = 1)
     {
-        keyCount -= count;
+        bool result = true;    
+
+        if(KeyCount <= 0)
+        {
+            result = false;
+        }
+        else
+        {
+            KeyCount -= count;
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -226,16 +274,28 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="amount">획득량</param>
     public void GetCoin(uint amount)
     {
-        coinAmount += amount;
+        CoinAmount += amount;
     }
 
     /// <summary>
     /// 코인를 사용할 때 개수 감소하는 함수
     /// </summary>
     /// <param name="count">감소시킬 코인 개수</param>
-    public void UseCoin(uint count)
+    /// <returns>사용 성공 여부 (true : 성공적으로 사용함, false : 개수 부족)</returns>
+    public bool UseCoin(uint count)
     {
-        coinAmount -= count;
+        bool result = true;
+
+        if (CoinAmount <= 0)
+        {
+            result = false;
+        }
+        else
+        {
+            CoinAmount -= count;
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -244,16 +304,28 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="count">획득량</param>
     public void GetBomb(uint count)
     {
-        bombCount += count;
+        BombCount += count;
     }
 
     /// <summary>
     /// 폭탄 사용할 때 개수 감소하는 함수
     /// </summary>
     /// <param name="count">감소시킬 폭탄 개수</param>
-    public void UseBomb(uint count = 1)
+    /// <returns>사용 성공 여부 (true : 성공적으로 사용함, false : 개수 부족)</returns>
+    public bool UseBomb(uint count = 1)
     {
-        bombCount -= count;
+        bool result = true;
+
+        if (BombCount <= 0)
+        {
+            result = false;
+        }
+        else
+        {
+            BombCount -= count;
+        }
+
+        return result;
     }
 
 
