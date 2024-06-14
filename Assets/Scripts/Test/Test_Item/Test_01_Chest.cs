@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Test_01_Chest : TestBase
 {
-    public Chest chest;
+    public LockedObject chest;
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {

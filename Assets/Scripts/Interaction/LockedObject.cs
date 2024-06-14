@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : MonoBehaviour, IUseable
+/// <summary>
+/// 잠긴 오브젝트가 가지는 클래스
+/// </summary>
+public class LockedObject : MonoBehaviour, IUseable
 {
     Animator animator;
 
