@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bomb : PoolObject
 {
     ParticleSystem effect;  // 도화선 이펙트
-    public ParticleSystem explosionEffect;  // 폭발 이펙트
+    public GameObject explosionEffect;  // 폭발 이펙트
     public float duration = 3f; // 폭발하기 걸리는 시간
 
     void Awake()
@@ -25,7 +25,7 @@ public class Bomb : PoolObject
     {
         yield return new WaitForSeconds(duration);
         effect.Stop();
-        explosionEffect.Play();
+        Instantiate(explosionEffect); // 나중에 팩토리로 변경할 것
 
         // boom
         RaycastHit[] hits;
@@ -35,7 +35,7 @@ public class Bomb : PoolObject
         {
             if(item.collider.GetComponent<IBreakable>() != null)
             {
-                IBreakable obj = item.collider.GetComponent<IBreakable>();
+                IBreakable obj = item.collider.GetComponentInParent<IBreakable>();
                 obj.OnBreak(this.transform);
             }
             
