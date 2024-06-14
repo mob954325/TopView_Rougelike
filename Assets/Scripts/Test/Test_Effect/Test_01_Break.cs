@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Test_01_Break : TestBase
 {
-    public Break _break;
+    public Wall_Breakable _break;
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
