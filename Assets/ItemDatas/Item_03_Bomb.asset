@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e66cb01ca66b7646bfdd1aea987175c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9de60a1a0636c194fb2f0ca3e75d1f9b, type: 3}
   m_Name: Item_03_Bomb
   m_EditorClassIdentifier: 
   code: 3
@@ -18,5 +18,5 @@ MonoBehaviour:
     \uBB3C\uAC74"
   maxCount: 50
   count: 1
-  dropPrefab: {fileID: 7787708524649179189, guid: 6c6f8dd1ce269ec4aa50bda616a5b713,
+  dropPrefab: {fileID: 2025875383747548584, guid: 9dc4e2a9939d9054ab7c8cdf9e579eb2,
     type: 3}

@@ -6,6 +6,6 @@ public enum ItemCodes
 {
     Dummy = 0,
     Key,
-    Gold,
+    Coin,
     Bomb
 }

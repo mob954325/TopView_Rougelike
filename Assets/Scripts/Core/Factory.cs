@@ -6,6 +6,7 @@ public class Factory : Singleton<Factory>
 {
     Pool_Enemy enemyPool;
     Pool_Bomb bombPool;
+    Pool_Item itemPool;
 
     protected override void Initialized()
     {
@@ -15,6 +16,8 @@ public class Factory : Singleton<Factory>
         enemyPool.Initialize();
         bombPool = GetComponentInChildren<Pool_Bomb>();
         bombPool.Initialize();
+        itemPool = GetComponentInChildren<Pool_Item>();
+        itemPool.Initialize();
     }
 
     public GameObject GetEnemy(Vector3? position = null, Quaternion? rotation = null)
@@ -25,5 +28,10 @@ public class Factory : Singleton<Factory>
     public GameObject GetBomb(Vector3? position = null, Quaternion? rotation = null)
     {
         return bombPool.GetObject(position, rotation).gameObject;
+    }
+
+    public GameObject GetItem(ItemCodes code, Vector3? position = null, Quaternion? rotation = null)
+    {
+        return itemPool.GetItemObject(code, position, rotation);
     }
 }

@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDataManager : MonoBehaviour
+/// <summary>
+/// 아이템 데이터 관리 매니저
+/// </summary>
+public class ItemDataManager : Singleton<ItemDataManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    /// <summary>
+    /// 아이템 정보가 저장되어있는 배열 (아이템 코드 순 정렬)
+    /// </summary>
+    public ItemData[] itemDatas;
 }

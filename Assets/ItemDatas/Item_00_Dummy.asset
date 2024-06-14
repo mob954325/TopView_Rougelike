@@ -17,5 +17,5 @@ MonoBehaviour:
   desc: "\uD14C\uC2A4\uD2B8\uC6A9 \uC544\uC774\uD15C"
   maxCount: 1
   count: 0
-  dropPrefab: {fileID: 9137892514359146937, guid: 25f1e62213ddc1f449a9c98aa363fec9,
+  dropPrefab: {fileID: 8626282876791877966, guid: 93bda7ed4794e1a47a1fd8f500005e65,
     type: 3}

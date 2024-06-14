@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Item_999_Key", menuName = "ScriptableObjects/Item-Key", order = 2)]
 public class ItemData_Key : ItemData, IGetable, IUseable
 {
     /// <summary>

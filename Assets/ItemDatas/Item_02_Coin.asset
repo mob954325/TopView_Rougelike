@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e66cb01ca66b7646bfdd1aea987175c, type: 3}
-  m_Name: Item_02_Gold
+  m_Script: {fileID: 11500000, guid: 946532afdf45ac344afabcfd087e4c0e, type: 3}
+  m_Name: Item_02_Coin
   m_EditorClassIdentifier: 
   code: 2
   itemName: "\uB3C8"
   desc: "\uBB34\uC5C7\uC774\uB4E0 \uD560 \uC218 \uC788\uB294 \uBB3C\uAC74"
   maxCount: 4294967295
   count: 5000
-  dropPrefab: {fileID: 8951982109482398676, guid: 6b0cac12e1afb5e4787a2dda8f6d1150,
+  dropPrefab: {fileID: 7034280379204004614, guid: 9306cea8942a2af48978d9d74584eee3,
     type: 3}

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Wall_Breakable : MonoBehaviour, IBreakable
 {
+    /// <summary>
+    /// 반응할 자식 오브젝트
+    /// </summary>
     Rigidbody[] reactionObjs;
 
     /// <summary>

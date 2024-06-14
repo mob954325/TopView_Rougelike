@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour
+public class ItemObject : PoolObject
 {
     [SerializeField] ItemData itemData;
 
@@ -36,7 +36,17 @@ public class ItemObject : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();  
-        prop = transform.GetChild(0).gameObject;
+    }
+
+    private void OnEnable()
+    {
+
+    }
+
+    void OnDisable()
+    {
+        playerObj = null;
+        isNear = false;
     }
 
     private void FixedUpdate()
@@ -62,18 +72,39 @@ public class ItemObject : MonoBehaviour
         }
     }
 
-    void OnDisable()
-    {
-        playerObj = null;
-        isNear = false;
-    }
-
     /// <summary>
     /// 아이템 데이터 초기화 함수
     /// </summary>
     public void Initialize(ItemData data)
     {
         itemData = data;
+
+        // 아이템 생성
+        if (transform.childCount == 0) // 자식 오브젝트가 없다 (아이템이 없다)
+        {
+            // 아이템 오브젝트 생성
+            GameObject itemObj = new GameObject($"{itemData.name}");
+            itemObj.transform.parent = this.gameObject.transform;
+
+            MeshFilter meshFilter = itemObj.AddComponent<MeshFilter>();
+            meshFilter.mesh = itemData.dropPrefab.GetComponent<MeshFilter>().sharedMesh;
+
+            MeshRenderer meshRenderer = itemObj.AddComponent<MeshRenderer>();
+            meshRenderer.material = itemData.dropPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+        }
+        else // 아이템 오브젝트가 존재하면 mesh만 바꾸기
+        {
+            Transform child = transform.GetChild(0);
+
+            MeshFilter meshFilter = child.GetComponent<MeshFilter>();
+            meshFilter.mesh = itemData.dropPrefab.GetComponent<MeshFilter>().sharedMesh;
+
+            MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
+            meshRenderer.material = itemData.dropPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
+        prop = transform.GetChild(0).gameObject;
+        prop.transform.localPosition = Vector3.zero; // 위치 초기화
     }
 
     public void GetItem(GameObject owner)
@@ -83,6 +114,7 @@ public class ItemObject : MonoBehaviour
         if (getableItem != null)
         {
             getableItem.OnGet(owner);
+            this.gameObject.SetActive(false);
         }
     }
 }

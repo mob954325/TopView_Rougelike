@@ -12,10 +12,11 @@ public class Player_Sensor : Sensor
 
         if (item != null)
         {
-            if ((other.gameObject.transform.position - transform.position).magnitude < 1.5f)
+            if ((other.gameObject.transform.position - transform.position).magnitude < 2f)
             {
                 detectedObjects.Remove(other.gameObject);
                 item.GetItem(transform.root.gameObject);
+                Debug.Log((other.gameObject.transform.position - transform.position).magnitude);
             }
         }
     }
