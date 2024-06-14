@@ -259,7 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1070193642726065532}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: Wall(4x6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
