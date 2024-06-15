@@ -3,32 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 방향 값 (비트 플래그)
+/// </summary>
 [Flags]
 public enum Direction : byte
 {
    NONE = 0, UP = 1, DOWN = 2, LEFT = 4, RIGHT = 8
 }
 
+/// <summary>
+/// 방타입 
+/// </summary>
 public enum RoomType
 {
     Normal = 0, Chest, Boss
 }
 
-public class Cell : MonoBehaviour
+public class MapObject : MonoBehaviour
 {
-    // 타입
+    /// <summary>
+    /// 해당 방 타입
+    /// </summary>
     public RoomType type = RoomType.Normal;
-    // 뚫려있는 방향
+    
+    /// <summary>
+    /// 뚫려있는 길 방향
+    /// </summary>
     public Direction direction = Direction.NONE;
-    // 입구 오브젝트
+
+    /// <summary>
+    /// 입구 오브젝트들 (상하좌우)
+    /// </summary>
     public GameObject[] entrance; 
-    // 적 개수
+
+    /// <summary>
+    /// 해당 방 적 개수
+    /// </summary>
     public uint enemyCount = 0;
-    // 해당 셀 위치 값
-    public Vector2Int grid;
-    // 셀 한 면의 크기
-    const float cellWidth = 15f;
-    // 해당 스테이지 클리어 여부
+
+    /// <summary>
+    /// 위치 값 (월드)
+    /// </summary>
+    public Vector3 position; // 왼쪽 밑이 pivot
+
+    /// <summary>
+    /// 해당 스테이지 클리어 여부
+    /// </summary>
     public bool isClear = false;
 
     private void Awake()
@@ -44,18 +65,6 @@ public class Cell : MonoBehaviour
     }
 
     /// <summary>
-    /// 셀 생성자 
-    /// </summary>
-    /// <param name="dir">뚫려있는 방향(비트 플래그)</param>
-    /// <param name="type">방 타입</param>
-    /// <param name="grid">그리드값 위치</param>
-    public Cell(Direction dir, RoomType type, Vector2Int grid)
-    {
-        MakePath(dir);
-        transform.position = new Vector3(grid.x, 0f, grid.y);
-    }
-
-    /// <summary>
     /// 셀의 길을 뚫는 함수
     /// </summary>
     /// <param name="dir">방향 값</param>
@@ -65,7 +74,6 @@ public class Cell : MonoBehaviour
         for(int i = 0; i < 4; i++)
         {
             int result = (int)dir & mask;
-            Debug.Log($"{result}");
             if(result == mask)
             {
                 entrance[i].SetActive(false);

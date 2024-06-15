@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Test_07_GenerateMap : TestBase
+public class Test_07_Cell : TestBase
 {
-    public Cell cell;
+    public MapObject cell;
 
     [Header("Cell 정보")]
     public Direction direction;
