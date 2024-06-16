@@ -50,24 +50,21 @@ public class MapGenerator : MonoBehaviour
     {
         DeleteMap();
 
-        BackTracking dfs = new BackTracking(width, height);
+        Ellers dfs = new Ellers(width, height);
 
         for(int y = 0; y < height; y++)
         {
             for(int x = 0; x < width; x++)
             {
-                if(dfs.cells[y * width + x].isVisited)
-                {
-                    // 방 오브젝트 생성
-                    GameObject obj = Instantiate(cellObj);
-                    mapObjs[y * width + x] = obj.GetComponent<MapObject>();
-                    obj.transform.parent = this.gameObject.transform;
-                    obj.name = $"Cell_{y * width + x}";
+                // 방 오브젝트 생성
+                GameObject obj = Instantiate(cellObj);
+                mapObjs[y * width + x] = obj.GetComponent<MapObject>();
+                obj.transform.parent = this.gameObject.transform;
+                obj.name = $"Cell_{y * width + x}";
 
-                    // 방 오브젝트 위치 잡기
-                    mapObjs[y * width + x].transform.position = GridToWorld(dfs.cells[y * width + x].grid);
-                    mapObjs[y * width + x].MakePath(dfs.cells[y * width + x].pathDir);
-                }
+                // 방 오브젝트 위치 잡기
+                mapObjs[y * width + x].transform.position = GridToWorld(dfs.cells[y * width + x].grid);
+                mapObjs[y * width + x].MakePath(dfs.cells[y * width + x].pathDir);
             }
         }
 
