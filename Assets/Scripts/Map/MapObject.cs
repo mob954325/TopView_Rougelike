@@ -17,7 +17,7 @@ public enum Direction : byte
 /// </summary>
 public enum RoomType
 {
-    Normal = 0, Chest, Boss
+    Normal = 0, Chest, Start ,Boss
 }
 
 public class MapObject : MonoBehaviour
@@ -40,12 +40,7 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 해당 방 적 개수
     /// </summary>
-    public uint enemyCount = 0;
-
-    /// <summary>
-    /// 위치 값 (월드)
-    /// </summary>
-    public Vector3 position; // 왼쪽 밑이 pivot
+    public int enemyCount = 0;
 
     /// <summary>
     /// 해당 스테이지 클리어 여부
@@ -65,10 +60,24 @@ public class MapObject : MonoBehaviour
     }
 
     /// <summary>
+    /// 맵 오브젝트 초기화 함수
+    /// </summary>
+    /// <param name="roomType">방 타입</param>
+    /// <param name="pathDir">뚫린 방향</param>
+    /// <param name="enemyCount">스폰할 적 숫자</param>
+    public void Initialize(RoomType roomType, Direction pathDir, int enemyCount)
+    {
+        type = roomType;
+        MakePath(pathDir);
+
+        // 개수 만큼 적 생성
+    }
+
+    /// <summary>
     /// 셀의 길을 뚫는 함수
     /// </summary>
     /// <param name="dir">방향 값</param>
-    public void MakePath(Direction dir)
+    void MakePath(Direction dir)
     {
         int mask = 1; // 비트 확인용 값
         for(int i = 0; i < 4; i++)

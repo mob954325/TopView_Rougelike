@@ -33,7 +33,6 @@ public class MapGenerator : MonoBehaviour
     const int mapObjLength = 15;
 
     bool isGenerated = false;
-
     public void Initialize(int width, int height)
     {
         this.width = width;
@@ -62,9 +61,20 @@ public class MapGenerator : MonoBehaviour
                 obj.transform.parent = this.gameObject.transform;
                 obj.name = $"Cell_{y * width + x}";
 
+                // 적 개수 생성
+                int randomEnemyNum = (int)UnityEngine.Random.Range(1, 4);
+
+                // 방 타입 정하기
+                    // 시작 위치 : 맵 중앙 ( 반올림 )
+                    // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
+                    // 상자방 랜덤 1 ~ 2개
+                    // 나머지는 노말
+
                 // 방 오브젝트 위치 잡기
                 mapObjs[y * width + x].transform.position = GridToWorld(dfs.cells[y * width + x].grid);
-                mapObjs[y * width + x].MakePath(dfs.cells[y * width + x].pathDir);
+                //mapObjs[y * width + x].Initialize();
+
+                //mapObjs[y * width + x].MakePath(dfs.cells[y * width + x].pathDir);
             }
         }
 
