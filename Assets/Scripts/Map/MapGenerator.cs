@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class MapGenerator : MonoBehaviour
 {
+    // 스테이지 세팅 ============================================================================
+
     /// <summary>
     /// 넓이 
     /// </summary>
@@ -32,7 +35,40 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     const int mapObjLength = 15;
 
+    /// <summary>
+    /// 생성되었는지 확인하는 변수
+    /// </summary>
     bool isGenerated = false;
+
+    // 방 개수 ============================================================================
+
+    /// <summary>
+    /// 현재 상자방 개수 (생성용)
+    /// </summary>
+    int currentChestRoomCount = 0;
+
+    /// <summary>
+    /// 최대 상자방 생성 개수 (생성용)
+    /// </summary>
+    [Range(1, 3)]
+    public int maxChestRoomCount = 0;
+
+    /// <summary>
+    /// 현재 기본 방 개수 (생성용)
+    /// </summary>
+    int currnetNormalRoomCount = 0;
+
+    /// <summary>
+    /// 현재 시작방 개수 (생성용)
+    /// </summary>
+    int currnetStartRoomCount = 0;
+
+    /// <summary>
+    /// 현재 보스방 개수 (생성용)
+    /// </summary>
+    int currnetBossRoomCount = 0;
+
+    // 맵 생성 함수 ============================================================================
     public void Initialize(int width, int height)
     {
         this.width = width;
@@ -47,9 +83,14 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public void GenerateMap()
     {
+        currnetNormalRoomCount = width * height;
+        currnetStartRoomCount = 0;
+        currnetBossRoomCount = 0;
+        currentChestRoomCount = 0;
+
         DeleteMap();
 
-        Ellers dfs = new Ellers(width, height);
+        Ellers eller = new Ellers(width, height);
 
         for(int y = 0; y < height; y++)
         {
@@ -65,19 +106,62 @@ public class MapGenerator : MonoBehaviour
                 int randomEnemyNum = (int)UnityEngine.Random.Range(1, 4);
 
                 // 방 타입 정하기
-                    // 시작 위치 : 맵 중앙 ( 반올림 )
+                Vector2Int grid = new Vector2Int(x, y);
+
+                // 시작 위치 : 맵 중앙 ( 버림 )
+                if (grid == new Vector2Int((int)Mathf.Ceil(width), (int)Mathf.Ceil(height))
+                    && currnetStartRoomCount < 1)
+                {
+                    mapObjs[y * width + x].Initialize(RoomType.Start,
+                                                      eller.cells[y * width + x].pathDir,
+                                                      randomEnemyNum);
+                    currnetStartRoomCount++;
+
+                }
+                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1)
+                    && currnetBossRoomCount < 1)
+                {
                     // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
-                    // 상자방 랜덤 1 ~ 2개
-                    // 나머지는 노말
+                    // y == 0,  y == height - 1, x == 0, x == width - 1
+                    mapObjs[y * width + x].Initialize(RoomType.Boss,
+                                                      eller.cells[y * width + x].pathDir,
+                                                      randomEnemyNum);
+                    currnetBossRoomCount++;
+                }
 
                 // 방 오브젝트 위치 잡기
-                mapObjs[y * width + x].transform.position = GridToWorld(dfs.cells[y * width + x].grid);
-                //mapObjs[y * width + x].Initialize();
-
-                //mapObjs[y * width + x].MakePath(dfs.cells[y * width + x].pathDir);
+                mapObjs[y * width + x].transform.position = GridToWorld(eller.cells[y * width + x].grid);
             }
         }
 
+        // 보물 방 설정
+        do
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (mapObjs[y * width + x].Type == RoomType.Normal) // 방이 노말인 방만 변경
+                    {
+                        if (currentChestRoomCount > maxChestRoomCount - 1) break; // esc do-while when chestroomcount same maxcount
+
+                        // 상자방 랜덤
+                        float rand = Random.value;
+
+                        if (rand > 0.5f) // 50% 랜덤 생성
+                        {
+                            mapObjs[y * width + x].Initialize(RoomType.Chest,
+                                                              eller.cells[y * width + x].pathDir,
+                                                              0);
+
+                            currentChestRoomCount++;
+                        }
+                    }
+                }
+            }
+        }while(currentChestRoomCount < maxChestRoomCount + 1);
+
+        ShowRoomTypeCount();
         isGenerated = true;
     }
 
@@ -105,6 +189,13 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    // 좌표 변환 ============================================================================
+
+    /// <summary>
+    /// 그리드 좌표에서 월드 좌표 반환하는 함수
+    /// </summary>
+    /// <param name="grid">그리드 좌표</param>
+    /// <returns>월드 좌표</returns>
     Vector3 GridToWorld(Vector2Int grid)
     {
         return new Vector3(grid.x * mapObjLength, 0, grid.y * mapObjLength);
@@ -140,4 +231,32 @@ public class MapGenerator : MonoBehaviour
     {
         return grid.x > -1 && grid.x < width && grid.y > -1 && grid.y < height;
     }
+
+#if UNITY_EDITOR
+    public void ShowRoomTypeCount()
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (mapObjs[y * width + x].Type == RoomType.Boss)
+                {
+                    currnetNormalRoomCount--;
+                }
+
+                if (mapObjs[y * width + x].Type == RoomType.Start)
+                {
+                    currnetNormalRoomCount--;
+                }
+
+                if(mapObjs[y * width + x].Type == RoomType.Chest)
+                {
+                    currnetNormalRoomCount--;
+                }                
+            }
+        }
+
+        Debug.Log($"상자 방 : {currentChestRoomCount}\n 기본 방 : {currnetNormalRoomCount}");
+    }
+#endif
 }

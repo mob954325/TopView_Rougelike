@@ -25,22 +25,27 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 해당 방 타입
     /// </summary>
-    public RoomType type = RoomType.Normal;
+    [SerializeField]RoomType type = RoomType.Normal;
+
+    /// <summary>
+    /// 방 타입 확인용 프로퍼티 
+    /// </summary>
+    public RoomType Type => type;
     
     /// <summary>
     /// 뚫려있는 길 방향
     /// </summary>
-    public Direction direction = Direction.NONE;
+    [SerializeField]Direction direction = Direction.NONE;
 
     /// <summary>
     /// 입구 오브젝트들 (상하좌우)
     /// </summary>
-    public GameObject[] entrance; 
+    public GameObject[] entrance;
 
     /// <summary>
     /// 해당 방 적 개수
     /// </summary>
-    public int enemyCount = 0;
+    [SerializeField]int enemyCount = 0;
 
     /// <summary>
     /// 해당 스테이지 클리어 여부
@@ -79,6 +84,8 @@ public class MapObject : MonoBehaviour
     /// <param name="dir">방향 값</param>
     void MakePath(Direction dir)
     {
+        direction = dir;
+
         int mask = 1; // 비트 확인용 값
         for(int i = 0; i < 4; i++)
         {
@@ -96,13 +103,9 @@ public class MapObject : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// 방타입에 따라 방 세팅하는 함수
-    /// </summary>
-    void SetByRoomType()
-    {
-
-    }
+    // 파괴 가능한 벽으로 막기
+    // 적 생성
+    // 클리어 여부 ( 일반 보스 )
 
 #if UNITY_EDITOR
     public void Test_SetPath(Direction dir)
