@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 잠긴 오브젝트가 가지는 클래스
 /// </summary>
-public class LockedObject : MonoBehaviour, IUseable
+public class LockedObject : PoolObject, IUseable
 {
     Animator animator;
 
