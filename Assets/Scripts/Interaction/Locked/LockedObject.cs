@@ -16,7 +16,7 @@ public class LockedObject : PoolObject, IUseable
 
     int HashToOpen = Animator.StringToHash("Open");
 
-    void Awake()
+    protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
     }
@@ -37,6 +37,15 @@ public class LockedObject : PoolObject, IUseable
             isOpen = true;
 
             // 아이템 받기 또는 아이템 소환
+            AfterOpen();
         }
+    }
+
+    /// <summary>
+    /// 상호작용 이후 실행할 내용
+    /// </summary>
+    protected virtual void AfterOpen()
+    {
+
     }
 }
