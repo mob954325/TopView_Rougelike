@@ -10,5 +10,6 @@ public class Test_09_SpawnObjects : Test_08_GenerateMap
     {
         target = transform.GetChild(0);
         Factory.Instance.GetChest(target.position);
+        Factory.Instance.GetItem(ItemCodes.Key, target.position);
     }
 }
