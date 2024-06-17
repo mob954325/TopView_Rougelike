@@ -784,6 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7d1624ddc6f8242a229dc5d7762915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectedObjects: []
 --- !u!135 &4704292401793786896
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1827,7 +1828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1609754776252149971
 Transform:
   m_ObjectHideFlags: 0
@@ -2645,6 +2646,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3807177744048214667}
     m_Modifications:
+    - target: {fileID: 1931336136614478471, guid: 0b04d700d6821e641a1ba22a4ba4b3ce,
+        type: 3}
+      propertyPath: fireBall
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2693387980610232656, guid: 0b04d700d6821e641a1ba22a4ba4b3ce,
         type: 3}
       propertyPath: m_Name

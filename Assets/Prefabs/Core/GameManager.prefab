@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerPrefab: {fileID: 4841434086152268311, guid: 3601e7230a6625e4f8023cd29c720aad,
+    type: 3}
+  isPlayerSpanwed: 0
 --- !u!114 &8443850754408094986
 MonoBehaviour:
   m_ObjectHideFlags: 0

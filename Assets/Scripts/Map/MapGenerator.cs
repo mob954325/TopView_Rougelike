@@ -30,7 +30,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// 맵 셀 오브젝트
     /// </summary>
-    MapObject[] mapObjs;
+    MapObject[] mapCells;
 
     /// <summary>
     /// mapObjs 한 면의 길이
@@ -76,7 +76,7 @@ public class MapGenerator : MonoBehaviour
         this.width = width;
         this.height = height;
 
-        mapObjs = new MapObject[width * height];
+        mapCells = new MapObject[width * height];
 
         GenerateMap();
     }
@@ -102,7 +102,7 @@ public class MapGenerator : MonoBehaviour
             {
                 // 방 오브젝트 생성
                 GameObject obj = Instantiate(cellObj);
-                mapObjs[y * width + x] = obj.GetComponent<MapObject>();
+                mapCells[y * width + x] = obj.GetComponent<MapObject>();
                 obj.transform.parent = this.gameObject.transform;
                 obj.name = $"Cell_{y * width + x}";
 
@@ -113,51 +113,52 @@ public class MapGenerator : MonoBehaviour
                 Vector2Int grid = new Vector2Int(x, y);
 
                 // 시작 위치 : 맵 중앙 ( 버림 )
-                if (grid == new Vector2Int((int)Mathf.Ceil(width), (int)Mathf.Ceil(height))
-                    && currnetStartRoomCount < 1)
+                if ((grid == WorldToGrid(new Vector3(mapObjLength, 0, mapObjLength))) && currnetStartRoomCount < 1)
                 {
-                    mapObjs[y * width + x].Initialize(RoomType.Start,
-                                                      GridToWorld(eller.cells[y * width + x].grid),
-                                                      randomEnemyNum);
+                    mapCells[y * width + x].Initialize(RoomType.Start, randomEnemyNum);
                     currnetStartRoomCount++;
 
                 }
                 // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
-                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1)
-                    && currnetBossRoomCount < 1)
+                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1) && currnetBossRoomCount < 1)
                 {
-
-                    mapObjs[y * width + x].Initialize(RoomType.Boss,
-                                                      GridToWorld(eller.cells[y * width + x].grid),
-                                                      randomEnemyNum);
+                    // 현재 0,0 이 무조껀 보스방으로 잡힘
+                    mapCells[y * width + x].Initialize(RoomType.Boss, 1);
                     currnetBossRoomCount++;
+                }
+                else
+                {
+                    mapCells[y * width + x].Initialize(RoomType.Normal, randomEnemyNum);
                 }
 
                 // 방 오브젝트 위치 잡기
-                mapObjs[y * width + x].transform.position = GridToWorld(eller.cells[y * width + x].grid);
-                mapObjs[y * width + x].MakePath(eller.cells[y * width + x].pathDir);
+                mapCells[y * width + x].transform.localPosition = GridToWorld(eller.cells[y * width + x].grid);
+                mapCells[y * width + x].MakePath(eller.cells[y * width + x].pathDir);
             }
         }
 
+        int remainRoomCount = width * height - currnetBossRoomCount - currnetStartRoomCount; // normal 타입 방 개수
         // Chest 타입 방 생성
-        MapObject[] temp = new MapObject[width * height]; // 임시 배열 생성
-
-        for(int i = 0; i < width * height; i++)
+        MapObject[] temp = new MapObject[remainRoomCount]; // 임시 배열 생성
+        
+        for(int i = 0, tempIndex = 0; i < width * height; i++)
         {
-            temp[i] = mapObjs[i];
+            if (mapCells[i].Type == RoomType.Normal) // 특정 타입이 존재하는 방이면 무시
+            {
+                temp[tempIndex] = mapCells[i];
+                tempIndex++;
+            }
         }
-
+        
         Util<MapObject> util = new Util<MapObject>();
         temp = util.Shuffle(temp);  // 배열 섞기
-
+        
         // 섞은 배열 중 배열의 0번째부터 maxChestRoomCount - 1번째 방을 chest type으로 설정
         for (int i = 0; i < maxChestRoomCount; i++)
         {
-            int index = WorldToIndex(temp[i].transform.position);
-
-            mapObjs[index].Initialize(RoomType.Chest,
-                                      mapObjs[index].transform.position,
-                                      0);
+            int index = WorldToIndex(temp[i].transform.localPosition);
+        
+            mapCells[index].Initialize(RoomType.Chest, 0);        
             currentChestRoomCount++;
         }
 
@@ -174,11 +175,11 @@ public class MapGenerator : MonoBehaviour
             return;
 
         // 배열 제거
-        for(int i = 0; i < mapObjs.Length; i++)
+        for(int i = 0; i < mapCells.Length; i++)
         {
-            if(mapObjs[i] != null)
+            if(mapCells[i] != null)
             {
-                mapObjs[i] = null;
+                mapCells[i] = null;
             }
         }
 
@@ -196,7 +197,25 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public void SpawnObjets()
     {
-
+        for(int i = 0; i < width * height; i++)
+        {
+            Vector3 pos = mapCells[i].transform.localPosition + new Vector3(mapObjLength * 0.5f, 0, mapObjLength * 0.5f);
+            switch(mapCells[i].Type)
+            {
+                case RoomType.Start:
+                    GameManager.Instance.SpawnPlayer(pos);
+                    break;
+                case RoomType.Chest:
+                    Factory.Instance.SpawnChest(pos, Quaternion.identity);
+                    break;
+                case RoomType.Boss:
+                    Factory.Instance.SpawnEnemyWarrior(pos, Quaternion.identity);
+                    break;
+                case RoomType.Normal:
+                    mapCells[i].SpawnEnemy(pos);
+                    break;
+            }
+        }
     }
 
     // 좌표 변환 ============================================================================
@@ -216,7 +235,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     Vector2Int WorldToGrid(Vector3 position)
     {
-        int x = (int)position.x % mapObjLength;
+        int x = (int)position.x / mapObjLength;
         int y = (int)position.z / mapObjLength;
 
         return new Vector2Int(x, y);
@@ -254,17 +273,17 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                if (mapObjs[y * width + x].Type == RoomType.Boss)
+                if (mapCells[y * width + x].Type == RoomType.Boss)
                 {
                     currnetNormalRoomCount--;
                 }
 
-                if (mapObjs[y * width + x].Type == RoomType.Start)
+                if (mapCells[y * width + x].Type == RoomType.Start)
                 {
                     currnetNormalRoomCount--;
                 }
 
-                if(mapObjs[y * width + x].Type == RoomType.Chest)
+                if(mapCells[y * width + x].Type == RoomType.Chest)
                 {
                     currnetNormalRoomCount--;
                 }                

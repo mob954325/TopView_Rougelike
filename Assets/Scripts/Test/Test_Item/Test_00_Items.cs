@@ -13,7 +13,7 @@ public class Test_00_Items : TestBase
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         target = transform.GetChild(0);
-        Factory.Instance.GetItem(code, target.position);
+        Factory.Instance.SpawnItem(code, target.position, Quaternion.identity);
     }
 }
 #endif

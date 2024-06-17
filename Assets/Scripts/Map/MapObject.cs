@@ -22,9 +22,6 @@ public enum RoomType
 
 public class MapObject : MonoBehaviour
 {
-    int index = 0;
-    public int Index => index;
-
     /// <summary>
     /// 해당 방 타입
     /// </summary>
@@ -44,8 +41,6 @@ public class MapObject : MonoBehaviour
     /// 입구 오브젝트들 (상하좌우)
     /// </summary>
     public GameObject[] entrance;
-
-    Vector3 worldPosition = Vector3.zero;
 
     /// <summary>
     /// 해당 방 적 개수
@@ -80,11 +75,10 @@ public class MapObject : MonoBehaviour
     /// <param name="roomType">방 타입</param>
     /// <param name="pathDir">뚫린 방향</param>
     /// <param name="enemyCount">스폰할 적 숫자</param>
-    public void Initialize(RoomType roomType, Vector3 worldPosition, int enemyCount = 0)
+    public void Initialize(RoomType roomType, int enemyCount = 0)
     {
         type = roomType;
         this.enemyCount = enemyCount;
-        this.worldPosition = worldPosition;
 
         // 개수 만큼 적 생성
     }
@@ -125,14 +119,15 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 방에서 적 스폰
     /// </summary>
-    public void SpawnEnemy()
+    /// <param name="cellPos">스폰 할 위치(셀 위치)</param>
+    public void SpawnEnemy(Vector3 cellPos)
     {
         for(int i = 0; i < enemyCount; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(1f, 3f),
                                                 0,
                                                 UnityEngine.Random.Range(1f, 3f));
-            Factory.Instance.GetEnemy(spawnPosition);
+            Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity);
         }    
     }
 

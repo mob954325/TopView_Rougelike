@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class ProjectileBase : MonoBehaviour
+public class ProjectileBase : PoolObject
 {
     Rigidbody rigid;
     Collider coll;
@@ -36,7 +36,7 @@ public class ProjectileBase : MonoBehaviour
 
     void OnEnable()
     {
-        Destroy(this.gameObject, 5f); // 임시 함수
+        DisableObject(5f);
     }
 
     void Start()
@@ -59,7 +59,7 @@ public class ProjectileBase : MonoBehaviour
         }
 
         Destroy(obj, particle.time + 1f);    // 이펙트 오브젝트 제거 예약
-        Destroy(this.gameObject); // 현재 투사체 제거
+        gameObject.SetActive(false);
     }
 
     /// <summary>

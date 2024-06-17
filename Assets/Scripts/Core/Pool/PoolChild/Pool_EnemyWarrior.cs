@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool_Enemy : Pool<EnemyBase>
+public class Pool_EnemyWarrior : Pool<EnemyBase>
 {
+
 }

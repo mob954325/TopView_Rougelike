@@ -6,10 +6,16 @@ using UnityEngine.InputSystem;
 public class Test_09_SpawnObjects : Test_08_GenerateMap
 {
     Transform target;
+
     protected override void OnTest2(InputAction.CallbackContext context)
     {
         target = transform.GetChild(0);
-        Factory.Instance.GetChest(target.position);
-        Factory.Instance.GetItem(ItemCodes.Key, target.position);
+        Factory.Instance.SpawnChest(target.position, Quaternion.identity);
+        Factory.Instance.SpawnItem(ItemCodes.Key, target.position, Quaternion.identity);
+    }
+
+    protected override void OnTest3(InputAction.CallbackContext context)
+    {
+        generator.SpawnObjets();
     }
 }

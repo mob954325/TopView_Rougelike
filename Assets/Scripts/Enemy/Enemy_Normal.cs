@@ -186,7 +186,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
             if (currnetWeapon != null)
             {
                 currnetWeapon.CastingSpell(target.transform.position);
-                Debug.Log(target.transform.position);
+                //Debug.Log(target.transform.position);
             }
         }
         else

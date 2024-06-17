@@ -15,7 +15,7 @@ public class Test_03_Key : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        Factory.Instance.GetItem(ItemCodes.Key, target.position);
+        Factory.Instance.SpawnItem(ItemCodes.Key, target.position, Quaternion.identity);
     }
 }
 #endif

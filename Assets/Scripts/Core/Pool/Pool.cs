@@ -55,7 +55,7 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
 
             pool[index] = comp;  
 
-            readyQueue.Enqueue(comp);                            // 큐 삽입
+            //readyQueue.Enqueue(comp);                             // 큐 삽입
             comp.onDisable += () => readyQueue.Enqueue(comp);     // 비활성화 될 때 다시 큐에 삽입
             comp.gameObject.SetActive(false);                    // 각 오브젝트 비활성화
 
@@ -68,7 +68,7 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
     /// </summary>
     /// <param name="position">위치값</param>
     /// <param name="rotation">회전값</param>
-    public T GetObject(Vector3? position = null, Quaternion? rotation = null)
+    public T GetObject(Vector3 position, Quaternion rotation)
     {
         T result = null;
 
@@ -77,8 +77,8 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
             comp = readyQueue.Peek();    // 큐에서 오브젝트 가져오기
             readyQueue.Dequeue();       // 레디큐에서 제거
             comp.gameObject.SetActive(true);        // 오브젝트 활성화
-            comp.transform.position = position.GetValueOrDefault();
-            comp.transform.rotation = rotation.GetValueOrDefault();
+            comp.transform.position = position;
+            comp.transform.rotation = rotation;
 
             result = comp;
         }

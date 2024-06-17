@@ -14,7 +14,7 @@ public class Test_02_Bomb : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        Factory.Instance.GetBomb(target.position);
+        Factory.Instance.SpawnBomb(target.position, Quaternion.identity);
     }
 }
 #endif
