@@ -22,6 +22,9 @@ public enum RoomType
 
 public class MapObject : MonoBehaviour
 {
+    int index = 0;
+    public int Index => index;
+
     /// <summary>
     /// 해당 방 타입
     /// </summary>
@@ -42,10 +45,17 @@ public class MapObject : MonoBehaviour
     /// </summary>
     public GameObject[] entrance;
 
+    Vector3 worldPosition = Vector3.zero;
+
     /// <summary>
     /// 해당 방 적 개수
     /// </summary>
     [SerializeField]int enemyCount = 0;
+
+    /// <summary>
+    /// 적 스폰 범위
+    /// </summary>
+    float maxSpawnRange = 3f;
 
     /// <summary>
     /// 해당 스테이지 클리어 여부
@@ -70,10 +80,11 @@ public class MapObject : MonoBehaviour
     /// <param name="roomType">방 타입</param>
     /// <param name="pathDir">뚫린 방향</param>
     /// <param name="enemyCount">스폰할 적 숫자</param>
-    public void Initialize(RoomType roomType, Direction pathDir, int enemyCount)
+    public void Initialize(RoomType roomType, Vector3 worldPosition, int enemyCount = 0)
     {
         type = roomType;
-        MakePath(pathDir);
+        this.enemyCount = enemyCount;
+        this.worldPosition = worldPosition;
 
         // 개수 만큼 적 생성
     }
@@ -82,7 +93,7 @@ public class MapObject : MonoBehaviour
     /// 셀의 길을 뚫는 함수
     /// </summary>
     /// <param name="dir">방향 값</param>
-    void MakePath(Direction dir)
+    public void MakePath(Direction dir)
     {
         direction = dir;
 
@@ -103,9 +114,35 @@ public class MapObject : MonoBehaviour
         }
     }
     
-    // 파괴 가능한 벽으로 막기
-    // 적 생성
-    // 클리어 여부 ( 일반 보스 )
+    /// <summary>
+    /// 파괴 가능한 벽 생성
+    /// </summary>
+    public void PlaceBreakableWall()
+    {
+
+    }
+
+    /// <summary>
+    /// 방에서 적 스폰
+    /// </summary>
+    public void SpawnEnemy()
+    {
+        for(int i = 0; i < enemyCount; i++)
+        {
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(1f, 3f),
+                                                0,
+                                                UnityEngine.Random.Range(1f, 3f));
+            Factory.Instance.GetEnemy(spawnPosition);
+        }    
+    }
+
+    /// <summary>
+    /// 클리어 설정
+    /// </summary>
+    public void SetClear()
+    {
+        isClear = true;
+    }
 
 #if UNITY_EDITOR
     public void Test_SetPath(Direction dir)

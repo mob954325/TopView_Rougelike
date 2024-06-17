@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 1664489989}
   - component: {fileID: 1664489990}
   m_Layer: 0
-  m_Name: Test_08_GnerateMap
+  m_Name: Test_09_SpawnObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

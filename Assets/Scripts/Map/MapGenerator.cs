@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -75,6 +77,7 @@ public class MapGenerator : MonoBehaviour
         this.height = height;
 
         mapObjs = new MapObject[width * height];
+
         GenerateMap();
     }
 
@@ -90,9 +93,10 @@ public class MapGenerator : MonoBehaviour
 
         DeleteMap();
 
-        Ellers eller = new Ellers(width, height);
+        Ellers eller = new Ellers(width, height); // 맵 알고리즘 실행
 
-        for(int y = 0; y < height; y++)
+        // 맵 생성 시작
+        for (int y = 0; y < height; y++)
         {
             for(int x = 0; x < width; x++)
             {
@@ -113,53 +117,49 @@ public class MapGenerator : MonoBehaviour
                     && currnetStartRoomCount < 1)
                 {
                     mapObjs[y * width + x].Initialize(RoomType.Start,
-                                                      eller.cells[y * width + x].pathDir,
+                                                      GridToWorld(eller.cells[y * width + x].grid),
                                                       randomEnemyNum);
                     currnetStartRoomCount++;
 
                 }
+                // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
                 else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1)
                     && currnetBossRoomCount < 1)
                 {
-                    // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
-                    // y == 0,  y == height - 1, x == 0, x == width - 1
+
                     mapObjs[y * width + x].Initialize(RoomType.Boss,
-                                                      eller.cells[y * width + x].pathDir,
+                                                      GridToWorld(eller.cells[y * width + x].grid),
                                                       randomEnemyNum);
                     currnetBossRoomCount++;
                 }
 
                 // 방 오브젝트 위치 잡기
                 mapObjs[y * width + x].transform.position = GridToWorld(eller.cells[y * width + x].grid);
+                mapObjs[y * width + x].MakePath(eller.cells[y * width + x].pathDir);
             }
         }
 
-        // 보물 방 설정
-        do
+        // Chest 타입 방 생성
+        MapObject[] temp = new MapObject[width * height]; // 임시 배열 생성
+
+        for(int i = 0; i < width * height; i++)
         {
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    if (mapObjs[y * width + x].Type == RoomType.Normal) // 방이 노말인 방만 변경
-                    {
-                        if (currentChestRoomCount > maxChestRoomCount - 1) break; // esc do-while when chestroomcount same maxcount
+            temp[i] = mapObjs[i];
+        }
 
-                        // 상자방 랜덤
-                        float rand = Random.value;
+        Util<MapObject> util = new Util<MapObject>();
+        temp = util.Shuffle(temp);  // 배열 섞기
 
-                        if (rand > 0.5f) // 50% 랜덤 생성
-                        {
-                            mapObjs[y * width + x].Initialize(RoomType.Chest,
-                                                              eller.cells[y * width + x].pathDir,
-                                                              0);
+        // 섞은 배열 중 배열의 0번째부터 maxChestRoomCount - 1번째 방을 chest type으로 설정
+        for (int i = 0; i < maxChestRoomCount; i++)
+        {
+            int index = WorldToIndex(temp[i].transform.position);
 
-                            currentChestRoomCount++;
-                        }
-                    }
-                }
-            }
-        }while(currentChestRoomCount < maxChestRoomCount + 1);
+            mapObjs[index].Initialize(RoomType.Chest,
+                                      mapObjs[index].transform.position,
+                                      0);
+            currentChestRoomCount++;
+        }
 
         ShowRoomTypeCount();
         isGenerated = true;
@@ -187,6 +187,16 @@ public class MapGenerator : MonoBehaviour
         {
             Destroy(transform.GetChild(i).gameObject);
         }
+    }
+
+    // 오브젝트 생성 함수 ====================================================================
+
+    /// <summary>
+    /// 맵에 오브젝트 스폰 하는 함수
+    /// </summary>
+    public void SpawnObjets()
+    {
+
     }
 
     // 좌표 변환 ============================================================================
@@ -219,7 +229,12 @@ public class MapGenerator : MonoBehaviour
     /// <returns>인덱스 값</returns>
     int GridToIndex(Vector2Int grid)
     {
-        return grid.y * grid.x + grid.x;
+        return grid.y * width + grid.x;
+    }
+
+    int WorldToIndex(Vector3 position)
+    {
+        return GridToIndex(WorldToGrid(position));
     }
 
     /// <summary>
