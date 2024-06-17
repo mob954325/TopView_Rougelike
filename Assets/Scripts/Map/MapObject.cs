@@ -95,4 +95,19 @@ public class MapObject : MonoBehaviour
             mask <<= 1; // 왼쪽으로 한칸 옮김
         }
     }
+    
+    /// <summary>
+    /// 방타입에 따라 방 세팅하는 함수
+    /// </summary>
+    void SetByRoomType()
+    {
+
+    }
+
+#if UNITY_EDITOR
+    public void Test_SetPath(Direction dir)
+    {
+        MakePath(dir);
+    }
+#endif
 }

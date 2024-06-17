@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Test_07_Cell : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        cell.MakePath(direction);
+        cell.Test_SetPath(direction);
     }
 }
+#endif

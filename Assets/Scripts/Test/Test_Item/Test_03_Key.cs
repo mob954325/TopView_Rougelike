@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,3 +18,4 @@ public class Test_03_Key : TestBase
         Factory.Instance.GetItem(ItemCodes.Key, target.position);
     }
 }
+#endif

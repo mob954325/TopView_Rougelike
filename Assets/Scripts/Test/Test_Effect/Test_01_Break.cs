@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,3 +14,4 @@ public class Test_01_Break : TestBase
         _break.OnBreak(transform.GetChild(0));
     }
 }
+#endif
