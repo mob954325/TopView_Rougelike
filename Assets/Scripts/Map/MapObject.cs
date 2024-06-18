@@ -38,9 +38,14 @@ public class MapObject : MonoBehaviour
     [SerializeField]Direction direction = Direction.NONE;
 
     /// <summary>
-    /// 입구 오브젝트들 (상하좌우)
+    /// 연결된 방향의 벽 오브젝트들 (상하좌우)
     /// </summary>
-    public GameObject[] entrance;
+    public GameObject[] entranceWalls;
+
+    /// <summary>
+    /// 연결된 방향의 게이트 오브젝트들 (상하좌우)
+    /// </summary>
+    public GameObject[] entanceGates;
 
     /// <summary>
     /// 해당 방 적 개수
@@ -60,12 +65,16 @@ public class MapObject : MonoBehaviour
     private void Awake()
     {
         Transform child;
-        entrance = new GameObject[4];
+        entranceWalls = new GameObject[4];
+        entanceGates = new GameObject[4];
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             child = transform.GetChild(i).GetChild(2);
-            entrance[i] = child.gameObject;
+            entanceGates[i] = child.GetChild(0).gameObject;
+            entanceGates[i].SetActive(false);
+
+            entranceWalls[i] = child.GetChild(1).gameObject;
         }
     }
 
@@ -97,11 +106,12 @@ public class MapObject : MonoBehaviour
             int result = (int)dir & mask;
             if(result == mask)
             {
-                entrance[i].SetActive(false);
+                entanceGates[i].SetActive(true);
+                entranceWalls[i].SetActive(false);
             }
             else
             {
-                entrance[i].SetActive(true);
+                entranceWalls[i].SetActive(true);
             }
 
             mask <<= 1; // 왼쪽으로 한칸 옮김
