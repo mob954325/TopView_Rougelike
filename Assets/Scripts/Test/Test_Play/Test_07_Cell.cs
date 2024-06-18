@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Test_07_Cell : TestBase
 {
-    public MapObject cell;
+    public RoomObject cell;
 
     [Header("Cell 정보")]
     public Direction direction;

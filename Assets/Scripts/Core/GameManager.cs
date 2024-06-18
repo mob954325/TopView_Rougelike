@@ -10,14 +10,25 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public Player player;
 
+    /// <summary>
+    /// 플레이어 프리팹
+    /// </summary>
     public GameObject playerPrefab;
 
+    /// <summary>
+    /// 플레이어가 스폰되었는지 확인하는 변수 
+    /// </summary>
     public bool isPlayerSpanwed = false;
 
-    protected override void PreInitialize()
-    {
+    /// <summary>
+    /// 게임 시작시 호출되는 델리게이트
+    /// </summary>
+    public Action onGameStart;
 
-    }
+    /// <summary>
+    /// 게임 종료시 호출되는 델리게이트
+    /// </summary>
+    public Action onGameEnd;
 
     /// <summary>
     /// 플레이어 스폰 함수

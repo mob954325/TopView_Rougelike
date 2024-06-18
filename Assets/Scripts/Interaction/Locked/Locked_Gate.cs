@@ -1,10 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Locked_Gate : LockedObject
 {
+    Collider coll;
+
     int HashToClose = Animator.StringToHash("Close");
+
+    /// <summary>
+    /// 방을 통과 할 때 호출되는 델리게이트
+    /// </summary>
+    public Action onPassDoor;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        coll = GetComponent<Collider>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 
     protected override void BeforeUse()
     {
@@ -23,6 +42,7 @@ public class Locked_Gate : LockedObject
     {
         SetIsOpen(true);
         animator.SetTrigger(HashToOpen);
+        coll.enabled = true;
     }
 
     /// <summary>
@@ -31,5 +51,6 @@ public class Locked_Gate : LockedObject
     public void ForcedClose()
     {
         animator.SetTrigger(HashToClose);
+        coll.enabled = false;
     }
 }

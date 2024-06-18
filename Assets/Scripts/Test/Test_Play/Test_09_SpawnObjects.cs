@@ -7,6 +7,8 @@ public class Test_09_SpawnObjects : Test_08_GenerateMap
 {
     Transform target;
 
+    public int index;
+
     protected override void OnTest2(InputAction.CallbackContext context)
     {
         target = transform.GetChild(0);
@@ -16,6 +18,7 @@ public class Test_09_SpawnObjects : Test_08_GenerateMap
 
     protected override void OnTest3(InputAction.CallbackContext context)
     {
-        generator.SpawnObjets();
+        RoomObject room = generator.MapRooms[index];
+        generator.SpawnObjets(room.Type, index);
     }
 }

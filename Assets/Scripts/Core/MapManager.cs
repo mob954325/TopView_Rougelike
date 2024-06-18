@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapManager : Singleton<MapManager>
 {
-    // 맵 생성,
+    // 생성한 맵의 정보 관리
     // 맵의 각 셀들 관리
     // 각 셀별 클리어 여부
 
@@ -13,33 +13,31 @@ public class MapManager : Singleton<MapManager>
     /// </summary>
     MapGenerator generator;
 
-    [Header("맵 세팅")]
+    [Header("맵 정보")]
     /// <summary>
-    /// 맵의 셀 오브젝트
+    /// 맵의 셀 오브젝트들
     /// </summary>
-    public GameObject cellObject;
-
-    [Space(10f)]
-    /// <summary>
-    /// 맵 가로 길이 (개수)
-    /// </summary>
-    [Tooltip("가로 오브젝트 개수")]
-    public int width;
-
-    /// <summary>
-    /// 맵 세로 길이 (개수)
-    /// </summary>
-    [Tooltip("세로 오브젝트 개수")]
-    public int height;
+    public RoomObject[] cellObject;
 
     protected override void PreInitialize()
     {
-        GameObject generatorObj = new GameObject();
-        generatorObj.name = $"Map";
-        generatorObj.transform.parent = transform;
+        generator = GetComponentInChildren<MapGenerator>();    
+    }
 
-        generator = generatorObj.AddComponent<MapGenerator>();
-        generator.cellObject = this.cellObject; // 셀 오브젝트 저장
-        generator.Initialize(width, height);    // 스테이지 초기화
+    /// <summary>
+    /// 방에 진입했을 때 실행하는 함수
+    /// </summary>
+    /// <param name="index">인덱스 값</param>
+    public void StartRoom(int index)
+    {
+        generator.CloseAroundDoor(index);
+    }
+
+    /// <summary>
+    /// 방에 모든 일이 끝나면 실행하는 함수 ( 전투 종료 등등 )
+    /// </summary>
+    public void EndRoom(int index)
+    {
+        generator.OpenAroundDoor(index);
     }
 }

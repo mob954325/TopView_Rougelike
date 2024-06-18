@@ -23,7 +23,7 @@ public enum RoomType
 /// <summary>
 /// 맵 오브젝트 클래스
 /// </summary>
-public class MapObject : MonoBehaviour
+public class RoomObject : MonoBehaviour
 {
     /// <summary>
     /// 해당 방 인덱스
@@ -33,7 +33,7 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 방 인덱스 접근 프로퍼티
     /// </summary>
-    int RoomIndex => roomIndex;
+    public int RoomIndex => roomIndex;
 
     /// <summary>
     /// 해당 방 타입
@@ -53,7 +53,7 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 뚫려있는 방향 확인용 프로퍼티
     /// </summary>
-    public Direction Direction => Direction;
+    public Direction Direction => direction;
 
     /// <summary>
     /// 연결된 방향의 벽 오브젝트들 (상하좌우)
@@ -64,6 +64,11 @@ public class MapObject : MonoBehaviour
     /// 연결된 방향의 게이트 오브젝트들 (상하좌우)
     /// </summary>
     public Locked_Gate[] entranceGates;
+
+    /// <summary>
+    /// 방의 오브젝트들 저장 배열
+    /// </summary>
+    public GameObject[] roomObjects;
 
     /// <summary>
     /// 해당 방 적 개수
@@ -107,6 +112,15 @@ public class MapObject : MonoBehaviour
         type = roomType;
         this.enemyCount = enemyCount;
         this.roomIndex = indexNum;
+
+        if (roomType == RoomType.Normal || roomType == RoomType.Boss)
+        {
+            roomObjects = new GameObject[enemyCount];   // 적 오브젝트들 저장
+        }
+        else
+        {
+            roomObjects = new GameObject[1];            // 상자, 플레이어 등등 저장
+        }
     }
 
     /// <summary>
@@ -149,13 +163,14 @@ public class MapObject : MonoBehaviour
     /// <param name="cellPos">스폰 할 위치(셀 위치)</param>
     public void SpawnEnemy(Vector3 cellPos)
     {
-        for(int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(2f, maxSpawnRange),
                                                 0,
                                                 UnityEngine.Random.Range(2f, maxSpawnRange));
 
-            Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity); // 적 생성
+            GameObject obj = Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity); // 적 생성
+            roomObjects[i] = obj;
         }    
     }
 
@@ -221,16 +236,16 @@ public class MapObject : MonoBehaviour
     {
         bool result = false;
 
-        int mask = (int)(Direction.DOWN | Direction.UP | Direction.RIGHT | Direction.LEFT); // 모든 방향값 , 1111
+        int mask = (int)Direction; // 모든 방향값 , 1111
         int maskedNum = mask & (int)dir;    // 비교 : dir값의 자리가 1이면 존재 0이면 존재하지않음
-       
-        if(maskedNum == 0) // 0이다 == 해당 방향 비트가 0이다.
-        {
-            Debug.LogWarning($"{roomIndex}번의 방에 {dir}방향 길이 존재하지 않습니다.");
-        }
-        else // 존재함
+
+        if(maskedNum == (int)dir) // 값이 같다 == 해당 방향이 존재한다
         {
             result = true;
+        }
+        else // 존재하지 않는다.
+        {
+            Debug.LogWarning($"{roomIndex}번의 방에 {dir}방향 길이 존재하지 않습니다.");
         }
 
         return result;
