@@ -8,14 +8,14 @@ using UnityEngine;
 /// </summary>
 public class LockedObject : PoolObject, IUseable
 {
-    Animator animator;
+    protected Animator animator;
 
     /// <summary>
     /// 열었는지 확인하는 변수
     /// </summary>
     bool isOpen = false;
 
-    int HashToOpen = Animator.StringToHash("Open");
+    protected int HashToOpen = Animator.StringToHash("Open");
 
     protected virtual void Awake()
     {
@@ -57,5 +57,14 @@ public class LockedObject : PoolObject, IUseable
     protected virtual void AfterOpen()
     {
 
+    }
+    
+    /// <summary>
+    /// isOpen 변수 설정하는 함수
+    /// </summary>
+    /// <param name="value">true면 열림, false면 닫힘</param>
+    protected void SetIsOpen(bool value)
+    {
+        isOpen = value;
     }
 }

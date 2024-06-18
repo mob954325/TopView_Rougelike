@@ -23,6 +23,16 @@ public enum RoomType
 public class MapObject : MonoBehaviour
 {
     /// <summary>
+    /// 해당 방 인덱스
+    /// </summary>
+    int roomIndex;
+
+    /// <summary>
+    /// 방 인덱스 접근 프로퍼티
+    /// </summary>
+    int RoomIndex => roomIndex;
+
+    /// <summary>
     /// 해당 방 타입
     /// </summary>
     [SerializeField]RoomType type = RoomType.Normal;
@@ -38,6 +48,11 @@ public class MapObject : MonoBehaviour
     [SerializeField]Direction direction = Direction.NONE;
 
     /// <summary>
+    /// 뚫려있는 방향 확인용 프로퍼티
+    /// </summary>
+    public Direction Direction => Direction;
+
+    /// <summary>
     /// 연결된 방향의 벽 오브젝트들 (상하좌우)
     /// </summary>
     public GameObject[] entranceWalls;
@@ -45,7 +60,7 @@ public class MapObject : MonoBehaviour
     /// <summary>
     /// 연결된 방향의 게이트 오브젝트들 (상하좌우)
     /// </summary>
-    public GameObject[] entanceGates;
+    public Locked_Gate[] entranceGates;
 
     /// <summary>
     /// 해당 방 적 개수
@@ -66,13 +81,13 @@ public class MapObject : MonoBehaviour
     {
         Transform child;
         entranceWalls = new GameObject[4];
-        entanceGates = new GameObject[4];
+        entranceGates = new Locked_Gate[4];
 
         for (int i = 0; i < 4; i++)
         {
             child = transform.GetChild(i).GetChild(2);
-            entanceGates[i] = child.GetChild(0).gameObject;
-            entanceGates[i].SetActive(false);
+            entranceGates[i] = child.GetChild(0).GetComponent<Locked_Gate>();
+            entranceGates[i].gameObject.SetActive(false);
 
             entranceWalls[i] = child.GetChild(1).gameObject;
         }
@@ -82,14 +97,13 @@ public class MapObject : MonoBehaviour
     /// 맵 오브젝트 초기화 함수
     /// </summary>
     /// <param name="roomType">방 타입</param>
-    /// <param name="pathDir">뚫린 방향</param>
     /// <param name="enemyCount">스폰할 적 숫자</param>
-    public void Initialize(RoomType roomType, int enemyCount = 0)
+    /// <param name="indexNum">방 인덱스 번호</param>
+    public void Initialize(RoomType roomType, int enemyCount = 0, int indexNum = 9999)
     {
         type = roomType;
         this.enemyCount = enemyCount;
-
-        // 개수 만큼 적 생성
+        this.roomIndex = indexNum;
     }
 
     /// <summary>
@@ -106,7 +120,7 @@ public class MapObject : MonoBehaviour
             int result = (int)dir & mask;
             if(result == mask)
             {
-                entanceGates[i].SetActive(true);
+                entranceGates[i].gameObject.SetActive(true);
                 entranceWalls[i].SetActive(false);
             }
             else
@@ -142,11 +156,52 @@ public class MapObject : MonoBehaviour
     }
 
     /// <summary>
-    /// 클리어 설정
+    /// 특정 방향의 문을 여는 함수
     /// </summary>
-    public void SetClear()
+    /// <param name="dir">방향 값</param>
+    public void OpenDoor(Direction dir)
     {
-        isClear = true;
+        if (!IsVaildDirection(dir))
+            return;
+
+        switch (dir)
+        {
+            case Direction.UP:
+                entranceGates[0].ForcedOpen();
+                break;
+            case Direction.DOWN:
+                entranceGates[1].ForcedOpen();
+                break;
+            case Direction.LEFT:
+                entranceGates[2].ForcedOpen();
+                break;
+            case Direction.RIGHT:
+                entranceGates[3].ForcedOpen();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 존재하는 방향인지 확인하는 함수
+    /// </summary>
+    /// <returns>존재하면 true 아니면 false</returns>
+    public bool IsVaildDirection(Direction dir)
+    {
+        bool result = false;
+
+        int mask = (int)(Direction.DOWN | Direction.UP | Direction.RIGHT | Direction.LEFT); // 모든 방향값 , 1111
+        int maskedNum = mask & (int)dir;    // 비교 : dir값의 자리가 1이면 존재 0이면 존재하지않음
+       
+        if(maskedNum == 0) // 0이다 == 해당 방향 비트가 0이다.
+        {
+            Debug.LogWarning($"{roomIndex}번의 방에 {dir}방향 길이 존재하지 않습니다.");
+        }
+        else // 존재함
+        {
+            result = true;
+        }
+
+        return result;
     }
 
 #if UNITY_EDITOR
