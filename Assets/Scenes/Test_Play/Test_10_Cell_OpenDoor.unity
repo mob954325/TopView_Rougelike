@@ -745,7 +745,7 @@ MonoBehaviour:
   mapGenerator: {fileID: 645647988}
   width: 3
   height: 3
-  dir: 0
+  dir: 1
   x: 0
   y: 0
 --- !u!1001 &1869702510
