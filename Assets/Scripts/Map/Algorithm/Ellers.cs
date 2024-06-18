@@ -53,6 +53,9 @@ public class Ellers
     /// </summary>
     public Cell[] cells;
 
+    /// <summary>
+    /// 셀 고유 번호 (알고리즘용)
+    /// </summary>
     int setNum = 1;
 
     /// <summary>
@@ -215,8 +218,6 @@ public class Ellers
         target_cell.pathDir = target_cell.pathDir |= Direction.DOWN;
     }
 
-
-
     /// <summary>
     /// 반대 방향값을 반환하는 함수
     /// </summary>
@@ -245,7 +246,6 @@ public class Ellers
 
         return result;
     }
-
 
     /// <summary>
     /// 존재하는 위치인지 확인하는 함수

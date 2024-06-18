@@ -16,10 +16,14 @@ public class GameManager : Singleton<GameManager>
 
     protected override void PreInitialize()
     {
-        //player = FindAnyObjectByType<Player>();
-        //player = playerPrefab.GetComponent<Player>();
+
     }
 
+    /// <summary>
+    /// 플레이어 스폰 함수
+    /// </summary>
+    /// <param name="position">스폰 위치 값</param>
+    /// <returns>스폰 성공하면 true 아니면 false</returns>
     public bool SpawnPlayer(Vector3 position)
     {
         bool result = false;

@@ -20,6 +20,9 @@ public enum RoomType
     Normal = 0, Chest, Start ,Boss
 }
 
+/// <summary>
+/// 맵 오브젝트 클래스
+/// </summary>
 public class MapObject : MonoBehaviour
 {
     /// <summary>
@@ -148,10 +151,11 @@ public class MapObject : MonoBehaviour
     {
         for(int i = 0; i < enemyCount; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(1f, 3f),
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(2f, maxSpawnRange),
                                                 0,
-                                                UnityEngine.Random.Range(1f, 3f));
-            Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity);
+                                                UnityEngine.Random.Range(2f, maxSpawnRange));
+
+            Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity); // 적 생성
         }    
     }
 

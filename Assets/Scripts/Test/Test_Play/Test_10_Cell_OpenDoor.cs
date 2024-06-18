@@ -30,7 +30,7 @@ public class Test_10_Cell_OpenDoor : TestBase
 
     protected override void OnTest2(InputAction.CallbackContext context)
     {
-        if (x >= mapGenerator.width || y >= mapGenerator.height)
+        if (x >= width || y >= height)
         {
             Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
             return;
@@ -47,7 +47,7 @@ public class Test_10_Cell_OpenDoor : TestBase
 
     protected override void OnTest3(InputAction.CallbackContext context)
     {
-        if (x >= mapGenerator.width || y >= mapGenerator.height)
+        if (x >= width || y >= height)
         {
             Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
             return;

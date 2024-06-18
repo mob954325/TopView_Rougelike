@@ -16,12 +16,12 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// 넓이 
     /// </summary>
-    public int width;
+    int width;
 
     /// <summary>
     /// 높이
     /// </summary>
-    public int height;
+    int height;
 
     /// <summary>
     /// 셀 오브젝트
@@ -89,7 +89,6 @@ public class MapGenerator : MonoBehaviour
         mapCells = new MapObject[width * height];
 
         GenerateMap();
-        OnGameStart();
     }
 
     /// <summary>
@@ -239,6 +238,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public void OnGameStart()
     {
+        SpawnObjets();
     }
 
 
@@ -248,7 +248,16 @@ public class MapGenerator : MonoBehaviour
     /// <param name="grid"></param>
     public void CloseAroundDoor(Vector2Int grid)
     {
+        MapObject obj = mapCells[GridToIndex(grid)];    // 시작 방
 
+        for (int i = 0; i < typeof(Direction).GetEnumValues().Length; i++)
+        {
+            Direction dir = (Direction)(1 << i);
+            if (obj.IsVaildDirection(dir))  // 각 방향 검사
+            {
+                obj.CloseDoor(dir);          // 있으면 문 열음
+            }
+        }
     }
 
     /// <summary>
@@ -257,8 +266,16 @@ public class MapGenerator : MonoBehaviour
     /// <param name="grid">중심 방 그리드 값</param>
     public void OpenAroundDoor(Vector2Int grid)
     {
-        // dir 확인
-        // 확인한 dir 값마다 방문 개방
+        MapObject obj = mapCells[GridToIndex(grid)];    // 시작 방
+
+        for (int i = 0; i < typeof(Direction).GetEnumValues().Length; i++)
+        {
+            Direction dir = (Direction)(1 << i);
+            if (obj.IsVaildDirection(dir))  // 각 방향 검사
+            {
+                obj.OpenDoor(dir);          // 있으면 문 열음
+            }
+        }
     }
 
     /// <summary>
@@ -378,6 +395,11 @@ public class MapGenerator : MonoBehaviour
         return grid.y * width + grid.x;
     }
 
+    /// <summary>
+    /// 월드 좌표에서 인덱스 값을 반환하는 함수
+    /// </summary>
+    /// <param name="position">월드 좌표값</param>
+    /// <returns></returns>
     int WorldToIndex(Vector3 position)
     {
         return GridToIndex(WorldToGrid(position));
@@ -388,7 +410,7 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     /// <param name="grid">그리드 값</param>
     /// <returns>해당 그리드 좌표가 존재하는 좌표면 true 아니면 false</returns>
-    bool IsVaild(Vector2Int grid)
+    bool IsVaildGrid(Vector2Int grid)
     {
         return grid.x > -1 && grid.x < width && grid.y > -1 && grid.y < height;
     }
