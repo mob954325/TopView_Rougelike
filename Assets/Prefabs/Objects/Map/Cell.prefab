@@ -156,7 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   direction: 0
-  entrance: []
+  entranceWalls: []
+  entranceGates: []
   enemyCount: 0
   isClear: 0
 --- !u!1001 &1869915463185918696
@@ -185,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
@@ -249,7 +250,7 @@ PrefabInstance:
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
@@ -315,11 +316,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5763218706237656160}
     m_Modifications:
-    - target: {fileID: 5107836923537013779, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6225775348128933228, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_Name
@@ -338,7 +334,7 @@ PrefabInstance:
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
@@ -412,7 +408,7 @@ PrefabInstance:
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}

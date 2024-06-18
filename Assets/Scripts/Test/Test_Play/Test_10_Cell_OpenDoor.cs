@@ -44,5 +44,22 @@ public class Test_10_Cell_OpenDoor : TestBase
 
         mapGenerator.OpenOnePath(new Vector2Int(x, y), dir);
     }
+
+    protected override void OnTest3(InputAction.CallbackContext context)
+    {
+        if (x >= mapGenerator.width || y >= mapGenerator.height)
+        {
+            Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
+            return;
+        }
+
+        if (dir == (Direction.UP | Direction.DOWN | Direction.LEFT | Direction.RIGHT))
+        {
+            Debug.LogWarning($"잘못된 dir, 한 반향만 설정해주세요");
+            return;
+        }
+
+        mapGenerator.CloseOnePath(new Vector2Int(x, y), dir);
+    }
 }
 #endif

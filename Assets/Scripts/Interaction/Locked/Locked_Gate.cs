@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Locked_Gate : LockedObject
 {
+    int HashToClose = Animator.StringToHash("Close");
+
     protected override void BeforeUse()
     {
         //
@@ -21,5 +23,13 @@ public class Locked_Gate : LockedObject
     {
         SetIsOpen(true);
         animator.SetTrigger(HashToOpen);
+    }
+
+    /// <summary>
+    /// 문을 닫는 함수
+    /// </summary>
+    public void ForcedClose()
+    {
+        animator.SetTrigger(HashToClose);
     }
 }

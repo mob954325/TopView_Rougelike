@@ -182,6 +182,34 @@ public class MapObject : MonoBehaviour
     }
 
     /// <summary>
+    /// 특정 방향의 문을 닫는 함수
+    /// </summary>
+    /// <param name="dir">방향 값</param>
+    public void CloseDoor(Direction dir)
+    {
+        if (!IsVaildDirection(dir))
+            return;
+
+        switch (dir)
+        {
+            case Direction.UP:
+                entranceGates[0].ForcedClose();
+                break;
+            case Direction.DOWN:
+                entranceGates[1].ForcedClose();
+                break;
+            case Direction.LEFT:
+                entranceGates[2].ForcedClose();
+                break;
+            case Direction.RIGHT:
+                entranceGates[3].ForcedClose();
+                break;
+        }
+    }
+
+
+
+    /// <summary>
     /// 존재하는 방향인지 확인하는 함수
     /// </summary>
     /// <returns>존재하면 true 아니면 false</returns>

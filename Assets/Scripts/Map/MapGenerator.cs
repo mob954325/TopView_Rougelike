@@ -303,6 +303,48 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 한 쪽 면을 닫는 함수
+    /// </summary>
+    /// <param name="grid">셀 그리드 값</param>
+    /// <param name="dir">열 방향</param>
+    public void CloseOnePath(Vector2Int grid, Direction dir)
+    {
+        MapObject obj = mapCells[GridToIndex(grid)];    // 시작 방
+        MapObject targetObj;                            // 시작 방에서의 dir방향의 방
+
+        if (obj.IsVaildDirection(dir))  // 해당 방향에 길이 있다면
+        {
+            // 4방향 별로 각 그리드 셀 찾기
+            switch (dir)
+            {
+                // targetObj는 시작방의 반대방향 문열기
+                case Direction.LEFT:
+                    targetObj = mapCells[GridToIndex(grid + Vector2Int.left)];
+                    targetObj.CloseDoor(Direction.RIGHT);
+                    break;
+                case Direction.RIGHT:
+                    targetObj = mapCells[GridToIndex(grid + Vector2Int.right)];
+                    targetObj.CloseDoor(Direction.LEFT);
+                    break;
+                case Direction.DOWN:
+                    targetObj = mapCells[GridToIndex(grid + Vector2Int.down)];
+                    targetObj.CloseDoor(Direction.UP);
+                    break;
+                case Direction.UP:
+                    targetObj = mapCells[GridToIndex(grid + Vector2Int.up)];
+                    targetObj.CloseDoor(Direction.DOWN);
+                    break;
+            }
+
+            obj.CloseDoor(dir); // 시작 방문 열기
+        }
+        else
+        {
+            Debug.LogWarning($"{mapCells[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
+        }
+    }
+
     // 좌표 변환 ============================================================================
 
     /// <summary>
