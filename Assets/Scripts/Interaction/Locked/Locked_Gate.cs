@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Locked_Gate : LockedObject
 {
-
+    protected override void BeforeUse()
+    {
+    }
 
     protected override void AfterOpen()
     {

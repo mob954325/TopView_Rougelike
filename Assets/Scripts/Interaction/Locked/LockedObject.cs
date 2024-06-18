@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,8 @@ public class LockedObject : PoolObject, IUseable
     /// </summary>
     public void OnUse(GameObject owner)
     {
+        BeforeUse();
+
         if (isOpen)
             return;
 
@@ -39,6 +42,13 @@ public class LockedObject : PoolObject, IUseable
             // 아이템 받기 또는 아이템 소환
             AfterOpen();
         }
+    }
+
+    /// <summary>
+    /// 상호작용 전 실행할 내용
+    /// </summary>
+    protected virtual void BeforeUse()
+    {
     }
 
     /// <summary>
