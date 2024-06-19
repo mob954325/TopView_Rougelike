@@ -147,6 +147,11 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// </summary>
     public float sprintSpeed = 8f;
 
+    /// <summary>
+    /// 추가 속도 ( 버프용 )
+    /// </summary>
+    public float addtionalSpeed = 0f;
+
     // Hashes ===========================================================
 
     /// <summary>
@@ -203,10 +208,10 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="isSprint">움직일 방향 값</param>
     public void Move(Vector3 moveVector, bool isSprint)
     {
-        speed = isSprint ? sprintSpeed : walkSpeed; // 달리는지 걷는지 확인하고 값 변경
+        speed = isSprint ? sprintSpeed + addtionalSpeed : walkSpeed + addtionalSpeed; // 달리는지 걷는지 확인하고 값 변경
 
         rigid.MovePosition(transform.position + Time.fixedDeltaTime * moveVector * speed);
-        animator.SetFloat(hashToSpeed, moveVector.magnitude * speed / sprintSpeed);
+        animator.SetFloat(hashToSpeed, moveVector.magnitude * ( speed - addtionalSpeed ) / sprintSpeed);
     }
 
     /// <summary>
@@ -343,8 +348,16 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="value">증가량</param>
     public void InCreaseSpeed(float value)
     {
-        speed += value;
-        sprintSpeed += value;
+        addtionalSpeed += value;
+    }
+
+    /// <summary>
+    /// 최대 체력 증가 함수
+    /// </summary>
+    /// <param name="value">증가량</param>
+    public void InCreaseMaxHealth(float value)
+    {
+        maxHealth += value;
     }
 
 

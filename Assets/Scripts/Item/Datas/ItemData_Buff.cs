@@ -16,18 +16,17 @@ public class ItemData_Buff : ItemData, IGetable
 
         if(player != null)
         {
-            //
             IBattler battler = player as IBattler;
-
-            int mask = 1;
 
             for(int i = 0; i < typeof(BuffType).GetEnumValues().Length; i++)    // 무슨 버프인지 확인
             {
-                if (((int)buffType & mask) != 1 << i)
+                int result = (int)buffType & (1 << i);
+
+                if (result != 1 << i)
                     continue;
                 
                 // 임시 증가
-                switch(i)
+                switch(result)
                 {
                     case 1:
                         battler.AttackPower += value;
@@ -35,7 +34,7 @@ public class ItemData_Buff : ItemData, IGetable
                     case 2:
                         battler.DefencePower += value;
                         break;
-                    case 3:
+                    case 4:
                         player.InCreaseSpeed(value);
                         break;
                     default: 

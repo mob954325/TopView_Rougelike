@@ -21,7 +21,6 @@ public enum ItemCodes
 [Flags]
 public enum BuffType : byte
 {
-    Debuff = 0,
     Damage = 1,
     Defence = 2,
     Speed = 4,
