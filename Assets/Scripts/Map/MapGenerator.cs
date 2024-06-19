@@ -182,12 +182,18 @@ public class MapGenerator : MonoBehaviour
                 mapRooms[index].transform.localPosition = GridToWorld(eller.cells[index].grid);
                 mapRooms[index].MakePath(eller.cells[index].pathDir);
 
+                // 각 방 별로 함수 추가
                 for(int i = 0; i < MapRooms[index].entranceGates.Length; i++)
                 {
                     if (MapRooms[index].Type == RoomType.Start) // 시작 방 제외
                         continue;
 
-                    MapRooms[index].entranceGates[i].onPassDoor += () => SpawnObjets(MapRooms[index].Type, index);
+                    MapRooms[index].entranceGates[i].onPassDoor += () =>
+                    {
+                        SpawnObjets(MapRooms[index].Type, index);   // 적 스폰
+                        CloseAroundDoor(index);                     // 문 닫기
+                        MapRooms[index].SetIsEnter(true);           // 입장 확인
+                    };
                 }
             }
         }

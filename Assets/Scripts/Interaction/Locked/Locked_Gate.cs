@@ -22,7 +22,10 @@ public class Locked_Gate : LockedObject
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.CompareTag("Player"))
+        {
+            onPassDoor?.Invoke();
+        }
     }
 
     protected override void BeforeUse()

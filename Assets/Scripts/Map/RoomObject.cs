@@ -75,15 +75,41 @@ public class RoomObject : MonoBehaviour
     /// </summary>
     [SerializeField]int enemyCount = 0;
 
+    public int EnemyCount
+    {
+        get => enemyCount;
+        set
+        {
+            enemyCount = value;
+            if(enemyCount < 1 && isRoomEnter)
+            {
+                onRoomClear?.Invoke();
+                isClear = true;
+            }
+        }
+    }
+
     /// <summary>
     /// 적 스폰 범위
     /// </summary>
     float maxSpawnRange = 3f;
 
     /// <summary>
+    /// 방에 들어왔는지 확인하는 변수
+    /// </summary>
+    bool isRoomEnter = false;
+
+    /// <summary>
     /// 해당 스테이지 클리어 여부
     /// </summary>
-    public bool isClear = false;
+    bool isClear = false;
+
+    /// <summary>
+    /// 방의 모든 적이 처리되면 호출되는 델리게이트
+    /// </summary>
+    public Action onRoomClear;
+
+    // 생명 함수 ===========================================================================================
 
     private void Awake()
     {
@@ -100,6 +126,8 @@ public class RoomObject : MonoBehaviour
             entranceWalls[i] = child.GetChild(1).gameObject;
         }
     }
+
+    // 오브젝트 설정 함수 ===========================================================================================
 
     /// <summary>
     /// 맵 오브젝트 초기화 함수
@@ -148,7 +176,9 @@ public class RoomObject : MonoBehaviour
             mask <<= 1; // 왼쪽으로 한칸 옮김
         }
     }
-    
+
+    // 스폰 관련 함수 ===========================================================================================
+
     /// <summary>
     /// 파괴 가능한 벽 생성
     /// </summary>
@@ -171,8 +201,11 @@ public class RoomObject : MonoBehaviour
 
             GameObject obj = Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity); // 적 생성
             roomObjects[i] = obj;
+            roomObjects[i].GetComponent<PoolObject>().onDisable += () => EnemyCount--;
         }    
     }
+
+    // 문 관련 함수 ===========================================================================================
 
     /// <summary>
     /// 특정 방향의 문을 여는 함수
@@ -226,7 +259,7 @@ public class RoomObject : MonoBehaviour
         }
     }
 
-
+    // 기능 함수 ===========================================================================================
 
     /// <summary>
     /// 존재하는 방향인지 확인하는 함수
@@ -251,10 +284,28 @@ public class RoomObject : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// isRoomEnter 변수 변경 함수
+    /// </summary>
+    /// <param name="value">ture or false</param>
+    /// <returns>true면 isRoomEnter 활성화 false면 비활성화</returns>
+    public bool SetIsEnter(bool value)
+    {
+        return isRoomEnter = value;
+    }
+
 #if UNITY_EDITOR
     public void Test_SetPath(Direction dir)
     {
         MakePath(dir);
+    }
+
+    public void Test_DisableAllObjects()
+    {
+        foreach(var item in roomObjects)
+        {
+            item.SetActive(false);
+        }
     }
 #endif
 }

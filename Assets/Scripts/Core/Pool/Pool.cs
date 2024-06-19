@@ -56,7 +56,7 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
             pool[index] = comp;  
 
             //readyQueue.Enqueue(comp);                             // 큐 삽입
-            comp.onDisable += () => readyQueue.Enqueue(comp);     // 비활성화 될 때 다시 큐에 삽입
+            comp.onDisable = () => readyQueue.Enqueue(comp);     // 비활성화 될 때 다시 큐에 삽입
             comp.gameObject.SetActive(false);                    // 각 오브젝트 비활성화
 
             index++;
