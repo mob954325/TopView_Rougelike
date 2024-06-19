@@ -16,6 +16,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     Animator animator;
     // 가지고 있는 아이템 정보=============================================  
 
+    [Header("플레이어 아이템 정보")]
     /// <summary>
     /// 열쇠 개수
     /// </summary>
@@ -68,11 +69,14 @@ public class Player : MonoBehaviour, IHealth, IBattler
     }
 
     // IHealth =========================================================
+
+
     /// <summary>
     /// 시작 체력
     /// </summary>
     float startHealth = 10f;
 
+    [Header("플레이어 체력 정보")]
     /// <summary>
     /// 현재 체력
     /// </summary>
@@ -101,6 +105,8 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
     // IBattler ========================================================
 
+    [Header("플레이어 전투 정보")]
+
     /// <summary>
     /// 캐릭터 현재 공격력
     /// </summary>
@@ -123,6 +129,9 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
 
     // Movement =========================================================
+
+    [Header("플레이어 이동 정보")]
+
     /// <summary>
     /// 플레이어 현재 속도
     /// </summary>
@@ -326,6 +335,16 @@ public class Player : MonoBehaviour, IHealth, IBattler
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// 속도를 증가 시키는 함수
+    /// </summary>
+    /// <param name="value">증가량</param>
+    public void InCreaseSpeed(float value)
+    {
+        speed += value;
+        sprintSpeed += value;
     }
 
 
