@@ -642,6 +642,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerPrefab: {fileID: 0}
+  isPlayerSpanwed: 0
+  playerCam: {fileID: 0}
 --- !u!4 &467734229
 Transform:
   m_ObjectHideFlags: 0

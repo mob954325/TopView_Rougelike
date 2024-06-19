@@ -8,10 +8,25 @@ public class Test_02_ObjectPooling : TestBase
 {
     Transform t;
 
+    private void Start()
+    {
+        t = transform.GetChild(0);        
+    }
+
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        t = transform.GetChild(0);
         Factory.Instance.SpawnBomb(t.position, Quaternion.identity);
+    }
+
+    protected override void OnTest2(InputAction.CallbackContext context)
+    {
+        Factory.Instance.SpawnEnemyMage(t.position, Quaternion.identity);
+        Time.timeScale = 0.3f;
+    }
+
+    protected override void OnTest3(InputAction.CallbackContext context)
+    {
+        GameManager.Instance.SpawnPlayer(t.position);
     }
 }
 #endif

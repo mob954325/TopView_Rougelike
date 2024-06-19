@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ProjectileBase : PoolObject
 {
+    GameObject owner;
+
     Rigidbody rigid;
     Collider coll;
 
@@ -17,11 +19,6 @@ public class ProjectileBase : PoolObject
     /// 맞고 난 뒤 생성될 이펙트 오브젝트
     /// </summary>
     public GameObject EffecObject;
-
-    /// <summary>
-    /// 어딘가에 부딪혔을 때 실행되는 이펙트
-    /// </summary>
-    ParticleSystem HitEffect;    // Visual Effect 로 변환 고려 ( 성능 이슈 )
 
     /// <summary>
     /// 이 투사체의 공격력
@@ -41,11 +38,14 @@ public class ProjectileBase : PoolObject
 
     void Start()
     {
-        SetDestination(targetVec);        
+        //SetDestination(targetVec);        
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject == owner)
+            return;
+
         // 이펙트 오브젝트 생성
         GameObject obj = Instantiate(EffecObject);
         obj.transform.position = transform.position;
@@ -65,8 +65,10 @@ public class ProjectileBase : PoolObject
     /// <summary>
     /// 투사체 목표 지점 설정 함수
     /// </summary>
+    /// <param name="owner">시전자</param>
     /// <param name="destinationVector">날라갈 위치값</param>
-    public void SetDestination(Vector3 destinationVector, float damage = 1f)
+    /// <param name="damage">투사체 대미지</param>
+    public void SetDestination(GameObject owner, Vector3 destinationVector, float damage = 1f)
     {
         targetVec = destinationVector;
         Vector3 dirVec = destinationVector - transform.position;

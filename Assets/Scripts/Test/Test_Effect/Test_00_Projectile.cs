@@ -16,7 +16,7 @@ public class Test_00_Projectile : TestBase
         // 오브젝트 생성 및 초기화
         GameObject obj = Instantiate(projectile).gameObject;
         obj.name = "Test";
-        obj.GetComponent<ProjectileBase>().SetDestination(goalTransform.position);
+        obj.GetComponent<ProjectileBase>().SetDestination(null, goalTransform.position);
         obj.transform.position = startTransform.position;
     }
 }
