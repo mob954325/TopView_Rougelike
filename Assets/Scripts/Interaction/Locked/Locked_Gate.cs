@@ -25,6 +25,7 @@ public class Locked_Gate : LockedObject
         if(other.CompareTag("Player"))
         {
             onPassDoor?.Invoke();
+            coll.enabled = false;
         }
     }
 

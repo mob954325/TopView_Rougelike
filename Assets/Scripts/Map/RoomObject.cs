@@ -81,7 +81,7 @@ public class RoomObject : MonoBehaviour
         set
         {
             enemyCount = value;
-            if(enemyCount < 1 && isRoomEnter)
+            if(enemyCount < 1 && isRoomEnter && !isClear)
             {
                 onRoomClear?.Invoke();
                 isClear = true;
@@ -105,7 +105,12 @@ public class RoomObject : MonoBehaviour
     bool isClear = false;
 
     /// <summary>
-    /// 방의 모든 적이 처리되면 호출되는 델리게이트
+    /// 클리어 여부 접근 프로퍼티
+    /// </summary>
+    public bool IsClear => isClear;
+
+    /// <summary>
+    /// 방의 모든 적이 처리되면 호출되는 델리게이트 ( 조건 : 적 개수 0이면 호출 )
     /// </summary>
     public Action onRoomClear;
 
@@ -138,7 +143,7 @@ public class RoomObject : MonoBehaviour
     public void Initialize(RoomType roomType, int enemyCount = 0, int indexNum = 9999)
     {
         type = roomType;
-        this.enemyCount = enemyCount;
+        this.EnemyCount = enemyCount;
         this.roomIndex = indexNum;
 
         if (roomType == RoomType.Normal || roomType == RoomType.Boss)
@@ -276,19 +281,13 @@ public class RoomObject : MonoBehaviour
         {
             result = true;
         }
-        else // 존재하지 않는다.
-        {
-            Debug.LogWarning($"{roomIndex}번의 방에 {dir}방향 길이 존재하지 않습니다.");
-        }
 
         return result;
     }
 
     /// <summary>
-    /// isRoomEnter 변수 변경 함수
+    /// isRoomEnter 값 변경 함수 
     /// </summary>
-    /// <param name="value">ture or false</param>
-    /// <returns>true면 isRoomEnter 활성화 false면 비활성화</returns>
     public bool SetIsEnter(bool value)
     {
         return isRoomEnter = value;

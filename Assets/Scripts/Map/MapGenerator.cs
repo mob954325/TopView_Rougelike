@@ -160,7 +160,7 @@ public class MapGenerator : MonoBehaviour
                 // 시작 위치 : 맵 중앙 ( 버림 )
                 if ((grid == WorldToGrid(new Vector3(mapObjLength, 0, mapObjLength))) && currnetStartRoomCount < 1)
                 {
-                    mapRooms[index].Initialize(RoomType.Start, randomEnemyNum, index);
+                    mapRooms[index].Initialize(RoomType.Start, 0, index);
                     startRoom = mapRooms[index];
 
                     currnetStartRoomCount++;
@@ -188,11 +188,31 @@ public class MapGenerator : MonoBehaviour
                     if (MapRooms[index].Type == RoomType.Start) // 시작 방 제외
                         continue;
 
-                    MapRooms[index].entranceGates[i].onPassDoor += () =>
+                    // 방 입장 설정
+                    MapRooms[index].entranceGates[i].onPassDoor = () =>
                     {
-                        SpawnObjets(MapRooms[index].Type, index);   // 적 스폰
-                        CloseAroundDoor(index);                     // 문 닫기
-                        MapRooms[index].SetIsEnter(true);           // 입장 확인
+                        if(!MapRooms[index].IsClear)
+                        {
+                            SpawnObjets(MapRooms[index].Type, index);   // 타입별 오브젝트 스폰
+                            CloseAroundDoor(index);                     // 문 닫기
+                            MapRooms[index].SetIsEnter(true);           // 입장 확인
+
+                            if (mapRooms[index].Type == RoomType.Chest) // 해당 방이 상자 방이면 즉시 클리어 
+                            {
+                                mapRooms[index].onRoomClear?.Invoke();
+                            }
+                        }
+                    };
+
+                    // 방 클리어 설정
+                    mapRooms[index].onRoomClear = () =>
+                    {
+                        OpenAroundDoor(index); // 모든 문 개방
+
+                        if (mapRooms[index].Type == RoomType.Normal) // 기본 방일 때만 스폰
+                        {
+                            SpawnRandomItems(mapRooms[index].transform.localPosition + new Vector3(mapObjLength * 0.5f, 1.2f, mapObjLength * 0.5f)); // 아이템 스폰 ( 위치 : 맵 중앙 )
+                        }
                     };
                 }
             }
@@ -280,7 +300,26 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
     }
-    // 실행 함수 ============================================================================
+
+    /// <summary>
+    /// 방 클리어하고 아이템을 랜덤으로 생성하는 함수 ( 폭탄 or 열쇠 )
+    /// </summary>
+    /// <param name="position">생성할 위치</param>
+    void SpawnRandomItems(Vector3 position)
+    {
+        float randomValue = UnityEngine.Random.value;
+
+        if (randomValue > 0.5f)
+        {
+            Factory.Instance.SpawnItem(ItemCodes.Bomb, position, Quaternion.identity);
+        }
+        else
+        {
+            Factory.Instance.SpawnItem(ItemCodes.Key, position, Quaternion.identity);
+        }
+    }
+
+    // 기능 함수 ============================================================================
 
     /// <summary>
     /// 주변 모든 문 닫기 ( 그리드 )
@@ -429,7 +468,18 @@ public class MapGenerator : MonoBehaviour
     /// <returns>월드 좌표</returns>
     Vector3 GridToWorld(Vector2Int grid)
     {
-        return new Vector3(grid.x * mapObjLength, 0, grid.y * mapObjLength);
+        return GridToWorld(grid.x, grid.y);
+    }
+
+    /// <summary>
+    /// 그리드 좌표에서 월드 좌표 반환하는 함수
+    /// </summary>
+    /// <param name="x">그리드 x 값</param>
+    /// <param name="y">그리드 y 값</param>
+    /// <returns></returns>
+    Vector3 GridToWorld(int x, int y)
+    {
+        return new Vector3(x * mapObjLength, 0, y * mapObjLength);
     }
 
     /// <summary>

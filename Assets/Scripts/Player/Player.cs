@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour, IHealth, IBattler
 {
-    public Player_InputSettings playerInput;
+    public Player_InputSettings playerInput;    
 
     Rigidbody rigid;
     Animator animator;

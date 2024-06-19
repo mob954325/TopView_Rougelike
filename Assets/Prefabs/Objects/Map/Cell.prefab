@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6902387207142382983}
   - component: {fileID: 434778267534857271}
   - component: {fileID: 7933392373283170869}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,6 @@ MonoBehaviour:
   entranceGates: []
   roomObjects: []
   enemyCount: 0
-  isClear: 0
 --- !u!1001 &1869915463185918696
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7403874306259396744}
   - component: {fileID: 6248620194845407531}
+  - component: {fileID: 3279391505265314037}
   m_Layer: 0
   m_Name: PlayerVC
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244335495964359097}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40455356, y: 0.00000002225333, z: -0.000000009844203, w: 0.9145143}
+  m_LocalRotation: {x: 0.40455112, y: 0, z: 0, w: 0.9145154}
   m_LocalPosition: {x: 3.2938771, y: 13.5, z: -9.896849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 556689518094249239}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 47.726, y: 0, z: 0}
 --- !u!114 &6248620194845407531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +73,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 556689518094249239}
+--- !u!114 &3279391505265314037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244335495964359097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: becad28c9863b8d4d9a484bf96a5baa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8283140499294075227
 GameObject:
   m_ObjectHideFlags: 0

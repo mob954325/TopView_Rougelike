@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    // 플레이어 =================================================================
     /// <summary>
     /// 게임 플레이어
     /// </summary>
@@ -21,6 +22,12 @@ public class GameManager : Singleton<GameManager>
     public bool isPlayerSpanwed = false;
 
     /// <summary>
+    /// 플래이어 카메라 스크립트
+    /// </summary>
+    public Player_Camera playerCam;
+
+    // 델리게이트 =================================================================
+    /// <summary>
     /// 게임 시작시 호출되는 델리게이트
     /// </summary>
     public Action onGameStart;
@@ -29,6 +36,11 @@ public class GameManager : Singleton<GameManager>
     /// 게임 종료시 호출되는 델리게이트
     /// </summary>
     public Action onGameEnd;
+
+    protected override void PreInitialize()
+    {
+        playerCam = GetComponentInChildren<Player_Camera>();
+    }
 
     /// <summary>
     /// 플레이어 스폰 함수
@@ -48,6 +60,10 @@ public class GameManager : Singleton<GameManager>
             player = playerObj.GetComponent<Player>();
 
             isPlayerSpanwed = true; // 스폰 확인 
+
+            // 스폰 후 설정
+            playerCam.Initialize(player); // 카메라 세팅
+
             result = true;
         }
 
