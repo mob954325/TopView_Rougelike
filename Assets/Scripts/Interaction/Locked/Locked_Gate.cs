@@ -46,7 +46,7 @@ public class Locked_Gate : LockedObject
     {
         SetIsOpen(true);
         animator.SetTrigger(HashToOpen);
-        coll.enabled = true;
+        coll.enabled = true; //
     }
 
     /// <summary>
@@ -55,6 +55,6 @@ public class Locked_Gate : LockedObject
     public void ForcedClose()
     {
         animator.SetTrigger(HashToClose);
-        coll.enabled = false;
+        coll.enabled = false; // 
     }
 }

@@ -10,11 +10,6 @@ public class Weapon_Staff : WeaponBase
     public GameObject fireBall;
 
     /// <summary>
-    /// 이 스크립트를 가지고 있는 최상위 오브젝트 (root)
-    /// </summary>
-    GameObject rootObj;
-
-    /// <summary>
     /// 투사체 높이 ( 고정값 : 8f )
     /// </summary>
     const float projectileHeight = 8f;
@@ -22,7 +17,6 @@ public class Weapon_Staff : WeaponBase
     protected override void Awake()
     {
         Owner = GetComponentInParent<IBattler>(); // 재사용 중, 수정해야함
-        rootObj = transform.root.gameObject;
     }
 
     public override void ActiveWeapon()
@@ -41,8 +35,8 @@ public class Weapon_Staff : WeaponBase
     /// <param name="targetPosition">공격할 위치</param>
     public void CastingSpell(Vector3 targetPosition)
     {
-        Vector3 spawnPosition = rootObj.transform.position + transform.up * projectileHeight;
-        GameObject obj = Factory.Instance.SpawnEnemyMage_Projectile(spawnPosition, Quaternion.identity);    // 투사체 소환
+        Vector3 spawnVector = this.gameObject.transform.position + transform.up * projectileHeight;
+        GameObject obj = Factory.Instance.SpawnEnemyMage_Projectile(spawnVector, Quaternion.identity);    // 투사체 소환
 
         // Projectile 스크립트에 접근 후 공격 시작
         ProjectileBase projectile = obj.GetComponent<ProjectileBase>();
@@ -55,7 +49,7 @@ public class Weapon_Staff : WeaponBase
 
         float totalDamage = Owner.AttackPower;  // 투사체 공격력
 
-        projectile.SetDestination(rootObj, targetPosition, totalDamage); // 투사체 목적지 설정
+        projectile.SetDestination(null, targetPosition, totalDamage); // 투사체 목적지 설정, 1번 임시 매개변수
     }
 
     protected override void OnTriggerEnter(Collider other)

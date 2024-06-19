@@ -70,8 +70,9 @@ public class ProjectileBase : PoolObject
     /// <param name="damage">투사체 대미지</param>
     public void SetDestination(GameObject owner, Vector3 destinationVector, float damage = 1f)
     {
+        this.owner = owner;
         targetVec = destinationVector;
-        Vector3 dirVec = destinationVector - transform.position;
+        Vector3 dirVec = destinationVector - transform.localPosition;
         rigid.AddForce(dirVec, ForceMode.Impulse);
         transform.LookAt(targetVec);
 

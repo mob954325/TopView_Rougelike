@@ -47,7 +47,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// mapObjs 한 면의 길이
     /// </summary>
-    const int mapObjLength = 15;
+    [SerializeField]int mapObjLength = 15;
 
     /// <summary>
     /// 생성되었는지 확인하는 변수
@@ -199,7 +199,7 @@ public class MapGenerator : MonoBehaviour
 
                             if (mapRooms[index].Type == RoomType.Chest) // 해당 방이 상자 방이면 즉시 클리어 
                             {
-                                mapRooms[index].onRoomClear?.Invoke();
+                                mapRooms[index].EnemyCount = 0;         // 즉시 클리어하게 적 개수 0으로 설정
                             }
                         }
                     };
