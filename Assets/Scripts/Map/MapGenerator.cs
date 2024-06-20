@@ -64,7 +64,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// 최대 상자방 생성 개수 (생성용)
     /// </summary>
-    [Range(1, 3)]
+    [Range(1, 5)]
     public int maxChestRoomCount = 0;
 
     /// <summary>
@@ -94,19 +94,25 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     RoomObject StartRoom => startRoom;
 
+    // 델리게이트 =============================================================================
+    
+    /// <summary>
+    /// 생성이 완료되면 실행되는 델리게이트
+    /// </summary>
+    public Action onGenerateComplete;
 
     // 생명 주기 함수  ========================================================================
 
     private void Start()
     {
-        width = mapSize;
-        height = mapSize;
-
-        Initialize(width, height);
-
-        // 플레이어 설정
-        SpawnObjets(StartRoom.Type, StartRoom.RoomIndex);   // 플레이어 스폰
-        OpenAroundDoor(StartRoom.RoomIndex, true);                // 모든 플레이어 방 개방
+       width = mapSize;
+       height = mapSize;
+       
+       Initialize(width, height);
+       
+       // 플레이어 설정
+       SpawnObjets(StartRoom.Type, StartRoom.RoomIndex);   // 플레이어 스폰
+       OpenAroundDoor(StartRoom.RoomIndex, true);                // 모든 플레이어 방 개방
     }
 
     // 맵 생성 함수 ============================================================================
@@ -124,6 +130,7 @@ public class MapGenerator : MonoBehaviour
         mapRooms = new RoomObject[width * height];
 
         GenerateMap();
+        onGenerateComplete?.Invoke();
     }
 
     /// <summary>

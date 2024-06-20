@@ -21,7 +21,6 @@ public class Test_02_ObjectPooling : TestBase
     protected override void OnTest2(InputAction.CallbackContext context)
     {
         Factory.Instance.SpawnEnemyMage(t.position, Quaternion.identity);
-        Time.timeScale = 0.3f;
     }
 
     protected override void OnTest3(InputAction.CallbackContext context)

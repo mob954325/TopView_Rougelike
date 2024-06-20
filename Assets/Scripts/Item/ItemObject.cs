@@ -40,11 +40,12 @@ public class ItemObject : PoolObject
 
     private void OnEnable()
     {
-
+        Initialize(ItemDataManager.Instance.itemDatas[(int)ItemCodes.Dummy]);  // 활성화 되었을 때 더미로 초기화 ( null 방지 )
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         playerObj = null;
         isNear = false;
     }

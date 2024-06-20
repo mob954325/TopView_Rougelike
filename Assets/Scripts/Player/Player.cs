@@ -98,7 +98,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 최대 체력
     /// </summary>
-    float maxHealth;
+    [SerializeField]float maxHealth;
     public float MaxHealth => maxHealth;
 
     public Action onDie { get; set; }

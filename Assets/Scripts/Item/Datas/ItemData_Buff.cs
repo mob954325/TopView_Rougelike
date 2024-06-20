@@ -7,8 +7,18 @@ public class ItemData_Buff : ItemData, IGetable
 {
     public BuffType buffType;
 
-    [Tooltip("능력치 증가량")]
-    public float value;
+    [Header("능력치 증가량")]
+    [Tooltip("공격력 증가량")]
+    public float attackPowerIncrease;
+
+    [Tooltip("방어력 증가량")]
+    public float defenceIncrease;
+
+    [Tooltip("속도 증가량")]
+    public float speedIncrease;
+
+    [Tooltip("체력 증가량")]
+    public float healthIncrease;
 
     public void OnGet(GameObject owner)
     {
@@ -16,32 +26,48 @@ public class ItemData_Buff : ItemData, IGetable
 
         if(player != null)
         {
-            IBattler battler = player as IBattler;
-
-            for(int i = 0; i < typeof(BuffType).GetEnumValues().Length; i++)    // 무슨 버프인지 확인
+            for(int i = 0; i < typeof(BuffType).GetEnumValues().Length; i++)    
             {
-                int result = (int)buffType & (1 << i);
+                int result = (int)buffType & (1 << i); // 무슨 버프인지 확인
 
                 if (result != 1 << i)
                     continue;
-                
-                // 임시 증가
-                switch(result)
-                {
-                    case 1:
-                        battler.AttackPower += value;
-                        break;
-                    case 2:
-                        battler.DefencePower += value;
-                        break;
-                    case 4:
-                        player.InCreaseSpeed(value);
-                        break;
-                    default: 
-                        break;
-                }
 
+                GetBuff(player, result);
             }
         }
+    }
+
+    /// <summary>
+    /// 버프를 선택해서 증가시키는 함수
+    /// </summary>
+    /// <param name="player">플레이어</param>
+    /// <param name="result">비교한 비트 결과값</param>
+    /// <returns></returns>
+    private bool GetBuff(Player player, int bitResult)
+    {
+        bool result = true;
+        IBattler battler = player as IBattler;
+
+        switch (bitResult)
+        {            
+            case 1:
+                battler.AttackPower += attackPowerIncrease;
+                break;
+            case 2:
+                battler.DefencePower += defenceIncrease;
+                break;
+            case 4:
+                player.InCreaseSpeed(speedIncrease);
+                break;
+            case 8:
+                player.InCreaseMaxHealth(healthIncrease);
+                break;
+            default:
+            result = false;
+                break;
+        }
+
+        return result;
     }
 }

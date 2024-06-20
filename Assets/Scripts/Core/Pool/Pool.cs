@@ -55,9 +55,9 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
 
             pool[index] = comp;  
 
-            readyQueue.Enqueue(comp);                             // 큐 삽입
-            comp.onDisable = () => { readyQueue.Enqueue(comp); };     // 비활성화 될 때 다시 큐에 삽입
-            comp.gameObject.SetActive(false);                    // 각 오브젝트 비활성화
+            readyQueue.Enqueue(comp);                               // 큐 삽입
+            comp.gameObject.SetActive(false);                       // 각 오브젝트 비활성화
+            comp.onDisable = () => { readyQueue.Enqueue(comp); };   // 비활성화 될 때 다시 큐에 삽입
 
             index++;
         }
@@ -126,6 +126,8 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
                 comp.name = $"{prefab.name}_{index}";
                 pool[index] = comp;
                 readyQueue.Enqueue(comp);   // 큐 삽입 ( 이미 나머지 오브젝트들을 활성화되어있기 때문에 추가로 생성한 것만 추가 )
+                comp.gameObject.SetActive(false);                    // 각 오브젝트 비활성화
+                comp.onDisable = () => { readyQueue.Enqueue(comp); };
             }
             index++;
         }

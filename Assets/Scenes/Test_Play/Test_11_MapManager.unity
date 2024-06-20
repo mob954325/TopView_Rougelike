@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276813, g: 0.21589187, b: 0.29782563, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -620,7 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: -1
   mapGenerator: {fileID: 0}
-  index: 0
+  index: 7
 --- !u!1001 &1869702510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -790,6 +790,11 @@ PrefabInstance:
     - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
         type: 3}
       propertyPath: height
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
+        type: 3}
+      propertyPath: maxChestRoomCount
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6902337389588956609, guid: 7c462890c80e60d4b9c33a203dfeb06f,

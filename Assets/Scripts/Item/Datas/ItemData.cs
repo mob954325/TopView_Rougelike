@@ -10,7 +10,7 @@ public class ItemData : ScriptableObject
     /// <summary>
     /// 해당 아이템 코드
     /// </summary>
-    public ItemCodes code;
+    public ItemCodes itemCode;
 
     /// <summary>
     /// 아이템 이름

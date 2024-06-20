@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2102943396744071562}
   - component: {fileID: 3787927818409377843}
   m_Layer: 0
-  m_Name: Item_Emtpy
+  m_Name: Item_00_Emtpy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

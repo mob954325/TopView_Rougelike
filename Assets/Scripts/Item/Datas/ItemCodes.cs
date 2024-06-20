@@ -12,7 +12,10 @@ public enum ItemCodes
     Key,
     Coin,
     Bomb,
-    Buff
+    Buff_Attack,
+    Buff_Defence,
+    Buff_Speed,
+    Buff_Health
 }
 
 /// <summary>
@@ -24,5 +27,5 @@ public enum BuffType : byte
     Damage = 1,
     Defence = 2,
     Speed = 4,
-    /*Luck*/
+    Health = 8,
 }

@@ -15,7 +15,10 @@ public class Test_04_Buff : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        Factory.Instance.SpawnItem(ItemCodes.Buff, t.position, Quaternion.identity);
+        Factory.Instance.SpawnItem(ItemCodes.Buff_Attack, t.position, Quaternion.identity);
+        Factory.Instance.SpawnItem(ItemCodes.Buff_Defence, t.position, Quaternion.identity);
+        Factory.Instance.SpawnItem(ItemCodes.Buff_Speed, t.position, Quaternion.identity);
+        Factory.Instance.SpawnItem(ItemCodes.Buff_Health, t.position, Quaternion.identity);
     }
 }
 #endif

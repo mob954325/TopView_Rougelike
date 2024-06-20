@@ -13,7 +13,7 @@ public class PoolObject : MonoBehaviour
     /// </summary>
     public Action onDisable;
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
         transform.position = Vector3.zero;  // 위치 초기화
         onDisable?.Invoke();                // 비활성화
