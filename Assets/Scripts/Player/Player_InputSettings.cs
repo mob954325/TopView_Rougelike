@@ -28,6 +28,11 @@ public class Player_InputSettings : MonoBehaviour
     /// </summary>
     public Action onAttack;
 
+    /// <summary>
+    /// 플레이어가 특수 공격할 때 호출되는 델리게이트
+    /// </summary>
+    public Action onHeavyAttack;
+
     void Awake()
     {
         playerInputAction = new PlayerInputActions();
@@ -42,10 +47,12 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Player.Sprint.performed += OnSprintInput;
         playerInputAction.Player.Sprint.canceled += OnSprintInput;
         playerInputAction.Player.Attack.performed += OnAttackInput;
+        playerInputAction.Player.HeavyAttack.performed += OnHeavyAttackInput;
     }
 
     void OnDisable()
     {
+        playerInputAction.Player.HeavyAttack.performed -= OnHeavyAttackInput;
         playerInputAction.Player.Attack.performed -= OnAttackInput;
         playerInputAction.Player.Sprint.canceled -= OnSprintInput;
         playerInputAction.Player.Sprint.performed -= OnSprintInput;
@@ -53,11 +60,6 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Player.Move.canceled -= OnMoveInput;
         playerInputAction.Player.Move.performed -= OnMoveInput;
         playerInputAction.Disable();
-    }
-
-    private void OnAttackInput(InputAction.CallbackContext context)
-    {
-        onAttack?.Invoke();
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)
@@ -73,5 +75,15 @@ public class Player_InputSettings : MonoBehaviour
     private void OnSprintInput(InputAction.CallbackContext context)
     {
         onSprint?.Invoke(context.performed);
+    }
+
+    private void OnAttackInput(InputAction.CallbackContext context)
+    {
+        onAttack?.Invoke();
+    }
+
+    private void OnHeavyAttackInput(InputAction.CallbackContext context)
+    {
+        onHeavyAttack?.Invoke();
     }
 }

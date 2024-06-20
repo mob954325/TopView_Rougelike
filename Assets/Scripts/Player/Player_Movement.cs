@@ -96,7 +96,7 @@ public class Player_Movement : MonoBehaviour
 
         lookVec = lookVector;
         
-        return transform.position + lookVector.normalized;
+        return transform.position + lookVector;
     }
 
     /// <summary>

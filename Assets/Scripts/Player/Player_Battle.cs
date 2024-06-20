@@ -24,16 +24,25 @@ public class Player_Battle : MonoBehaviour
 
     private void Start()
     {
-        player.playerInput.onAttack += OnAttack;        
+        player.playerInput.onAttack += OnAttack;
+        player.playerInput.onHeavyAttack += OnHeavyAttack;
     }
 
     /// <summary>
-    /// 공격키 입력시 호출되는 함수
+    /// 공격키 입력시 호출되는 함수 ( 왼쪽 마우스 버튼 )
     /// </summary>
     private void OnAttack()
     {
         // 공격 시 실행 내용
         player.OnAttack();
+    }
+
+    /// <summary>
+    /// 강공격키 입력시 호출되는 함수 ( 오른쪽 마우스 버튼 )
+    /// </summary>
+    private void OnHeavyAttack()
+    {
+        player.OnHeavyAttack();
     }
 
     // 애니메이션 함수 =============================================================

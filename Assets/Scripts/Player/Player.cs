@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Player_InputSettings))]
 
@@ -14,6 +11,12 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
     Rigidbody rigid;
     Animator animator;
+
+    /// <summary>
+    /// 플레이어가 가지고 있는 센서
+    /// </summary>
+    Sensor sensor;
+
     // 가지고 있는 아이템 정보=============================================  
 
     [Header("플레이어 아이템 정보")]
@@ -69,7 +72,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
     }
 
     // IHealth =========================================================
-
 
     /// <summary>
     /// 시작 체력
@@ -127,7 +129,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
         set => defencePower = value;
     }
 
-
     // Movement =========================================================
 
     [Header("플레이어 이동 정보")]
@@ -165,6 +166,11 @@ public class Player : MonoBehaviour, IHealth, IBattler
     int HashToAttack = Animator.StringToHash("Attack");
 
     /// <summary>
+    /// 강공격 시작 트리거
+    /// </summary>
+    int HashToHeavyAttack = Animator.StringToHash("HeavyAttack");
+
+    /// <summary>
     /// 공격을 하는 중인지 확인하는 프로퍼티 ( true : 공격중, false : 공격안하고있음 )
     /// </summary>
     int HashToIsAttacking = Animator.StringToHash("IsAttacking");
@@ -184,6 +190,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         playerInput = GetComponent<Player_InputSettings>();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        sensor = GetComponentInChildren<Sensor>();  
 
         CharacterInintialize();
     }
@@ -226,7 +233,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     // Battle   =============================================================
 
     /// <summary>
-    /// 플레이어 공격 시 실행하는 함수
+    /// IBattler를 가진 오브젝트가 공격 받으면 실행하는 함수
     /// </summary>
     public void Attack(IBattler target)
     {
@@ -236,9 +243,38 @@ public class Player : MonoBehaviour, IHealth, IBattler
         }
     }
 
+    /// <summary>
+    /// 플레이어 공격시 실행하는 함수
+    /// </summary>
     public void OnAttack()
     {
         animator.SetBool(HashToAttack, true);   // 공격 애니메이션 시작
+    }
+
+    /// <summary>
+    /// 플레이어가 강공격시 실행하는 함수
+    /// </summary>
+    public void OnHeavyAttack()
+    {
+        animator.SetTrigger(HashToHeavyAttack);
+
+        GameObject[] objs = sensor.detectedObjects.ToArray();
+
+        for(int i = 0; i < objs.Length; i++)
+        {
+            IBattler battler = objs[i].GetComponent<IBattler>();
+            Rigidbody rigidbody = objs[i].GetComponent<Rigidbody>();
+
+            if(battler != null) // IBattler를 가진 오브젝트만 공격
+            {
+                // 공격
+                battler.Hit(attackPower);
+
+                // 밀치기
+                Vector3 dir = objs[i].transform.position - this.transform.position;
+                rigidbody.AddForce(dir * 5f, ForceMode.Impulse);
+            }
+        }
     }
 
     /// <summary>
@@ -359,7 +395,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
     {
         maxHealth += value;
     }
-
 
     // 애니메이션 이벤트 함수 ==================================================
 
