@@ -25,7 +25,7 @@ public class Locked_Gate : LockedObject
         if(other.CompareTag("Player"))
         {
             onPassDoor?.Invoke();
-            coll.enabled = false;
+            SetColliderEnable(false);
         }
     }
 
@@ -45,8 +45,8 @@ public class Locked_Gate : LockedObject
     public void ForcedOpen()
     {
         SetIsOpen(true);
+        animator.SetBool(HashToClose, false);
         animator.SetTrigger(HashToOpen);
-        coll.enabled = true; //
     }
 
     /// <summary>
@@ -54,7 +54,15 @@ public class Locked_Gate : LockedObject
     /// </summary>
     public void ForcedClose()
     {
-        animator.SetTrigger(HashToClose);
-        coll.enabled = false; // 
+        animator.SetBool(HashToClose, true);
+    }
+
+    /// <summary>
+    /// 문의 트리거 콜라이더 활성화, 비활성화 하는 함수
+    /// </summary>
+    /// <param name="value">true면 활셩화 false면 비활성화</param>
+    public void SetColliderEnable(bool value)
+    {
+        coll.enabled = value;
     }
 }

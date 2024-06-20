@@ -11,9 +11,9 @@ public class Factory : Singleton<Factory>
     Pool_Item itemPool;
     Pool_Chest chestPool;
 
-    protected override void PreInitialize()
+    protected override void Initialized()
     {
-        base.PreInitialize();
+        base.Initialized();
 
         enemyMagePool = GetComponentInChildren<Pool_EnemyMage>();
         enemyMagePool.Initialize();

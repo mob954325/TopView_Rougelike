@@ -103,6 +103,8 @@ public class MapGenerator : MonoBehaviour
         height = mapSize;
 
         Initialize(width, height);
+
+        // 플레이어 설정
         SpawnObjets(StartRoom.Type, StartRoom.RoomIndex);   // 플레이어 스폰
         OpenAroundDoor(StartRoom.RoomIndex, true);                // 모든 플레이어 방 개방
     }
@@ -207,14 +209,18 @@ public class MapGenerator : MonoBehaviour
                     // 방 클리어 설정
                     mapRooms[index].onRoomClear = () =>
                     {
-                        OpenAroundDoor(index); // 모든 문 개방
+                        OpenAroundDoor(index, true); // 모든 문 개방
 
                         if (mapRooms[index].Type == RoomType.Normal) // 기본 방일 때만 스폰
                         {
                             SpawnRandomItems(mapRooms[index].transform.localPosition + new Vector3(mapObjLength * 0.5f, 1.2f, mapObjLength * 0.5f)); // 아이템 스폰 ( 위치 : 맵 중앙 )
                         }
                     };
+
+                    // 모든 방문 초기화
+                    CloseAroundDoor(index);
                 }
+
             }
         }
 
@@ -324,12 +330,13 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// 주변 모든 문 닫기 ( 그리드 )
     /// </summary>
-    /// <param name="grid"></param>
+    /// <param name="grid">그리드 값</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void CloseAroundDoor(Vector2Int grid, bool isTwoWay = false)
     {
         RoomObject obj = mapRooms[GridToIndex(grid)];    // 시작 방
 
-        for (int i = 0; i < typeof(Direction).GetEnumValues().Length; i++)
+        for (int i = 0; i < 4; i++)
         {
             Direction dir = (Direction)(1 << i);
             if (obj.IsVaildDirection(dir))  // 각 방향 검사
@@ -343,6 +350,7 @@ public class MapGenerator : MonoBehaviour
     /// 주변 모든 문 닫기 ( 인덱스 )
     /// </summary>
     /// <param name="index">인덱스 값</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void CloseAroundDoor(int index, bool isTwoWay = false)
     {
         CloseAroundDoor(IndexToGrid(index), isTwoWay);
@@ -352,11 +360,12 @@ public class MapGenerator : MonoBehaviour
     /// 주변 모든 문 열기 ( 그리드 )
     /// </summary>
     /// <param name="grid">중심 방 그리드 값</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void OpenAroundDoor(Vector2Int grid, bool isTwoWay = false)
     {
         RoomObject obj = mapRooms[GridToIndex(grid)];    // 시작 방
 
-        for (int i = 0; i < typeof(Direction).GetEnumValues().Length; i++)
+        for (int i = 0; i < 4; i++)
         {
             Direction dir = (Direction)(1 << i);
             if (obj.IsVaildDirection(dir))  // 각 방향 검사
@@ -370,6 +379,7 @@ public class MapGenerator : MonoBehaviour
     /// 주변 모든 문 열기 ( 인덱스 )
     /// </summary>
     /// <param name="index">인덱스 값</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void OpenAroundDoor(int index, bool isTwoWay = false)
     {
         OpenAroundDoor(IndexToGrid(index), isTwoWay);
@@ -380,15 +390,21 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     /// <param name="grid">셀 그리드 값</param>
     /// <param name="dir">열 방향</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void OpenOnePath(Vector2Int grid, Direction dir, bool isTwoWay = false)
     {
         RoomObject obj = mapRooms[GridToIndex(grid)];    // 시작 방
         RoomObject targetObj;                            // 시작 방에서의 dir방향의 방
 
-        if(obj.IsVaildDirection(dir) && isTwoWay)  // 해당 방향에 길이 있다면
+        if(obj.IsVaildDirection(dir))  // 해당 방향에 길이 있다면
         {
+            obj.OpenDoor(dir); // 시작 방문 열기
+
+            if (!isTwoWay)
+                return;
+
             // 4방향 별로 각 그리드 셀 찾기
-            switch(dir)
+            switch (dir)
             {
                 // targetObj는 시작방의 반대방향 문열기
                 case Direction.LEFT:
@@ -408,8 +424,6 @@ public class MapGenerator : MonoBehaviour
                     targetObj.OpenDoor(Direction.DOWN);
                     break;
             }
-
-            obj.OpenDoor(dir); // 시작 방문 열기
         }
         else
         {
@@ -422,13 +436,19 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     /// <param name="grid">셀 그리드 값</param>
     /// <param name="dir">열 방향</param>
+    /// <param name="isTwoWay">양방향 여부</param>
     public void CloseOnePath(Vector2Int grid, Direction dir, bool isTwoWay = false)
     {
         RoomObject obj = mapRooms[GridToIndex(grid)];    // 시작 방
         RoomObject targetObj;                            // 시작 방에서의 dir방향의 방
 
-        if (obj.IsVaildDirection(dir) && isTwoWay)  // 해당 방향에 길이 있다면
+        if (obj.IsVaildDirection(dir))  // 해당 방향에 길이 있다면
         {
+            obj.CloseDoor(dir); // 시작 방문 열기
+
+            if (!isTwoWay)
+                return;
+
             // 4방향 별로 각 그리드 셀 찾기
             switch (dir)
             {
@@ -450,8 +470,6 @@ public class MapGenerator : MonoBehaviour
                     targetObj.CloseDoor(Direction.DOWN);
                     break;
             }
-
-            obj.CloseDoor(dir); // 시작 방문 열기
         }
         else
         {

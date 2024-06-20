@@ -221,20 +221,34 @@ public class RoomObject : MonoBehaviour
         if (!IsVaildDirection(dir))
             return;
 
+        int index = -1;
         switch (dir)
         {
             case Direction.UP:
-                entranceGates[0].ForcedOpen();
+                index = 0;
+                entranceGates[index].ForcedOpen();
                 break;
             case Direction.DOWN:
-                entranceGates[1].ForcedOpen();
+                index = 1;
+                entranceGates[index].ForcedOpen();
                 break;
             case Direction.LEFT:
-                entranceGates[2].ForcedOpen();
+                index = 2;
+                entranceGates[index].ForcedOpen();
                 break;
             case Direction.RIGHT:
-                entranceGates[3].ForcedOpen();
+                index = 3;
+                entranceGates[index].ForcedOpen();
                 break;
+        }
+
+        if (!IsClear)
+        {
+            entranceGates[index].SetColliderEnable(true);
+        }
+        else
+        {
+            entranceGates[index].SetColliderEnable(false);
         }
     }
 
@@ -246,22 +260,29 @@ public class RoomObject : MonoBehaviour
     {
         if (!IsVaildDirection(dir))
             return;
-
+        
+        int index = -1;
         switch (dir)
         {
             case Direction.UP:
-                entranceGates[0].ForcedClose();
+                index = 0;
+                entranceGates[index].ForcedClose();
                 break;
             case Direction.DOWN:
-                entranceGates[1].ForcedClose();
+                index = 1;
+                entranceGates[index].ForcedClose();
                 break;
             case Direction.LEFT:
-                entranceGates[2].ForcedClose();
+                index = 2;
+                entranceGates[index].ForcedClose();
                 break;
             case Direction.RIGHT:
-                entranceGates[3].ForcedClose();
+                index = 3;
+                entranceGates[index].ForcedClose();
                 break;
         }
+
+        entranceGates[index].SetColliderEnable(false);
     }
 
     // 기능 함수 ===========================================================================================
