@@ -7,7 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour, IHealth, IBattler
 {
-    public Player_InputSettings playerInput;    
+    public Player_InputSettings playerInput;
+
+    /// <summary>
+    /// 모델 트랜스폼
+    /// </summary>
+    Transform modelTransform;
 
     Rigidbody rigid;
     Animator animator;
@@ -190,7 +195,8 @@ public class Player : MonoBehaviour, IHealth, IBattler
         playerInput = GetComponent<Player_InputSettings>();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        sensor = GetComponentInChildren<Sensor>();  
+        sensor = GetComponentInChildren<Sensor>();
+        modelTransform = transform.GetChild(6).GetChild(0);
 
         CharacterInintialize();
     }
@@ -227,7 +233,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <param name="lookVector">캐릭터가 바라보는 벡터값</param>
     public void Look(Vector3 lookVector)
     {
-        transform.LookAt(lookVector);   // 플레이어가 바라보는 방향
+        modelTransform.LookAt(lookVector);   // 플레이어가 바라보는 방향
     }
 
     // Battle   =============================================================

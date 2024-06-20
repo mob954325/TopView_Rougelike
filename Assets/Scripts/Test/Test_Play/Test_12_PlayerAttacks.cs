@@ -7,14 +7,23 @@ public class Test_12_PlayerAttacks : TestBase
 {
     Transform target;
 
+    public AbilityContainer abilityContainer;
+
+    public AbilityCode code;
+
     private void Start()
     {
         target = transform.GetChild(0);
-        GameManager.Instance.SpawnPlayer(Vector3.zero);
+        //GameManager.Instance.SpawnPlayer(Vector3.zero);
     }
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         Factory.Instance.SpawnEnemyMage(target.position, Quaternion.identity);
+    }
+
+    protected override void OnTest2(InputAction.CallbackContext context)
+    {
+        abilityContainer.AddAbility(code);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item_999_Coin", menuName = "ScriptableObjects/Item-Coin", order = 3)]
+[CreateAssetMenu(fileName = "Item_999_Coin", menuName = "ScriptableObjects/Item/Item-Coin", order = 3)]
 public class ItemData_Coin : ItemData, IGetable
 {
     /// <summary>

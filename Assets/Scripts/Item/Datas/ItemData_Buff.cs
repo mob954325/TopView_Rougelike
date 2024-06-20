@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item_999_Buff", menuName = "ScriptableObjects/Item-Buff", order = 4)]
+[CreateAssetMenu(fileName = "Item_999_Buff", menuName = "ScriptableObjects/Item/Item-Buff", order = 4)]
 public class ItemData_Buff : ItemData, IGetable
 {
     public BuffType buffType;
