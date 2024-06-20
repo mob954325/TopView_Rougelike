@@ -158,6 +158,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     {
         base.OnDead();
         StartCoroutine(DisableObject(2f));
+        // 코인 드랍 작성
     }
 
     // IBattler 함수 ======================================================================================
