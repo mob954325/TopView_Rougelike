@@ -15,7 +15,6 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         Mage
     }
 
-    Rigidbody rigid;
     WeaponBase weapon;
 
     [Header("Enemy Normal Settings")]
@@ -92,7 +91,6 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     protected override void Awake()
     {
         base.Awake();
-        rigid = GetComponent<Rigidbody>();
         weapon = GetComponentInChildren<WeaponBase>();
 
         currentHealth = maxHp;
@@ -170,6 +168,9 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
     public void Hit(float hitDamage)
     {
+        if (CurrentHealth <= 0) // 체력이 있을 때만 피격 처리
+            return;
+
         CurrentHealth -= hitDamage - DefencePower;
         animator.SetTrigger(HashToHit);
     }

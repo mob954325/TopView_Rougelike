@@ -67,6 +67,8 @@ public class EnemyBase : PoolObject
     }
 
     protected Animator animator;
+    protected Rigidbody rigid;
+    protected Collider coll;
 
     /// <summary>
     /// 공격할 목표 오브젝트
@@ -120,6 +122,8 @@ public class EnemyBase : PoolObject
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
+        coll = GetComponent<Collider>();
     }
 
     protected virtual void OnEnable()
@@ -191,6 +195,6 @@ public class EnemyBase : PoolObject
     /// </summary>
     protected virtual void OnDead()
     {
-        animator.SetTrigger(HashToDeath);    // 사망 애니메이션 활성화
+        animator.SetTrigger(HashToDeath);   // 사망 애니메이션 활성화
     }
 }

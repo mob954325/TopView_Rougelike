@@ -42,7 +42,7 @@ public class WeaponBase : MonoBehaviour
 
         if(other.TryGetComponent(out IBattler target))
         {
-            Debug.Log($"{other.gameObject.name}");
+            //Debug.Log($"{other.gameObject.name}");
             Owner.Attack(target);
         }
     }
