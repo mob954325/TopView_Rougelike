@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9f5bd4a44bf7cf48a5df726691c0785, type: 3}
-  m_Name: Ability_00_Rotate
+  m_Name: Ability_01_Targeting
   m_EditorClassIdentifier: 
   code: 0
-  abilityName: "\uD68C\uC804\uCCB4"
-  abilityDesc: "\uD68C\uC804\uD558\uBA74\uC11C \uB54C\uB9B0\uB2E4"
-  damage: 5
-  speed: 180
-  coolTime: 1
-  minCount: 0
-  maxCount: 4
-  projectilePrefab: {fileID: 6630219451388961468, guid: 30c6c14ce3c7a36458dc870290a10a08,
-    type: 3}
+  abilityName: "\uACF5\uACA9\uCCB4"
+  abilityDesc: "\uD0C0\uAC9F\uC744 \uC9C0\uC815\uD574\uC11C \uACF5\uACA9\uD558\uB294
+    \uB2A5\uB825"
+  damage: 10
+  speed: 5
+  coolTime: 5
+  maxCount: 3
+  projecttile: {fileID: 0}

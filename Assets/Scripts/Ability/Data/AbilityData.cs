@@ -39,6 +39,11 @@ public class AbilityData : ScriptableObject
     public float coolTime;
 
     /// <summary>
+    /// 최소 개수
+    /// </summary>
+    public int minCount;
+
+    /// <summary>
     /// 최대 개수
     /// </summary>
     public int maxCount;
@@ -46,5 +51,5 @@ public class AbilityData : ScriptableObject
     /// <summary>
     /// 투사체 프리팹 오브젝트
     /// </summary>
-    public GameObject projecttile;
+    public GameObject projectilePrefab;
 }

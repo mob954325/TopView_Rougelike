@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,4 +27,10 @@ public class Test_12_PlayerAttacks : TestBase
     {
         abilityContainer.AddAbility(code);
     }
+
+    protected override void OnTest3(InputAction.CallbackContext context)
+    {
+        abilityContainer.UpGradeAbiliy(0);
+    }
 }
+#endif

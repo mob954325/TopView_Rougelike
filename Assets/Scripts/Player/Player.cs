@@ -196,7 +196,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         sensor = GetComponentInChildren<Sensor>();
-        modelTransform = transform.GetChild(6).GetChild(0);
+        modelTransform = transform.GetChild(6);
 
         CharacterInintialize();
     }
