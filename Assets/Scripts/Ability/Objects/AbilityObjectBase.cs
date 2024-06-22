@@ -23,17 +23,11 @@ public abstract class AbilityObjectBase : MonoBehaviour
     protected float damage;
 
     /// <summary>
-    /// 오브젝트 소환위치 값
-    /// </summary>
-    protected Vector3 spawnVector;
-
-    /// <summary>
     /// 오브젝트 초기화
     /// </summary>
     /// <param name="damage">대미지</param>
     /// <param name="speed">회전 및 이동 속도</param>
-    /// <param name="count">투사체 개수 ( 위치용 )</param>
-    public abstract void Initialize(float speed, float damage, int count);
+    public abstract void Initialize(float speed, float damage);
 
     /// <summary>
     /// 트리거에 닿았을 때 호출되는 함수

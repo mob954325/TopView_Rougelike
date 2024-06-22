@@ -7,19 +7,12 @@ using UnityEngine;
 /// </summary>
 public class AbilityObject_Rotate : AbilityObjectBase
 {
-    private Vector3 spawnPoint = Vector3.zero;
-    public override void Initialize(float speed, float damage, int count)
+    public override void Initialize(float speed, float damage)
     {
         root = transform.root;
         
         rotateSpeed = speed;
-        this.damage = damage;
-        float angle = 360f / count;
-
-        Quaternion betweenAngle = Quaternion.Euler(0f, angle, 0f);
-
-        spawnPoint = betweenAngle * Vector3.forward;
-        transform.position = spawnPoint;        
+        this.damage = damage;      
     }
 
     protected override void Attack(Collider target)

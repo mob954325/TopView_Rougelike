@@ -18,7 +18,7 @@ MonoBehaviour:
   damage: 5
   speed: 180
   coolTime: 1
-  minCount: 0
+  minCount: 2
   maxCount: 4
   projectilePrefab: {fileID: 6630219451388961468, guid: 30c6c14ce3c7a36458dc870290a10a08,
     type: 3}
