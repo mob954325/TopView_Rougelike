@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,3 +18,4 @@ public class Test_14_UI : TestBase
         Factory.Instance.SpawnEnemyWarrior(Vector3.zero, Quaternion.identity);
     }
 }
+#endif
