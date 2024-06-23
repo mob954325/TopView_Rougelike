@@ -15,17 +15,9 @@ public class AbilityObject_Rotate : AbilityObjectBase
         this.damage = damage;      
     }
 
-    protected override void Attack(Collider target)
+    public override void Attack(Transform target)
     {
-        if (target.transform.root == root)
-            return;
-
-        IBattler battler = target.gameObject.GetComponent<IBattler>();
-
-        if (battler != null)
-        {
-            battler.Hit(damage); // 공격
-        }
+        // 사용 안함
     }
     
     private void FixedUpdate()
@@ -35,6 +27,14 @@ public class AbilityObject_Rotate : AbilityObjectBase
     
     private void OnTriggerEnter(Collider other)
     {
-        Attack(other);
+        if (other.transform.root == root)
+            return;
+
+        IBattler battler = other.gameObject.GetComponent<IBattler>();
+
+        if (battler != null)
+        {
+            battler.Hit(damage); // 공격
+        }
     }
 }

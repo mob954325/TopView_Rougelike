@@ -12,7 +12,17 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     Player player;
 
-    WeaponBase sword; // 나중에 WeaponBase로 바꿀 예정
+    /// <summary>
+    /// 소지하고 있는 무기
+    /// </summary>
+    WeaponBase sword;
+
+    /// <summary>
+    /// 능력 모음 오브젝트
+    /// </summary>
+    AbilityContainer abilityContainer;
+
+    float coolTime = 0.0f;
 
     bool isAttacking = false;
 
@@ -20,12 +30,24 @@ public class Player_Battle : MonoBehaviour
     {
         player = GetComponent<Player>();
         sword = GetComponentInChildren<WeaponBase>();
+        abilityContainer = GetComponentInChildren<AbilityContainer>();
     }
 
     private void Start()
     {
         player.playerInput.onAttack += OnAttack;
         player.playerInput.onHeavyAttack += OnHeavyAttack;
+    }
+
+    private void FixedUpdate()
+    {
+        coolTime += Time.fixedDeltaTime;
+
+        if (coolTime > 1f)
+        {
+            coolTime = 0f;
+            AbilityAttack();
+        }
     }
 
     /// <summary>
@@ -43,6 +65,41 @@ public class Player_Battle : MonoBehaviour
     private void OnHeavyAttack()
     {
         player.OnHeavyAttack();
+    }
+
+    public void AbilityAttack()
+    {
+        GameObject[] objs = player.GetDetectedObjects();
+        GameObject target = null;
+        float minLength = float.MaxValue;
+
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].GetComponent<EnemyBase>() != null) // 적이면 타겟으로 지정 ( 첫번째로 지정된 타겟 )
+            {
+                if(target == null)  // target이 없으면 그 대상을 target으로 지정
+                {
+                    target = objs[i];
+                    minLength = (target.transform.position - transform.position).sqrMagnitude;
+                }
+                else
+                {
+                    float checkLength = Mathf.Min((objs[i].transform.position - transform.position).sqrMagnitude, (target.transform.position - transform.position).sqrMagnitude);
+                    if(checkLength < minLength) // 체크한 값이 더 낮다 == 체크한 오브젝트가 더 가깝다 -> target 업데이트
+                    {
+                        target = objs[i];
+                    }
+                }
+            }
+        }
+
+        foreach(var ability in abilityContainer.abilities)
+        {
+            if (ability != null && target != null)
+            {
+                ability.Attack(target.transform);
+            }
+        }
     }
 
     // 애니메이션 함수 =============================================================

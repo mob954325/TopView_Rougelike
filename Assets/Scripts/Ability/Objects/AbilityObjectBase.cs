@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public abstract class AbilityObjectBase : MonoBehaviour
     /// 이 오브젝트의 루트 오브젝트
     /// </summary>
     protected Transform root;
+
+    public Vector3 spawnVector;
 
     /// <summary>
     /// 회전속도
@@ -30,8 +33,8 @@ public abstract class AbilityObjectBase : MonoBehaviour
     public abstract void Initialize(float speed, float damage);
 
     /// <summary>
-    /// 트리거에 닿았을 때 호출되는 함수
+    /// 능력별 구현한 공격 함수
     /// </summary>
     /// <param name="target">공격 목표</param>
-    protected abstract void Attack(Collider target);
+    public abstract void Attack(Transform target);
 }

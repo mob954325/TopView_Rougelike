@@ -402,6 +402,17 @@ public class Player : MonoBehaviour, IHealth, IBattler
         maxHealth += value;
     }
 
+    // 기타 함수 =============================================================
+
+    /// <summary>
+    /// 감지된 오브젝트를 반환하는 함수 ( 배열 )
+    /// </summary>
+    public GameObject[] GetDetectedObjects()
+    {
+        return sensor.detectedObjects.ToArray();
+    }
+
+
     // 애니메이션 이벤트 함수 ==================================================
 
     /// <summary>

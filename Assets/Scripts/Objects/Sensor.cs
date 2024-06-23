@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,12 @@ public class Sensor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        OnDetectObject(other);
+        if (!CheckList(other.gameObject))
+        {
+            OnDetectObject(other);  // 감지한 오브젝트 추가
+        }
+        
+        RefreshList();  // 감지한 리스트 갱신
     }
 
     void OnTriggerStay(Collider other)
@@ -47,5 +53,43 @@ public class Sensor : MonoBehaviour
     public virtual void OnObjectStay(Collider other)
     {
 
+    }
+
+    private void RefreshList()
+    {
+        GameObject[] objs = new GameObject[detectedObjects.Count];
+
+        int index = 0;
+
+        // 제거할 오브젝트 찾기
+        foreach (var item in detectedObjects)
+        {
+            if(!item.activeSelf)
+            {
+                objs[index] = item;
+                index++;
+            }
+        }
+
+        // 리스트에서 저장된 오브젝트들 제거
+        foreach (var obj in objs)
+        {
+            detectedObjects.Remove(obj);
+        }
+    }
+
+    private bool CheckList(GameObject obj)
+    {
+        bool result = false;
+
+        foreach (var item in detectedObjects)
+        {
+            if(item == obj)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

@@ -85,15 +85,12 @@ public class Ability : MonoBehaviour
     {
         AbilityObjectBase projectile = Instantiate(data.projectilePrefab, this.transform).GetComponent<AbilityObjectBase>(); // 투사체 추가
 
-        if (code == AbilityCode.Rotating)
-        {
-            projectile.Initialize(rotateSpeed, damage);         // 오브젝트 생성
-            this.projectile[index] = projectile.gameObject;     // 배열 저장
-        }
+        projectile.Initialize(rotateSpeed, damage);         // 오브젝트 생성
+        this.projectile[index] = projectile.gameObject;     // 배열 저장
 
         activeCount = data.minCount;    // 활성화된 투사체 개수 초기화
 
-        SetLocalPositionByAngle(index);
+        projectile.spawnVector = SetLocalPositionByAngle(index);
     }
 
     /// <summary>
@@ -106,11 +103,12 @@ public class Ability : MonoBehaviour
             SetLocalPositionByAngle(i);
         }
     }
+
     /// <summary>
     /// 각도에 따라 투사체 위치를 설정하는 함수
     /// </summary>
     /// <param name="index">투사체 인덱스</param>
-    void SetLocalPositionByAngle(int index)
+    Vector3 SetLocalPositionByAngle(int index)
     {
         // 투사체 위치
         float angle = 360f / activeCount;
@@ -120,5 +118,23 @@ public class Ability : MonoBehaviour
         Vector3 spawnPoint = betweenAngle * Vector3.forward;                          // 위치 계산
         spawnPoint = new Vector3(spawnPoint.x, 0, spawnPoint.z);
         this.projectile[index].transform.localPosition = spawnPoint;                  // 위치 조정
+
+        return spawnPoint;
+    }
+
+    /// <summary>
+    /// 능력 투사체별 공격 실행 함수
+    /// </summary>
+    /// <param name="target">공격할 타겟 트랜스폼</param>
+    public void Attack(Transform target)
+    {
+        foreach(var item in projectile)
+        {
+            item.SetActive(true);   // 활성화  
+
+            AbilityObjectBase ablityObj = item.GetComponent<AbilityObjectBase>();
+            item.transform.localPosition = ablityObj.spawnVector;   // 위치 초기화
+            ablityObj.Attack(target);                               // 공격 실행
+        }
     }
 }

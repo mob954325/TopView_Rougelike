@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Test_12_PlayerAttacks : TestBase
+public class Test_12_RotateObject : TestBase
 {
     Transform target;
 
@@ -30,7 +30,7 @@ public class Test_12_PlayerAttacks : TestBase
 
     protected override void OnTest3(InputAction.CallbackContext context)
     {
-        abilityContainer.UpGradeAbiliy(0);
+        abilityContainer.UpGradeAbiliy((int)code);
     }
 }
 #endif
