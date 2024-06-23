@@ -33,12 +33,13 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 열쇠 개수 접근 및 수정 프로퍼티
     /// </summary>
-    private uint KeyCount
+    public uint KeyCount
     {
         get => keyCount;
         set
         {
             keyCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Key].maxCount);
+            onChangeKey?.Invoke(keyCount);
         }
     }
 
@@ -50,12 +51,13 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 코인 개수 접근 및 수정 프로퍼티
     /// </summary>
-    private uint CoinAmount
+    public uint CoinAmount
     {
         get => coinAmount;
         set
         {
             coinAmount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Coin].maxCount);
+            onChangeCoin?.Invoke(coinAmount);
         }
     }
 
@@ -67,12 +69,13 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// <summary>
     /// 폭탄 개수 접근 및 수정 프로퍼티
     /// </summary>
-    private uint BombCount
+    public uint BombCount
     {
         get => bombCount;
         set
         {
             bombCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Bomb].maxCount);
+            onChangeBomb?.Invoke(bombCount);
         }
     }
 
@@ -94,8 +97,9 @@ public class Player : MonoBehaviour, IHealth, IBattler
         set
         {
             currnetHealth = Mathf.Clamp(value, 0f, MaxHealth);
+            onChangeHealth?.Invoke(currnetHealth);
 
-            if(currnetHealth <= 0f) // 체력이 없으면 사망
+            if (currnetHealth <= 0f) // 체력이 없으면 사망
             {
                 onDie?.Invoke();
             }
@@ -189,6 +193,28 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// 애니메이션 Death 파라미터 ( bool )
     /// </summary>
     int HashToDeath = Animator.StringToHash("Death");
+
+    // 기타 ==================================================================
+
+    /// <summary>
+    /// 폭탄 개수가 변경될 때 실행되는 델리게이트
+    /// </summary>
+    public Action<uint> onChangeBomb;
+
+    /// <summary>
+    /// 열쇠 개수가 변경될 때 실행되는 델리게이트
+    /// </summary>
+    public Action<uint> onChangeKey;
+
+    /// <summary>
+    /// 코인 개수가 변경될 때 실행되는 델리게이트
+    /// </summary>
+    public Action<uint> onChangeCoin;
+
+    /// <summary>
+    /// 체력이 변경될 때 실행되는 델리게이트
+    /// </summary>
+    public Action<float> onChangeHealth;
 
     void Awake()
     {

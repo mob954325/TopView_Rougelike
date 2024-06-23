@@ -42,6 +42,11 @@ public class GameManager : Singleton<GameManager>
         playerCam = GetComponentInChildren<Player_Camera>();
     }
 
+    protected override void Initialized()
+    {
+        SpawnPlayer(Vector3.zero);
+    }
+
     /// <summary>
     /// 플레이어 스폰 함수
     /// </summary>

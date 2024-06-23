@@ -74,6 +74,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 98095f7d5a26dc84297442d01660f659, type: 2}
   abilityDatas:
   - {fileID: 11400000, guid: 0b3dcd5e43ecd014eb5a7ede1bf3076a, type: 2}
+  - {fileID: 11400000, guid: 23cbcb2cd8bdd0241b3d075ae6fd6f2f, type: 2}
 --- !u!1001 &7169524338483857616
 PrefabInstance:
   m_ObjectHideFlags: 0
