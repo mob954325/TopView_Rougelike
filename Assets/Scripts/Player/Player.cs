@@ -426,6 +426,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
     public void InCreaseMaxHealth(float value)
     {
         maxHealth += value;
+        CurrentHealth = MaxHealth;
     }
 
     // 기타 함수 =============================================================
