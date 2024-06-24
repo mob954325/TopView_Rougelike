@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &1262619570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,6 +2280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &1391651776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,20 +2332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a586c7880f317d48a26f25c10be8237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name:
-  - Health
-  - Speed
-  - Attack
-  - Defence
-  - ab1
-  - ab2
-  desc:
-  - Increase Health
-  - Increase Speed
-  - Increase Attack
-  - "Increase Defence\t"
-  - add or Upgrade ab1
-  - add or Upgrade ab2
 --- !u!225 &1391651779
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2354,7 +2342,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 0
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1001 &1394985948
 PrefabInstance:
@@ -2421,15 +2409,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8443850754408094986, guid: e176c0c09775aff4f84f09894103e1ed,
         type: 3}
-      propertyPath: abilityDatas.Array.size
-      value: 2
+      propertyPath: slotDatas.Array.size
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8443850754408094986, guid: e176c0c09775aff4f84f09894103e1ed,
-        type: 3}
-      propertyPath: abilityDatas.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 23cbcb2cd8bdd0241b3d075ae6fd6f2f,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4107,6 +4089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &2071494388
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,13 +6,29 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// 업그레이드 가능한 슬롯타입
+/// </summary>
+public enum UpgradeSlotType
+{
+    None = 0,
+    Health,
+    Attack,
+    Defence,
+    Speed,
+    Rotate,
+    Targeting
+}
+
 public class UpgadeSlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public Action onUpGrade;
+    public UpgradeSlotType type;
 
     TextMeshProUGUI slotName;
     TextMeshProUGUI desc;
     Image image;
+
+    public Action onUpGrade;
 
     private void Awake()
     {
@@ -31,9 +47,11 @@ public class UpgadeSlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     /// <summary>
     /// 슬롯 내용을 설정하는 함수
     /// </summary>
-    public void SetSlot(string name, string desc)
+    public void SetSlot(UpgradeSlotType type, string name, string desc)
     {
         // 내용 설정
+        slotName.text = name;
+        this.desc.text = desc;
     }
 
     /// <summary>

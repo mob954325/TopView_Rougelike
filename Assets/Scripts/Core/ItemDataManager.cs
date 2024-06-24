@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 아이템 데이터 관리 매니저
+/// 데이터 관리 매니저
 /// </summary>
 public class ItemDataManager : Singleton<ItemDataManager>
 {
@@ -16,4 +16,9 @@ public class ItemDataManager : Singleton<ItemDataManager>
     /// 능력 저장 배열 ( 임시 )
     /// </summary>
     public AbilityData[] abilityDatas;
+
+    /// <summary>
+    /// 슬롯 데이터 배열
+    /// </summary>
+    public SlotDatas[] slotDatas;
 }

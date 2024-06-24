@@ -101,6 +101,48 @@ public class Player_Battle : MonoBehaviour
             }
         }
     }
+    // 능력 관련 함수 =============================================================
+
+    public void GetAbliity(AbilityCode code)
+    {
+        abilityContainer.AddAbility(code);
+    }
+
+    public void UpgradeAbility(AbilityCode code)
+    {
+        // index번째 능력과 code가 같으면 해당 인덱스번 업그래이드
+        int index = 0;
+        foreach(var item in abilityContainer.abilities)
+        {
+            if(item.Data.code == code)
+            {
+                break;
+            }
+            index++;
+        }
+
+        if (index > abilityContainer.abilities.Length - 1)   // 해당 능력은 존재하지않는다.
+            return;
+
+        abilityContainer.UpGradeAbiliy(index);
+    }
+
+    public bool CheckAbilityContainerIsEmtpy()
+    {
+        bool result = true;
+
+        foreach(var item in abilityContainer.abilities)
+        {
+            if (item == null)
+            {
+                result = false;
+                break;
+            }
+        }
+
+
+        return result;
+    }
 
     // 애니메이션 함수 =============================================================
     public void BeginAttack()

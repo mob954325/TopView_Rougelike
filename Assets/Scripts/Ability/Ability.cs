@@ -11,6 +11,11 @@ public class Ability : MonoBehaviour
     [SerializeField] AbilityData data;
 
     /// <summary>
+    /// 능력 데이터 접근 프로퍼티
+    /// </summary>
+    public AbilityData Data => data;
+
+    /// <summary>
     /// 대미지
     /// </summary>
     public float damage;
