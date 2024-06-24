@@ -72,8 +72,11 @@ public class Ability : MonoBehaviour
     /// <returns></returns>
     public void AddProjectile()
     {
-        if (activeCount >= data.maxCount) // 투사체 최대 개수면 무시
+        if (activeCount >= data.maxCount) // 투사체 최대 개수면 데미지 증가
+        {
+            this.damage += data.increaseDamageValue;
             return;
+        }
 
         projectile[activeCount].SetActive(true);    // 투사체 활성화
         activeCount++;                              // 활성화 개수 추가
@@ -103,9 +106,10 @@ public class Ability : MonoBehaviour
     /// </summary>
     void RefreshAllProjectile()
     {
-        for(int i = 0; i < projectile.Length; i++)
+        for (int i = 0; i < projectile.Length; i++)
         {
-            SetLocalPositionByAngle(i);
+            AbilityObjectBase projectile = this.projectile[i].GetComponent<AbilityObjectBase>();            
+            projectile.spawnVector = SetLocalPositionByAngle(i);
         }
     }
 

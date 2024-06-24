@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,16 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class UpgradeUI : MonoBehaviour
 {
-    UpgadeSlotUI[] slots;
-
     CanvasGroup canvasGroup;
 
+    /// <summary>
+    /// 슬롯 배열 ( 3개 )
+    /// </summary>
+    UpgadeSlotUI[] slots;
+
+    /// <summary>
+    /// 슬롯 데이터 배열
+    /// </summary>
     SlotDatas[] datas;
 
     /// <summary>
@@ -26,7 +33,8 @@ public class UpgradeUI : MonoBehaviour
         }
 
         // 데이터 초기화
-        datas = new SlotDatas[typeof(SlotDatas).GetEnumValues().Length];
+        int dataCount = Enum.GetValues(typeof(UpgradeSlotType)).Length;
+        datas = new SlotDatas[dataCount];
         for(int i = 0; i < datas.Length; i++)
         {
             datas[i] = ItemDataManager.Instance.slotDatas[i];
@@ -68,10 +76,12 @@ public class UpgradeUI : MonoBehaviour
 
         SlotDatas[] tempDatas = new SlotDatas[datas.Length];
         tempDatas = util.Shuffle(datas);
+        
+        // 업그레이드가 풀업이면?
 
         for (int i = 0; i < slots.Length; i++)
         {
-            // 델리게이트 연결 slots[i].onUpgrade += ...
+            slots[i].SetSlot(tempDatas[i]);
         }
     }
 }

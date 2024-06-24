@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f5bd4a44bf7cf48a5df726691c0785, type: 3}
   m_Name: Ability_01_Targeting
   m_EditorClassIdentifier: 
-  code: 0
+  code: 1
   abilityName: "\uACF5\uACA9\uCCB4"
   abilityDesc: "\uD0C0\uAC9F\uC744 \uC9C0\uC815\uD574\uC11C \uACF5\uACA9\uD558\uB294
     \uB2A5\uB825"

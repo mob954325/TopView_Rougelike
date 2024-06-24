@@ -5,6 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 단순한 수치만 증가하는 슬롯 데이터 클래스
 /// </summary>
+[CreateAssetMenu(fileName = "SlotData_999_", menuName = "ScriptableObjects/UI/SlotData_Value", order = 3)]
+
 public class SlotDatas_Value : SlotDatas
 {
     [Header("증가량 정보")]

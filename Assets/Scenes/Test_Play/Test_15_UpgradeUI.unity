@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1834,7 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  data: {fileID: 0}
 --- !u!1 &1262619570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,7 +2280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  data: {fileID: 0}
 --- !u!1 &1391651776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,8 +2290,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1391651777}
-  - component: {fileID: 1391651779}
   - component: {fileID: 1391651778}
+  - component: {fileID: 1391651779}
   m_Layer: 5
   m_Name: UpgradeUI
   m_TagString: Untagged
@@ -2406,11 +2406,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443850754408094986, guid: e176c0c09775aff4f84f09894103e1ed,
-        type: 3}
-      propertyPath: slotDatas.Array.size
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4089,7 +4084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67293d56192634fa8370c1fe625ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  data: {fileID: 0}
 --- !u!1 &2071494388
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,15 +127,22 @@ public class Player_Battle : MonoBehaviour
         abilityContainer.UpGradeAbiliy(index);
     }
 
-    public bool CheckAbilityContainerIsEmtpy()
+    /// <summary>
+    /// 능력을 가지고 있는지 확인하는 변수
+    /// </summary>
+    /// <param name="code">확인할 능력 코드</param>
+    /// <returns>있으면 true 없으면 false</returns>
+    public bool CheckHasAbility(AbilityCode code)
     {
-        bool result = true;
+        bool result = false;
 
         foreach(var item in abilityContainer.abilities)
         {
-            if (item == null)
+            if (item == null) break;        // 데이터가 없으면 false
+
+            if (item.Data.code == code)     // 데이터가 있는데 같은 능력 코드면 true
             {
-                result = false;
+                result = true;
                 break;
             }
         }

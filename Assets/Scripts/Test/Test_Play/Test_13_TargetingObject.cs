@@ -25,5 +25,10 @@ public class Test_13_TargetingObject : TestBase
     {
         abilityContainer.AddAbility(AbilityCode.Targeting);
     }
+
+    protected override void OnTest4(InputAction.CallbackContext context)
+    {
+        abilityContainer.UpGradeAbiliy(0);
+    }
 }
 #endif

@@ -6,22 +6,30 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class AbilityObject_Targeting : AbilityObjectBase
 {
-    Rigidbody rigid;
-
+    /// <summary>
+    /// 날라갈 방향
+    /// </summary>
     Vector3 dir = Vector3.zero;
+
+    /// <summary>
+    /// 추적 여부
+    /// </summary>
     bool isTracing = false;
 
+    /// <summary>
+    /// 추적 딜레이 시간
+    /// </summary>
     const float delayTime = 0.5f;
-    const float speed = 5f;
 
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
-    }
+    /// <summary>
+    /// 추적 속도
+    /// </summary>
+    const float speed = 5f;
 
     public override void Initialize(float speed, float damage)
     {
         root = transform.root;
+        this.transform.parent = transform.parent;
 
         rotateSpeed = speed;
         this.damage = damage;
@@ -88,6 +96,10 @@ public class AbilityObject_Targeting : AbilityObjectBase
         {
             transform.localRotation = Quaternion.Euler(0, transform.localEulerAngles.y, 0); // 회전값 y만 적용
             transform.localPosition += Time.fixedDeltaTime * transform.forward * speed;
+        }
+        else if (root != null)
+        {
+            transform.localPosition = spawnVector;
         }
     }
 }

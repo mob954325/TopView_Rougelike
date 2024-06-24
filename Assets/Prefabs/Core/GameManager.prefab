@@ -76,12 +76,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b3dcd5e43ecd014eb5a7ede1bf3076a, type: 2}
   - {fileID: 11400000, guid: 23cbcb2cd8bdd0241b3d075ae6fd6f2f, type: 2}
   slotDatas:
-  - {fileID: 11400000, guid: 944145129b711a243ab540ce236c75b1, type: 2}
-  - {fileID: 11400000, guid: 0f0f1dcfd1afe224fa0bb3de95290a3a, type: 2}
-  - {fileID: 11400000, guid: d82f0293d098f7c439b851d93545d177, type: 2}
-  - {fileID: 11400000, guid: 34fba339b99215e4fa2c3a5770f4c93e, type: 2}
-  - {fileID: 11400000, guid: d0a5c53f4e5b588409940c37418ef9e4, type: 2}
-  - {fileID: 11400000, guid: be7dc16c558dcb04ea075bcbaae25d3b, type: 2}
+  - {fileID: 11400000, guid: 02584032b7c7b4e488bdc892c1905aed, type: 2}
+  - {fileID: 11400000, guid: 54bcae23e7854dd4bb602da97addc48c, type: 2}
+  - {fileID: 11400000, guid: a4c59d24252cfee43acfc49cefa921a9, type: 2}
+  - {fileID: 11400000, guid: 94bd56e0e43224242a16a30af42616e8, type: 2}
+  - {fileID: 11400000, guid: c903d50ee2b1a9c4d86f54d70b1d8b67, type: 2}
+  - {fileID: 11400000, guid: 730943e739052c34e85ddefd1668d544, type: 2}
 --- !u!1001 &7169524338483857616
 PrefabInstance:
   m_ObjectHideFlags: 0

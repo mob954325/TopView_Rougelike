@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ability_99_Empty", menuName = "ScriptableObjects/Ability/Ability", order = 1)]
 public class AbilityData : ScriptableObject
 {
+    [Header("능력 정보")]
     /// <summary>
     /// 능력 코드
     /// </summary>
@@ -23,6 +24,7 @@ public class AbilityData : ScriptableObject
     /// </summary>
     public string abilityDesc;
 
+    [Header("값 정보")]
     /// <summary>
     /// 데미지
     /// </summary>
@@ -47,6 +49,11 @@ public class AbilityData : ScriptableObject
     /// 최대 개수
     /// </summary>
     public int maxCount;
+
+    /// <summary>
+    /// 데미지 증가량 ( 활성화 된 투사체 개수가 최대일 때 이만큼 증가 )
+    /// </summary>
+    public float increaseDamageValue;
 
     /// <summary>
     /// 투사체 프리팹 오브젝트

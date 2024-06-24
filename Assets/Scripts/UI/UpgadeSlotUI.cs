@@ -11,8 +11,7 @@ using UnityEngine.UI;
 /// </summary>
 public enum UpgradeSlotType
 {
-    None = 0,
-    Health,
+    Health = 0,
     Attack,
     Defence,
     Speed,
@@ -22,7 +21,7 @@ public enum UpgradeSlotType
 
 public class UpgadeSlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public UpgradeSlotType type;
+    public SlotDatas data;
 
     TextMeshProUGUI slotName;
     TextMeshProUGUI desc;
@@ -47,27 +46,29 @@ public class UpgadeSlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     /// <summary>
     /// 슬롯 내용을 설정하는 함수
     /// </summary>
-    public void SetSlot(UpgradeSlotType type, string name, string desc)
+    public void SetSlot(SlotDatas slotData)
     {
         // 내용 설정
-        slotName.text = name;
-        this.desc.text = desc;
+        data = slotData;
+
+        slotName.text = data.slotName;
+        this.desc.text = data.slotDesc;
     }
 
     /// <summary>
     /// 플레이어 업그래이드 함수
     /// </summary>
-    public void Upgrade()
+    public void Upgrade(Player player)
     {
+        data.Upgrade(player);
         onUpGrade?.Invoke();
-        Debug.Log($"클릭한 오브젝트 이름 : {gameObject.name}");
     }
 
     // 이벤트 ==============================================================
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Upgrade();
+        Upgrade(GameManager.Instance.player);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
