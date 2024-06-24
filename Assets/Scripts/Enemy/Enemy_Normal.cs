@@ -4,21 +4,24 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
+/// 노말 적 타입
+/// </summary>
+public enum EnemyNormalType
+{
+    None = 0, // 정의되지않음
+    Warrior,
+    Mage
+}
+
+/// <summary>
 /// 기본적이 가지는 클래스
 /// </summary>
 public class Enemy_Normal : EnemyBase, IHealth, IBattler
 {
-    public enum Type
-    {
-        None = 0, // 정의되지않음
-        Warrior,
-        Mage
-    }
-
     WeaponBase weapon;
 
     [Header("Enemy Normal Settings")]
-    public Type type;
+    public EnemyNormalType type;
 
     /// <summary>
     /// 추적 방향 벡터
@@ -182,7 +185,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public void OnAttackStart()
     {
-        if(type == Type.Mage) // 마법사 공격 임시 추가 ( 적 타입별 공격 함수 )
+        if(type == EnemyNormalType.Mage) // 마법사 공격 임시 추가 ( 적 타입별 공격 함수 )
         {
             Weapon_Staff currnetWeapon = weapon as Weapon_Staff;
             if (currnetWeapon != null)

@@ -21,5 +21,6 @@ MonoBehaviour:
   coolTime: 5
   minCount: 1
   maxCount: 4
+  increaseDamageValue: 2
   projectilePrefab: {fileID: 8202438615548432312, guid: 9abeb1fdf3c4b224e8d245d0cf4686ed,
     type: 3}
