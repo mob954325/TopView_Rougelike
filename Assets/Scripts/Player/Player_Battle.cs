@@ -22,7 +22,25 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     AbilityContainer abilityContainer;
 
-    float coolTime = 0.0f;
+    /// <summary>
+    /// 능력 쿨타임 측정용
+    /// </summary>
+    float abilityCoolTimeElapsed = 0.0f;
+
+    /// <summary>
+    /// 능력 쿨타임
+    /// </summary>
+    const float abilityCoolTime = 1.0f;
+
+    /// <summary>
+    /// 강공격 쿨타임 측정용
+    /// </summary>
+    float heavyAttackCoolTimeRemain = 0.0f;
+
+    /// <summary>
+    /// 강공격 쿨타임
+    /// </summary>
+    const float heavyAttackCoolTime = 2f;
 
     bool isAttacking = false;
 
@@ -39,14 +57,19 @@ public class Player_Battle : MonoBehaviour
         player.playerInput.onHeavyAttack += OnHeavyAttack;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        coolTime += Time.fixedDeltaTime;
+        abilityCoolTimeElapsed += Time.deltaTime;
 
-        if (coolTime > 1f)
+        if (abilityCoolTimeElapsed > abilityCoolTime)
         {
-            coolTime = 0f;
+            abilityCoolTimeElapsed = 0f;
             AbilityAttack();
+        }
+
+        if(heavyAttackCoolTimeRemain > 0f)
+        {
+            heavyAttackCoolTimeRemain -= Time.deltaTime;
         }
     }
 
@@ -64,6 +87,11 @@ public class Player_Battle : MonoBehaviour
     /// </summary>
     private void OnHeavyAttack()
     {
+        if (heavyAttackCoolTimeRemain > 0f)
+            return;
+
+        heavyAttackCoolTimeRemain = heavyAttackCoolTime;
+
         player.OnHeavyAttack();
     }
 
