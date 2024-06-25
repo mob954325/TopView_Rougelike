@@ -14,8 +14,6 @@ public class Enemy_Boss_Warrior : Enemy_Normal
 
     Enemy_AttackArea attackArea;
 
-    Vector3 NextAttackPosition;
-
     public float rotateSpeed = 5f;
 
     int HashToAttack = Animator.StringToHash("Attack");
@@ -60,31 +58,32 @@ public class Enemy_Boss_Warrior : Enemy_Normal
         if (manager.player != null)
         {
             target = manager.player.gameObject;             // 타겟 지정             
-        }
+        }       
 
-        NextAttackPosition = target.transform.position - transform.position;
-        transform.LookAt(NextAttackPosition);                                        // 바라보는 방향
-        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);             // 수평 회전 외 전부 막기
+        //transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);             // 수평 회전 외 전부 막기
 
-        // 플레이어에게 돌아보기
-        // 일정 각도가 되면 돌진 후 공격 시작
-
-        CurrentState = EnemyState.Tracing;  // 상태전환
+        //CurrentState = EnemyState.Tracing;  // 상태전환
     }
 
     protected override void OnTracing()
     {
-        dirVec = NextAttackPosition - transform.position;
+        dirVec = target.transform.position - transform.position;
 
-        if (dirVec.sqrMagnitude < range * range) // 범위 안에 플레이어가 있으면 
-        {
-            CurrentState = EnemyState.Attack;   // 공격
-        }
-        else
-        {
+       if (dirVec.sqrMagnitude < range * range) // 범위 안에 플레이어가 있으면 
+       {
+           CurrentState = EnemyState.Attack;   // 공격
+       }
+       else
+       {
             rigid.MovePosition(transform.position + Time.fixedDeltaTime * dirVec.normalized * tracingSpeed);
+
+            Quaternion toRotation = Quaternion.LookRotation(dirVec, transform.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         }
     }
+
+    float attackTimer = 0f;
 
     protected override void OnAttack()
     {
@@ -96,10 +95,10 @@ public class Enemy_Boss_Warrior : Enemy_Normal
             CurrentState = EnemyState.Tracing;   // 추적
         }
 
-        if(!isAttack)
+        if (!isAttack)
         {
             float rand = Random.value;
-            if(rand > 0.2f)
+            if (rand > 0.2f)
             {
                 animator.SetTrigger(HashToAttack);
                 isAttack = true;
@@ -108,6 +107,18 @@ public class Enemy_Boss_Warrior : Enemy_Normal
             {
                 animator.SetTrigger(HashToTaunt);
                 isAttack = true;
+            }
+        }
+        else // 공격 중 피격 받으면 상태 안변하는 거 방지 -> 3초 지나면 추적상태 전환
+        {
+            attackTimer += Time.deltaTime;
+            Debug.Log(attackTimer);
+
+            if(attackTimer > 3f)
+            {
+                attackTimer = 0f;
+                isAttack = false;
+                CurrentState = EnemyState.Tracing;   // 추적
             }
         }
     }
