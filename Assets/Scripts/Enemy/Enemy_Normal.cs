@@ -26,12 +26,12 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// <summary>
     /// 추적 방향 벡터
     /// </summary>
-    Vector3 dirVec;
+    protected Vector3 dirVec;
 
     /// <summary>
     /// 공격하는지 확인하는 임시 변수
     /// </summary>
-    bool isAttack = false;
+    protected bool isAttack = false;
 
     [Header("전투")]
     /// <summary>
@@ -71,6 +71,8 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
             {
                 CurrentState = EnemyState.Dead; // 사망 상태로 변경
             }
+
+            onChangeHealth?.Invoke();
         }
     }
 
@@ -91,12 +93,18 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public System.Action onDie { get; set; }
 
+    /// <summary>
+    /// 체력이 변경될 때 호출되는 델리게이트
+    /// </summary>
+    public System.Action onChangeHealth;
+
     protected override void Awake()
     {
         base.Awake();
-        weapon = GetComponentInChildren<WeaponBase>();
-
         currentHealth = maxHp;
+
+        // 무기 찾기
+        weapon = GetComponentInChildren<WeaponBase>();
 
         if(weapon == null) // 무기가 없을 때 임시 오브젝트 생성
         {
@@ -108,6 +116,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
             weapon = obj.GetComponent<WeaponBase>();
         }
 
+        // 센서로 플레이어 찾기
         onFindPlayer = OnFindTarget;
     }
 
@@ -162,6 +171,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         base.OnDead();
         StartCoroutine(DisableObject(2f));
         // 코인 드랍 작성
+        Factory.Instance.SpawnItem(ItemCodes.Coin, transform.position, Quaternion.identity);
     }
 
     // IBattler 함수 ======================================================================================
@@ -183,7 +193,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// <summary>
     /// 공격 시작시 호출되는 애니메이션 이벤트 함수
     /// </summary>
-    public void OnAttackStart()
+    public virtual void OnAttackStart()
     {
         if(type == EnemyNormalType.Mage) // 마법사 공격 임시 추가 ( 적 타입별 공격 함수 )
         {
@@ -203,7 +213,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// <summary>
     /// 공격이 끝날 때 호출되는 애니메이션 이벤트 함수
     /// </summary>
-    public void OnAttackEnd()
+    public virtual void OnAttackEnd()
     {
         weapon.InactiveWeapon();
 
