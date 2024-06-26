@@ -72,14 +72,14 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
                 CurrentState = EnemyState.Dead; // 사망 상태로 변경
             }
 
-            onChangeHealth?.Invoke();
+            onChangeHealth?.Invoke(currentHealth);
         }
     }
 
     /// <summary>
     /// 최대체력
     /// </summary>
-    public float maxHp = 20f;
+    public float maxHealth = 20f;
     public float MaxHealth => CurrentHealth;
 
 
@@ -96,12 +96,12 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// <summary>
     /// 체력이 변경될 때 호출되는 델리게이트
     /// </summary>
-    public System.Action onChangeHealth;
+    public System.Action<float> onChangeHealth;
 
     protected override void Awake()
     {
         base.Awake();
-        currentHealth = maxHp;
+        currentHealth = maxHealth;
 
         // 무기 찾기
         weapon = GetComponentInChildren<WeaponBase>();
@@ -142,8 +142,6 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
         }
     }
 
-    float attackTimer = 0f;
-
     protected override void OnAttack()
     {
         if (dirVec.sqrMagnitude > range * range) // 공격 범위에 벗어나면
@@ -156,14 +154,17 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
             // 공격 시작
             animator.SetTrigger("Attack");
             isAttack = true;
+        }
+        else
+        {
             attackTimer += Time.deltaTime;
 
-            if(attackTimer > 3f) // 공격 중 피격 받으면 상태 안변하는 거 방지 -> 3초 지나면 추적상태 전환
+            if (attackTimer > maxAttackTime) // 공격 중 피격 받으면 상태 안변하는 거 방지 -> 2초 지나면 추적상태 전환
             {
                 attackTimer = 0f;
                 isAttack = false;
                 CurrentState = EnemyState.Idle;
-            }
+            }            
         }
 
     }

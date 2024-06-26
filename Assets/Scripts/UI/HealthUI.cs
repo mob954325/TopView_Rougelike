@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    Slider slider;
+    protected Slider slider;
 
     private void Awake()
     {

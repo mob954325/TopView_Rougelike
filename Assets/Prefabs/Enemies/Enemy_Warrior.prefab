@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   tracingSpeed: 4.5
-  range: 10
+  range: 2
   type: 1
   attackPower: 5
   defencePower: 1

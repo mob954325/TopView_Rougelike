@@ -7,6 +7,7 @@ public class Factory : Singleton<Factory>
 {
     Pool_EnemyMage enemyMagePool;
     Pool_EnemyWarrior enemyWarriorPool;
+    Pool_EnemyWarrior_Boss enemyWarriorBossPool;
     Pool_EnemyMage_Projectile enemyMage_ProjectilePool;
     Pool_Bomb bombPool;
     Pool_Item itemPool;
@@ -21,6 +22,9 @@ public class Factory : Singleton<Factory>
 
         enemyWarriorPool = GetComponentInChildren<Pool_EnemyWarrior>();
         enemyWarriorPool.Initialize();
+
+        enemyWarriorBossPool = GetComponentInChildren<Pool_EnemyWarrior_Boss>();
+        enemyWarriorBossPool.Initialize();
 
         enemyMage_ProjectilePool = GetComponentInChildren<Pool_EnemyMage_Projectile>();
         enemyMage_ProjectilePool.Initialize();
@@ -45,17 +49,36 @@ public class Factory : Singleton<Factory>
         return enemyWarriorPool.GetObject(position, rotation).gameObject;
     }
 
-    public GameObject SpawnEnemyByCode(EnemyNormalType code, Vector3 position, Quaternion rotation)
+    public GameObject SpawnEnemyWarriorBoss(Vector3 position, Quaternion rotation)
+    {
+        return enemyWarriorBossPool.GetObject(position, rotation).gameObject;
+    }
+
+    public GameObject SpawnEnemyByCode(EnemyNormalType code, Vector3 position, Quaternion rotation, bool isBoss = false)
     {
         GameObject result = null;
 
         switch(code)
         {
             case EnemyNormalType.Warrior:
-                result = enemyWarriorPool.GetObject(position, rotation).gameObject;
+                if(isBoss)
+                {
+                    result = SpawnEnemyWarriorBoss(position, rotation);
+                }
+                else
+                {
+                    result = SpawnEnemyWarrior(position, rotation);
+                }
                 break;
             case EnemyNormalType.Mage:
-                result = enemyMagePool.GetObject(position, rotation).gameObject;
+                if (isBoss)
+                {                    
+                    result = SpawnEnemyMage(position, rotation);
+                }
+                else
+                {
+                    result = SpawnEnemyMage(position, rotation);
+                }
                 break;
             default:
                 result = new GameObject($"Empty Enemy ( Created )");

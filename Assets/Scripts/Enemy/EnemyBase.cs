@@ -81,6 +81,16 @@ public class EnemyBase : PoolObject
     float delayTime = 1f;
 
     /// <summary>
+    /// 공격 타이머 ( 공격 후 측정하는 시간 )
+    /// </summary>
+    protected float attackTimer = 0f;
+
+    /// <summary>
+    /// 공격 타이머 최대 시간 ( 공격 후 대기 행동으로 돌아가기 위한 시간 )
+    /// </summary>
+    protected float maxAttackTime = 2f;
+
+    /// <summary>
     /// 현재 이동 속도
     /// </summary>
     float Speed;
