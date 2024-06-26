@@ -86,4 +86,12 @@ public class Player_InputSettings : MonoBehaviour
     {
         onHeavyAttack?.Invoke();
     }
+
+    /// <summary>
+    /// 플레이어 조작을 막는 함수
+    /// </summary>
+    public void DisablePlayInput()
+    {
+        playerInputAction.Player.Disable();
+    }
 }

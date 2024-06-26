@@ -129,6 +129,11 @@ public class Player : MonoBehaviour, IHealth, IBattler
     }
 
     /// <summary>
+    /// 추가로 증가한 공격력
+    /// </summary>
+    private float additionalAttackPower = 0f;
+
+    /// <summary>
     /// 캐릭터 현재 방어력 ( 가진 방어력만큼 데미지가 덜 들어감)
     /// </summary>
     public float defencePower = 1f;
@@ -137,6 +142,11 @@ public class Player : MonoBehaviour, IHealth, IBattler
         get => defencePower;
         set => defencePower = value;
     }
+
+    /// <summary>
+    /// 추가로 증가한 방어력
+    /// </summary>
+    private float additionalDefencePower = 0f;
 
     // Movement =========================================================
 
@@ -315,7 +325,8 @@ public class Player : MonoBehaviour, IHealth, IBattler
     public void OnDie()
     {
         animator.SetTrigger(HashToDeath);
-        // 조작 막기 
+        playerInput.DisablePlayInput();
+        GameManager.Instance.EndGame(GetPlayerScore(), false);
     }
 
     // 아이템 관련 상호작용 함수 ================================================
@@ -409,6 +420,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
         return result;
     }
+    // 업그레이드 함수 ==========================================================
 
     /// <summary>
     /// 속도를 증가 시키는 함수
@@ -429,6 +441,24 @@ public class Player : MonoBehaviour, IHealth, IBattler
         CurrentHealth = MaxHealth;
     }
 
+    /// <summary>
+    /// 공격력 증가 함수
+    /// </summary>
+    /// <param name="value">증가할 공격력</param>
+    public void IncreaseAttackPower(float value)
+    {
+        additionalAttackPower += value;
+    }
+
+    /// <summary>
+    /// 방어력 증가 함수
+    /// </summary>
+    /// <param name="value">증가할 방어력</param>
+    public void IncreaseDefencePower(float value)
+    {
+        additionalDefencePower += value;
+    }
+
     // 기타 함수 =============================================================
 
     /// <summary>
@@ -437,6 +467,21 @@ public class Player : MonoBehaviour, IHealth, IBattler
     public GameObject[] GetDetectedObjects()
     {
         return sensor.detectedObjects.ToArray();
+    }
+
+    /// <summary>
+    /// 플레이어의 게임 점수를 반환하는 함수
+    /// </summary>
+    /// <returns>int형 게임 점수 값</returns>
+    public int GetPlayerScore()
+    {
+        return (int)(coinAmount +
+                    BombCount * 20 +
+                    KeyCount * 100 +
+                    additionalAttackPower * 200 +
+                    additionalDefencePower * 200 +
+                    addtionalSpeed * 100);
+        // 킬카운트 추가 예정
     }
 
 

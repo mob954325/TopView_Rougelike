@@ -20,10 +20,10 @@ public class SlotDatas_Value : SlotDatas
                 player.InCreaseMaxHealth(Mathf.Floor(value));
                 break;
             case UpgradeSlotType.Attack:
-                player.attackPower += value;
+                player.IncreaseAttackPower(value);
                 break;
             case UpgradeSlotType.Defence:
-                player.defencePower += value;
+                player.IncreaseDefencePower(value);
                 break;
             case UpgradeSlotType.Speed:
                 player.InCreaseSpeed(value);
