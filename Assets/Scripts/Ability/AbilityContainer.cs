@@ -26,7 +26,7 @@ public class AbilityContainer : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
 
         Ability ability = obj.AddComponent<Ability>(); // 능력 스크립트 추가
-        ability.Initialize(ItemDataManager.Instance.abilityDatas[(int)code]); // 초기화
+        ability.Initialize(DataManager.Instance.abilityDatas[(int)code]); // 초기화
         abilities[index] = ability;
         index++;
     }

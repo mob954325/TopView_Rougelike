@@ -38,7 +38,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         get => keyCount;
         set
         {
-            keyCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Key].maxCount);
+            keyCount = (uint)Mathf.Clamp(value, 0, DataManager.Instance.itemDatas[(int)ItemCodes.Key].maxCount);
             onChangeKey?.Invoke(keyCount);
         }
     }
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         get => coinAmount;
         set
         {
-            coinAmount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Coin].maxCount);
+            coinAmount = (uint)Mathf.Clamp(value, 0, DataManager.Instance.itemDatas[(int)ItemCodes.Coin].maxCount);
             onChangeCoin?.Invoke(coinAmount);
         }
     }
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         get => bombCount;
         set
         {
-            bombCount = (uint)Mathf.Clamp(value, 0, ItemDataManager.Instance.itemDatas[(int)ItemCodes.Bomb].maxCount);
+            bombCount = (uint)Mathf.Clamp(value, 0, DataManager.Instance.itemDatas[(int)ItemCodes.Bomb].maxCount);
             onChangeBomb?.Invoke(bombCount);
         }
     }

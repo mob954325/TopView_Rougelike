@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 데이터 관리 매니저
 /// </summary>
-public class ItemDataManager : Singleton<ItemDataManager>
+public class DataManager : Singleton<DataManager>
 {
     /// <summary>
     /// 아이템 정보가 저장되어있는 배열 (아이템 코드 순 정렬)

@@ -37,7 +37,7 @@ public class UpgradeUI : MonoBehaviour
         datas = new SlotDatas[dataCount];
         for(int i = 0; i < datas.Length; i++)
         {
-            datas[i] = ItemDataManager.Instance.slotDatas[i];
+            datas[i] = DataManager.Instance.slotDatas[i];
         }
 
         canvasGroup = GetComponent<CanvasGroup>();

@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 6221136440227922078}
   - component: {fileID: 171702025721344590}
   - component: {fileID: 2566167444205856646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2026,7 +2026,7 @@ MonoBehaviour:
   attackPower: 5
   defencePower: 1
   currentHealth: 0
-  maxHp: 20
+  maxHealth: 20
 --- !u!65 &171702025721344590
 BoxCollider:
   m_ObjectHideFlags: 0

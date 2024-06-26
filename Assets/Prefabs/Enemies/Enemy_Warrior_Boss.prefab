@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 8093953785379098452}
   - component: {fileID: 2084650525446769250}
   - component: {fileID: 5668172782781155891}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Warrior_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -734,7 +734,7 @@ MonoBehaviour:
   attackPower: 5
   defencePower: 3
   currentHealth: 0
-  maxHp: 10
+  maxHealth: 20
   rotateSpeed: 5
 --- !u!95 &8093953785379098452
 Animator:

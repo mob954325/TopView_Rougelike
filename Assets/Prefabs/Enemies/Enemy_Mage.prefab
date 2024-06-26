@@ -1822,7 +1822,7 @@ GameObject:
   - component: {fileID: 6212887800331048821}
   - component: {fileID: 8487636526759960042}
   - component: {fileID: 3667691181622576164}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1894,7 +1894,7 @@ MonoBehaviour:
   attackPower: 5
   defencePower: 1
   currentHealth: 0
-  maxHp: 20
+  maxHealth: 20
 --- !u!54 &8487636526759960042
 Rigidbody:
   m_ObjectHideFlags: 0

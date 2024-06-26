@@ -10,7 +10,7 @@ public class Pool_Item : Pool<ItemObject>
     public GameObject GetItemObject(ItemCodes code, Vector3 position, Quaternion rotation)
     {
         ItemObject obj = GetObject(position, rotation);
-        obj.Initialize(ItemDataManager.Instance.itemDatas[(int)code]);  // 아이템 오브젝트 초기화
+        obj.Initialize(DataManager.Instance.itemDatas[(int)code]);  // 아이템 오브젝트 초기화
 
         return obj.gameObject;
     }
