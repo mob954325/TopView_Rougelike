@@ -56,11 +56,6 @@ public class GameManager : Singleton<GameManager>
         playerCam = GetComponentInChildren<Player_Camera>();
     }
 
-    protected override void Initialized()
-    {
-        SpawnPlayer(Vector3.zero);
-    }
-
     void FixedUpdate()
     {
         if(isGameStart)
@@ -89,18 +84,30 @@ public class GameManager : Singleton<GameManager>
             player = playerObj.GetComponent<Player>();
 
             isPlayerSpanwed = true; // 스폰 확인 
-
-            // 스폰 후 설정
-            playerCam.Initialize(player); // 카메라 세팅
-
-            // 게임 설정 초기화
-            isGameStart = true;
-            playTime = 0f;
-
             result = true;
         }
 
         return result;  
+    }
+
+    /// <summary>
+    /// 게임을 실행하는 함수
+    /// </summary>
+    public void StartGame()
+    {
+        // 플레이어 생성
+        SpawnPlayer(Vector3.zero);
+        // 맵 생성
+        MapManager.Instance.generator.OnGenerateStart();
+        // UI 생성
+        onGameStart?.Invoke();
+
+        // 스폰 후 설정
+        playerCam.Initialize(player); // 카메라 세팅
+
+        // 게임 설정 초기화
+        isGameStart = true;
+        playTime = 0f;
     }
 
     /// <summary>

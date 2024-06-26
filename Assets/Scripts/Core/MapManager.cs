@@ -12,7 +12,7 @@ public class MapManager : Singleton<MapManager>
     /// <summary>
     /// 맵 생성기
     /// </summary>
-    MapGenerator generator;
+    public MapGenerator generator;
 
     [Header("맵 정보")]
     /// <summary>
@@ -20,8 +20,16 @@ public class MapManager : Singleton<MapManager>
     /// </summary>
     [SerializeField]RoomObject[] cellObject;
 
+    Enemy_Boss_Warrior bossObj;
+
     protected override void PreInitialize()
     {
         generator = GetComponentInChildren<MapGenerator>();    
+    }
+
+    public void SetBossClear(Enemy_Boss_Warrior obj)
+    {
+        bossObj = obj;
+        bossObj.onDie += () => { GameManager.Instance.EndGame(GameManager.Instance.player.GetPlayerScore(), true); }
     }
 }

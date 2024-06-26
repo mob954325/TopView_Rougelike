@@ -9,6 +9,11 @@ public class Test_17_Boss : TestBase
     public Enemy_Boss_Warrior boss;
     public BossHealthUI ui;
 
+    void Start()
+    {
+        GameManager.Instance.SpawnPlayer(Vector3.zero);
+    }
+
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         Factory.Instance.SpawnEnemyByCode(EnemyNormalType.Warrior, Vector3.zero, Quaternion.identity, true);

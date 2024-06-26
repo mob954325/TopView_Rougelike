@@ -38,8 +38,6 @@ public class Enemy_Boss_Warrior : Enemy_Normal
         manager = GameManager.Instance;
         currentHealth = maxHealth;
         spawnedEnemy = new List<GameObject>();
-
-
     }
 
     protected override void OnDisable()

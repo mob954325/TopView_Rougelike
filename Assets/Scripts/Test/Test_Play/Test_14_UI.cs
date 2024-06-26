@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class Test_14_UI : TestBase
 {
+    void Start()
+    {
+        GameManager.Instance.SpawnPlayer(Vector3.zero);
+    }
+
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         Factory.Instance.SpawnItem(ItemCodes.Coin, transform.position, Quaternion.identity);

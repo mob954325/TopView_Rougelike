@@ -103,7 +103,10 @@ public class MapGenerator : MonoBehaviour
 
     // 생명 주기 함수  ========================================================================
 
-    private void Start()
+    /// <summary>
+    /// 맵 생성을 시작할 때 호출되는 함수
+    /// </summary>
+    public void OnGenerateStart()
     {
        width = mapSize;
        height = mapSize;
@@ -298,14 +301,14 @@ public class MapGenerator : MonoBehaviour
         switch (type)
         {
             case RoomType.Start:
-                GameManager.Instance.SpawnPlayer(pos);
+                GameManager.Instance.player.transform.position = pos; //
                 break;
             case RoomType.Chest:
                 obj = Factory.Instance.SpawnChest(pos, Quaternion.identity);
                 mapRooms[index].roomObjects[0] = obj;
                 break;
             case RoomType.Boss:
-                obj = Factory.Instance.SpawnEnemyWarrior(pos, Quaternion.identity);
+                obj = Factory.Instance.SpawnEnemyWarriorBoss(pos, Quaternion.identity);
                 mapRooms[index].roomObjects[0] = obj;
                 break;
             case RoomType.Normal:

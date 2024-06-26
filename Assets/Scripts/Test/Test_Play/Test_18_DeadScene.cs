@@ -9,12 +9,18 @@ public class Test_18_DeadScene : TestBase
     Player player;
 
 
-/*             (int)(coinAmount +
-                    BombCount* 20 +
-                    KeyCount* 100 +
-                    additionalAttackPower* 200 +
-                    additionalDefencePower* 200 +
-                    addtionalSpeed* 100);*/
+    /*             (int)(coinAmount +
+                        BombCount* 20 +
+                        KeyCount* 100 +
+                        additionalAttackPower* 200 +
+                        additionalDefencePower* 200 +
+                        addtionalSpeed* 100);*/
+
+    void Start()
+    {
+        GameManager.Instance.SpawnPlayer(Vector3.zero);
+    }
+
     protected override void OnTest1(InputAction.CallbackContext context)
     {
         player = FindFirstObjectByType<Player>();

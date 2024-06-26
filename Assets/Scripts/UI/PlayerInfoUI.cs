@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class PlayerInfoUI : MonoBehaviour
 {
     Player player;
@@ -14,10 +15,10 @@ public class PlayerInfoUI : MonoBehaviour
     TextMeshProUGUI KeyText;
     TextMeshProUGUI CoinText;
 
-    private void Start()
-    {
-        player = GameManager.Instance.player;
+    CanvasGroup canvasGroup;
 
+    void Awake()
+    {
         Transform child = transform.GetChild(0);
         healthUI = child.GetComponent<HealthUI>();
         HealthText = child.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -31,12 +32,14 @@ public class PlayerInfoUI : MonoBehaviour
         child = transform.GetChild(3).GetChild(1);
         CoinText = child.GetComponent<TextMeshProUGUI>();
 
-        player.onChangeBomb += RefreshBomb;
-        player.onChangeCoin += RefreshCoin;
-        player.onChangeKey += RefreshKey;
-        player.onChangeHealth += RefreshHealth;
+        canvasGroup = GetComponent<CanvasGroup>();
 
-        Initialize();
+        HideUI();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.onGameStart += Initialize;
     }
 
     /// <summary>
@@ -44,9 +47,18 @@ public class PlayerInfoUI : MonoBehaviour
     /// </summary>
     void Initialize()
     {
+        player = GameManager.Instance.player;
+
+        player.onChangeBomb += RefreshBomb;
+        player.onChangeCoin += RefreshCoin;
+        player.onChangeKey += RefreshKey;
+        player.onChangeHealth += RefreshHealth;
+
         BombText.text = $"{player.BombCount}";
         CoinText.text = $"{player.CoinAmount}";
         KeyText.text = $"{player.KeyCount}";
+
+        ShowUI();   
     }
 
     /// <summary>
@@ -83,5 +95,15 @@ public class PlayerInfoUI : MonoBehaviour
 
         healthUI.SetSliderValue(curHealth / maxHealth);
         HealthText.text = $"{curHealth:F0} / {maxHealth:F0} ";
+    }
+
+    public void ShowUI()
+    {
+        canvasGroup.alpha = 1f;
+    }
+
+    public void HideUI()
+    {
+        canvasGroup.alpha = 0f;
     }
 }
