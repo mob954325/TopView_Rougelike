@@ -115,6 +115,18 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void EndGame(int score, bool isClear)
     {
+        // 싱글톤 초기화 진행
+        MapManager.Instance.generator.DestoryMap();
+        Factory.Instance.ResetFactory();
+
+        // 플레이어 초기화 진행
+        Destroy(player.gameObject);
+        isPlayerSpanwed = false;
+
+        // 게임 끝을 알림
         onGameEnd?.Invoke(score, isClear);
+
+        onGameStart = null;
+        onGameEnd = null;
     }
 }

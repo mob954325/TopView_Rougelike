@@ -13,9 +13,9 @@ public class Factory : Singleton<Factory>
     Pool_Item itemPool;
     Pool_Chest chestPool;
 
-    protected override void Initialized()
+    protected override void PreInitialize()
     {
-        base.Initialized();
+        base.PreInitialize();
 
         enemyMagePool = GetComponentInChildren<Pool_EnemyMage>();
         enemyMagePool.Initialize();
@@ -106,5 +106,16 @@ public class Factory : Singleton<Factory>
     public GameObject SpawnChest(Vector3 position, Quaternion rotation)
     {
         return chestPool.GetObject(position, rotation).gameObject;
+    }
+
+    public void ResetFactory()
+    {
+        enemyMagePool.DisableAllObjects();
+        enemyWarriorPool.DisableAllObjects();
+        enemyWarriorBossPool.DisableAllObjects();
+        enemyMage_ProjectilePool.DisableAllObjects();
+        bombPool.DisableAllObjects();
+        itemPool.DisableAllObjects();
+        chestPool.DisableAllObjects();
     }
 }

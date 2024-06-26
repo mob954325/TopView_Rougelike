@@ -314,6 +314,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
 
                 // 밀치기
                 Vector3 dir = objs[i].transform.position - this.transform.position;
+                dir = new Vector3(dir.x, 0f, dir.z);
                 rigidbody.AddForce(dir * 5f, ForceMode.Impulse);
             }
         }

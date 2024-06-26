@@ -134,4 +134,18 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
 
         Debug.LogWarning($"{this.gameObject.name} 크기 증가 [{prevCount} -> {totalCount}]");
     }
+
+    /// <summary>
+    /// 배열에 있는 모든 오브젝트를 비활성화 하는 함수
+    /// </summary>
+    public void DisableAllObjects()
+    {
+        for(int i = 0; i < pool.Length; i++)
+        {
+            if (pool[i].gameObject.activeSelf)
+            {
+                pool[i].gameObject.SetActive(false);
+            }
+        }
+    }
 }

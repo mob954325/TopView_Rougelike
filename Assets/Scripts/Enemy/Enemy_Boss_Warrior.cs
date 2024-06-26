@@ -126,6 +126,12 @@ public class Enemy_Boss_Warrior : Enemy_Normal
     protected override void OnDead()
     {
         base.OnDead(); // 사망 트리거
+
+        // 모든 소환 몹 비활성화
+        foreach(var item in spawnedEnemy)
+        {
+            item.SetActive(false);
+        }
     }
     
     // 기타 함수 ======================================================================

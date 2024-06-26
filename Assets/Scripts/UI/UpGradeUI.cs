@@ -35,12 +35,17 @@ public class UpgradeUI : MonoBehaviour
         // 데이터 초기화
         int dataCount = Enum.GetValues(typeof(UpgradeSlotType)).Length;
         datas = new SlotDatas[dataCount];
-        for(int i = 0; i < datas.Length; i++)
+
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Start()
+    {
+        // 데이터 가져오기
+        for (int i = 0; i < datas.Length; i++)
         {
             datas[i] = DataManager.Instance.slotDatas[i];
         }
-
-        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     /// <summary>

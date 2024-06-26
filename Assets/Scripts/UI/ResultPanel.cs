@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -46,6 +47,7 @@ public class ResultPanel : MonoBehaviour
     {
         GameManager.Instance.onGameEnd += (value, result) =>
         {
+            GameManager.Instance.player.playerInput.DisablePlayInput(); // 플레이어 조작 막기
             SetResult(value, result);   // 결과값 설정 후
             ShowPanel();                // 패널 공개
         };
@@ -95,5 +97,6 @@ public class ResultPanel : MonoBehaviour
     private void BackToMenu()
     {
         // 메뉴로 돌아가기
+        SceneManager.LoadScene("Main");
     }
 }

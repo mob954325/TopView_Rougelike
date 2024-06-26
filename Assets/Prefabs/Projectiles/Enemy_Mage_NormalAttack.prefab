@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8534887847700877109}
   - component: {fileID: 5374311912769632367}
   - component: {fileID: 7928537667731319955}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_Mage_NormalAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5898996584930354631}
   - component: {fileID: 1124493165946236029}
   - component: {fileID: 2765871694141811376}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

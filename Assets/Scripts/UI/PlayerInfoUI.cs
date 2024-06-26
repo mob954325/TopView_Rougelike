@@ -37,7 +37,7 @@ public class PlayerInfoUI : MonoBehaviour
         HideUI();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         GameManager.Instance.onGameStart += Initialize;
     }
@@ -57,6 +57,7 @@ public class PlayerInfoUI : MonoBehaviour
         BombText.text = $"{player.BombCount}";
         CoinText.text = $"{player.CoinAmount}";
         KeyText.text = $"{player.KeyCount}";
+        RefreshHealth(player.CurrentHealth);
 
         ShowUI();   
     }
@@ -88,13 +89,12 @@ public class PlayerInfoUI : MonoBehaviour
         KeyText.text = value.ToString();
     }
 
-    void RefreshHealth(float value)
+    void RefreshHealth(float currnetHealth)
     {
         float maxHealth = player.MaxHealth;
-        float curHealth = player.CurrentHealth;
 
-        healthUI.SetSliderValue(curHealth / maxHealth);
-        HealthText.text = $"{curHealth:F0} / {maxHealth:F0} ";
+        healthUI.SetSliderValue(currnetHealth / maxHealth);
+        HealthText.text = $"{currnetHealth:F0} / {maxHealth:F0} ";
     }
 
     public void ShowUI()

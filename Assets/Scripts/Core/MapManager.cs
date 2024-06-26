@@ -18,18 +18,36 @@ public class MapManager : Singleton<MapManager>
     /// <summary>
     /// 맵의 셀 오브젝트들
     /// </summary>
-    [SerializeField]RoomObject[] cellObject;
+    [SerializeField] RoomObject[] cellObject;
 
-    Enemy_Boss_Warrior bossObj;
+    // UI 클래스 ==========================================================
+
+    /// <summary>
+    /// 업그레이드 UI 클래스
+    /// </summary>
+    UpgradeUI upgradeUI;
+
+    /// <summary>
+    /// 업그레이드 UI 접근 프로퍼티
+    /// </summary>
+    public UpgradeUI UpGradeUI => upgradeUI;
+
+    /// <summary>
+    /// 보스 체력 UI 클래스
+    /// </summary>
+    BossHealthUI bossHealthUI;
+
+    /// <summary>
+    /// 보스 체력 UI 접근용 프로퍼티
+    /// </summary>
+    public BossHealthUI BossHealthUI => bossHealthUI;   
+
+    // 함수 ==========================================================
 
     protected override void PreInitialize()
     {
-        generator = GetComponentInChildren<MapGenerator>();    
-    }
-
-    public void SetBossClear(Enemy_Boss_Warrior obj)
-    {
-        bossObj = obj;
-        bossObj.onDie += () => { GameManager.Instance.EndGame(GameManager.Instance.player.GetPlayerScore(), true); }
+        generator = GetComponentInChildren<MapGenerator>();
+        upgradeUI = FindAnyObjectByType<UpgradeUI>();
+        bossHealthUI = FindAnyObjectByType<BossHealthUI>();
     }
 }

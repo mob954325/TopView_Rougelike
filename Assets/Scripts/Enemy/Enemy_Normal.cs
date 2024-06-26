@@ -181,7 +181,9 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     protected override void OnDead()
     {
         base.OnDead();
+        onDie?.Invoke();
         StartCoroutine(DisableObject(2f));
+
         // 코인 드랍 작성
         Factory.Instance.SpawnItem(ItemCodes.Coin, transform.position, Quaternion.identity);
     }

@@ -224,6 +224,12 @@ public class MapGenerator : MonoBehaviour
                         if (mapRooms[index].Type == RoomType.Normal) // 기본 방일 때만 스폰
                         {
                             SpawnRandomItems(mapRooms[index].transform.localPosition + new Vector3(mapObjLength * 0.5f, 1.2f, mapObjLength * 0.5f)); // 아이템 스폰 ( 위치 : 맵 중앙 )
+                            MapManager.Instance.UpGradeUI.OpenPanel();
+                        }
+
+                        if (mapRooms[index].Type == RoomType.Boss)
+                        {
+                            MapManager.Instance.BossHealthUI.ShowUI();
                         }
                     };
 
@@ -309,6 +315,12 @@ public class MapGenerator : MonoBehaviour
                 break;
             case RoomType.Boss:
                 obj = Factory.Instance.SpawnEnemyWarriorBoss(pos, Quaternion.identity);
+                obj.GetComponent<Enemy_Normal>().onDie += () => 
+                {
+                    GameManager.Instance.EndGame(GameManager.Instance.player.GetPlayerScore(), true);
+                    MapManager.Instance.BossHealthUI.HideUI();
+                };  // 보스 잡으면 클리어 패널 등장
+
                 mapRooms[index].roomObjects[0] = obj;
                 break;
             case RoomType.Normal:
@@ -484,6 +496,23 @@ public class MapGenerator : MonoBehaviour
         else
         {
             Debug.LogWarning($"{mapRooms[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 모든 맵 오브젝트를 파괴하는 함수 (초기화 용)
+    /// </summary>
+    public void DestoryMap()
+    {
+        if (MapRooms == null)
+            return;
+
+        foreach(var item in MapRooms)
+        {
+            if(item != null)
+            {
+                Destroy(item.gameObject);
+            }
         }
     }
 
