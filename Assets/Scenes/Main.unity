@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -644,6 +644,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
+        type: 3}
+      propertyPath: mapSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
+        type: 3}
+      propertyPath: cellObject
+      value: 
+      objectReference: {fileID: 6151149897330074605, guid: 4ce139085432f0845b989f36d95b696d,
+        type: 3}
+    - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
+        type: 3}
+      propertyPath: mapObjLength
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214892452002833999, guid: 7c462890c80e60d4b9c33a203dfeb06f,
+        type: 3}
+      propertyPath: maxChestRoomCount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6902337389588956609, guid: 7c462890c80e60d4b9c33a203dfeb06f,
         type: 3}
