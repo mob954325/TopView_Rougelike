@@ -94,8 +94,11 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     RoomObject StartRoom => startRoom;
 
+    List<RoomObject> bossRoomCandidates;    // 보스방 후보 리스트
+    List<RoomObject> chestRoomCandidates;  // 상자방 후보 리스트
+
     // 델리게이트 =============================================================================
-    
+
     /// <summary>
     /// 생성이 완료되면 실행되는 델리게이트
     /// </summary>
@@ -141,21 +144,30 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     void GenerateMap()
     {
+        // 방 개수 변수 초기화
         currnetNormalRoomCount = width * height;
         currnetStartRoomCount = 0;
         currnetBossRoomCount = 0;
         currentChestRoomCount = 0;
 
+        // 맵 삭제 (기존에 생성했던 맵 제거 용)
         DeleteMap();
 
         Ellers eller = new Ellers(width, height); // 맵 알고리즘 실행
+
+        // 랜덤 방 설정용 리스트들 설정
+        int bossRoomCandidatesCount = (width * height) - ((width - 1) * (height - 1));          // 보스방 후보 개수
+        int chestRoomCandidatesCount = width * height - 2;                                      // 상자방 후보 개수 ( 모든 방 - 시작 방 - 보스방)
+
+        bossRoomCandidates = new List<RoomObject>(bossRoomCandidatesCount);
+        chestRoomCandidates = new List<RoomObject>(chestRoomCandidatesCount);
 
         // 맵 생성 시작
         for (int y = 0; y < height; y++)
         {
             for(int x = 0; x < width; x++)
             {
-                int index = y * width + x; // 인덱스 번호
+                int index = y * width + x; // 현재 방 인덱스 번호
 
                 // 방 오브젝트 생성
                 GameObject obj = Instantiate(cellObject);
@@ -163,10 +175,11 @@ public class MapGenerator : MonoBehaviour
                 obj.transform.parent = this.gameObject.transform;
                 obj.name = $"Cell_{index}";
 
-                // 적 개수 생성
-                int randomEnemyNum = (int)UnityEngine.Random.Range(1, 4);
+                int randomEnemyNum = (int)UnityEngine.Random.Range(1, 4);   // 적 개수 랜덤 생성
 
-                Vector2Int grid = new Vector2Int(x, y);
+                Vector2Int grid = new Vector2Int(x, y);                     // 그리드 값 (방 위치 체크용)
+
+                chestRoomCandidates.Add(mapRooms[index]);                   // 상자방 후보 지정 
 
                 // 방 타입 정하기
                 // 시작 위치 : 맵 중앙 ( 버림 )
@@ -177,15 +190,15 @@ public class MapGenerator : MonoBehaviour
 
                     currnetStartRoomCount++;
 
+                    chestRoomCandidates.Remove(mapRooms[index]);    // 상자방 후보 제거
                 }
                 // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
-                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1) && currnetBossRoomCount < 1)
+                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1))
                 {
-                    // 현재 0,0 이 무조껀 보스방으로 잡힘
-                    mapRooms[index].Initialize(RoomType.Boss, 1, index);
+                    bossRoomCandidates.Add(mapRooms[index]);        // 보스방 후보 추가
                     currnetBossRoomCount++;
                 }
-                else
+                else // 노말방 생성
                 {
                     mapRooms[index].Initialize(RoomType.Normal, randomEnemyNum, index);
                 }
@@ -227,9 +240,9 @@ public class MapGenerator : MonoBehaviour
                             MapManager.Instance.UpGradeUI.OpenPanel();
                         }
 
-                        if (mapRooms[index].Type == RoomType.Boss)
+                        if (mapRooms[index].Type == RoomType.Boss)      // 보스 방일 때
                         {
-                            MapManager.Instance.BossHealthUI.ShowUI();
+                            MapManager.Instance.BossHealthUI.ShowUI();  // 보스 체력 UI 활성화
                         }
                     };
 
@@ -240,33 +253,53 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        int remainRoomCount = width * height - currnetBossRoomCount - currnetStartRoomCount; // normal 타입 방 개수
-        // Chest 타입 방 생성
-        RoomObject[] temp = new RoomObject[remainRoomCount]; // 임시 배열 생성
-        
-        for(int i = 0, tempIndex = 0; i < width * height; i++)
-        {
-            if (mapRooms[i].Type == RoomType.Normal) // 특정 타입이 존재하는 방이면 무시
-            {
-                temp[tempIndex] = mapRooms[i];
-                tempIndex++;
-            }
-        }
-        
-        Util<RoomObject> util = new Util<RoomObject>();
-        temp = util.Shuffle(temp);  // 배열 섞기
-        
-        // 섞은 배열 중 배열의 0번째부터 maxChestRoomCount - 1번째 방을 chest type으로 설정
-        for (int i = 0; i < maxChestRoomCount; i++)
-        {
-            int index = WorldToIndex(temp[i].transform.localPosition);
-        
-            mapRooms[index].Initialize(RoomType.Chest, 0, index);        
-            currentChestRoomCount++;
-        }
+        SetRandomRoomType(RoomType.Chest, ref chestRoomCandidates, maxChestRoomCount);  // 상자방 생성
+        SetRandomRoomType(RoomType.Boss, ref bossRoomCandidates, 1);  // 보스방 생성
+
 
         ShowRoomTypeCount();
-        isGenerated = true;
+        isGenerated = true; // 미로 생성 여부 체크
+    }
+
+    /// <summary>
+    /// list에서 랜덤으로 setCount만큼 방 타입을 변경하는 함수
+    /// </summary>
+    /// <param name="type">설정할 방 타입</param>
+    /// <param name="list">후보 리스트</param>
+    /// <param name="setCount">설정할 방 개수</param>
+    void SetRandomRoomType(RoomType type, ref List<RoomObject> list, int setCount)
+    {
+        int roomCount = list.Count; // 방 개수
+        RoomObject[] temp = new RoomObject[roomCount];  // 셔플용 배열
+
+        int index = 0; // 배열용 인덱스 값
+        foreach(var room in list)
+        {
+            temp[index] = room; // 배열요소에 데이터 추가
+            index++;
+        }
+
+        // 배열 셔플
+        Util<RoomObject> util = new Util<RoomObject>();
+        temp = util.Shuffle(temp); 
+
+        for(int i = 0; i < setCount; i++)
+        {
+            index = WorldToIndex(temp[i].transform.localPosition);  // 셔플한 배열의 인덱스값
+
+            // 방 타입별 mapRooms 초기화
+            switch(type)
+            {
+                case RoomType.Chest:
+                    mapRooms[index].Initialize(type, 0, index);
+                    currentChestRoomCount++;
+                    break;
+                case RoomType.Boss:
+                    mapRooms[index].Initialize(type, 1, index);
+                    currnetStartRoomCount++;
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -594,6 +627,10 @@ public class MapGenerator : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+
+    /// <summary>
+    /// 방 타입 개수를 보여주는 테스트 함수
+    /// </summary>
     public void ShowRoomTypeCount()
     {
         for (int y = 0; y < height; y++)

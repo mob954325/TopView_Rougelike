@@ -182,7 +182,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     {
         base.OnDead();
         onDie?.Invoke();
-        StartCoroutine(DisableObject(2f));
+        //StartCoroutine(DisableObject(2f)); -> 보스 잡으면 자동으로 모든 오브젝트가 비활성화되서 주석처리
 
         // 코인 드랍 작성
         Factory.Instance.SpawnItem(ItemCodes.Coin, transform.position, Quaternion.identity);
