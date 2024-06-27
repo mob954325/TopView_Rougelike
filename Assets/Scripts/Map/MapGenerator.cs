@@ -94,8 +94,15 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     RoomObject StartRoom => startRoom;
 
-    List<RoomObject> bossRoomCandidates;    // 보스방 후보 리스트
-    List<RoomObject> chestRoomCandidates;  // 상자방 후보 리스트
+    /// <summary>
+    /// 보스방 후보 리스트
+    /// </summary>
+    List<RoomObject> bossRoomCandidates;
+
+    /// <summary>
+    /// 상자방 후보 리스트
+    /// </summary>
+    List<RoomObject> chestRoomCandidates;
 
     // 델리게이트 =============================================================================
 
@@ -226,6 +233,10 @@ public class MapGenerator : MonoBehaviour
                             {
                                 mapRooms[index].EnemyCount = 0;         // 즉시 클리어하게 적 개수 0으로 설정
                             }
+
+                            // 밑의 벽 반투명 설정
+                            TranslucentWall downWall = MapRooms[index].GetComponentInChildren<TranslucentWall>();
+                            downWall.ActiveTranslucent();
                         }
                     };
 
@@ -244,6 +255,10 @@ public class MapGenerator : MonoBehaviour
                         {
                             MapManager.Instance.BossHealthUI.ShowUI();  // 보스 체력 UI 활성화
                         }
+
+                        // 반투명 설정 해제
+                        TranslucentWall downWall = MapRooms[index].GetComponentInChildren<TranslucentWall>();
+                        downWall.DeactiveTranslucent();
                     };
 
                     // 모든 방문 초기화

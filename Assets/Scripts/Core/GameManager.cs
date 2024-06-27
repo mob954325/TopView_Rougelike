@@ -99,6 +99,8 @@ public class GameManager : Singleton<GameManager>
         SpawnPlayer(Vector3.zero);
         // 맵 생성
         MapManager.Instance.generator.OnGenerateStart();
+        MapManager.Instance.SetCellObjects(); // 맵 정보 저장
+
         // UI 생성
         onGameStart?.Invoke();
 

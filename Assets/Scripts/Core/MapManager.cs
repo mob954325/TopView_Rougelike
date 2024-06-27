@@ -50,4 +50,16 @@ public class MapManager : Singleton<MapManager>
         upgradeUI = FindAnyObjectByType<UpgradeUI>();
         bossHealthUI = FindAnyObjectByType<BossHealthUI>();
     }
+
+    /// <summary>
+    /// 방의 정보를 얻는 함수
+    /// </summary>
+    public void SetCellObjects()
+    {
+        cellObject = new RoomObject[generator.MapRooms.Length];
+        cellObject = generator.MapRooms;
+    }
+
+    // 플레이어가 들어가있는 방 찾기
+    // 해당 방의 Wall_Down 머터리얼 찾아서 Alpha 낮추기
 }
