@@ -81,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 2806125836374632753, guid: ae09863e63ce659469112430e7a61261,
         type: 3}
       propertyPath: m_Name
-      value: Wall_UP Variant  Variant
+      value: Wall_UP(21x21)  Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3900032201943744392, guid: ae09863e63ce659469112430e7a61261,
         type: 3}

@@ -57,6 +57,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 276962123962971541, guid: ba6131ddec553a64caf87ff196014b2a,
         type: 3}
+      propertyPath: mapSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 276962123962971541, guid: ba6131ddec553a64caf87ff196014b2a,
+        type: 3}
       propertyPath: cellObject
       value: 
       objectReference: {fileID: 6151149897330074605, guid: 4ce139085432f0845b989f36d95b696d,
