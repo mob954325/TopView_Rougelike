@@ -728,13 +728,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  tracingSpeed: 7
+  tracingSpeed: 10
   range: 6
   type: 1
   attackPower: 5
   defencePower: 3
   currentHealth: 0
-  maxHealth: 20
+  maxHealth: 50
   rotateSpeed: 5
 --- !u!95 &8093953785379098452
 Animator:

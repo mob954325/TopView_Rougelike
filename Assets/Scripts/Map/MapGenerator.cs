@@ -233,6 +233,11 @@ public class MapGenerator : MonoBehaviour
                                 mapRooms[index].EnemyCount = 0;         // 즉시 클리어하게 적 개수 0으로 설정
                             }
 
+                            if (mapRooms[index].Type == RoomType.Boss)      // 보스 방일 때
+                            {
+                                MapManager.Instance.BossHealthUI.ShowUI();  // 보스 체력 UI 활성화
+                            }
+
                             // 밑의 벽 반투명 설정
                             TranslucenWall(index);
                         }
@@ -248,12 +253,6 @@ public class MapGenerator : MonoBehaviour
                             SpawnRandomItems(mapRooms[index].transform.localPosition + new Vector3(mapObjLength * 0.5f, 1.2f, mapObjLength * 0.5f)); // 아이템 스폰 ( 위치 : 맵 중앙 )
                             MapManager.Instance.UpGradeUI.OpenPanel();
                         }
-
-                        if (mapRooms[index].Type == RoomType.Boss)      // 보스 방일 때
-                        {
-                            MapManager.Instance.BossHealthUI.ShowUI();  // 보스 체력 UI 활성화
-                        }
-
                         // 반투명 설정 해제
                         OpaqueWall(index);
                     };
@@ -365,6 +364,7 @@ public class MapGenerator : MonoBehaviour
                     MapManager.Instance.BossHealthUI.HideUI();
                 };  // 보스 잡으면 클리어 패널 등장
 
+                MapManager.Instance.BossHealthUI.Initialize(obj.GetComponent<Enemy_Boss_Warrior>());  // UI 초기화
                 mapRooms[index].roomObjects[0] = obj;
                 break;
             case RoomType.Normal:
