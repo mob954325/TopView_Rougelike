@@ -228,6 +228,9 @@ public class MapGenerator : MonoBehaviour
                             CloseAroundDoor(index);                     // 문 닫기
                             MapRooms[index].SetIsEnter(true);           // 입장 확인
 
+                            // 밑의 벽 반투명 설정
+                            TranslucenWall(index);
+
                             if (mapRooms[index].Type == RoomType.Chest) // 해당 방이 상자 방이면 즉시 클리어 
                             {
                                 mapRooms[index].EnemyCount = 0;         // 즉시 클리어하게 적 개수 0으로 설정
@@ -237,9 +240,6 @@ public class MapGenerator : MonoBehaviour
                             {
                                 MapManager.Instance.BossHealthUI.ShowUI();  // 보스 체력 UI 활성화
                             }
-
-                            // 밑의 벽 반투명 설정
-                            TranslucenWall(index);
                         }
                     };
 
@@ -253,6 +253,7 @@ public class MapGenerator : MonoBehaviour
                             SpawnRandomItems(mapRooms[index].transform.localPosition + new Vector3(mapObjLength * 0.5f, 1.2f, mapObjLength * 0.5f)); // 아이템 스폰 ( 위치 : 맵 중앙 )
                             MapManager.Instance.UpGradeUI.OpenPanel();
                         }
+
                         // 반투명 설정 해제
                         OpaqueWall(index);
                     };
@@ -571,7 +572,7 @@ public class MapGenerator : MonoBehaviour
         currentWall.ActiveTranslucent();
 
         // 맞은편 벽 반투명
-        Vector2Int grid = new Vector2Int(index / width - 1, index % width);
+        Vector2Int grid = new Vector2Int(index % width, index / width - 1);
         if(IsVaildGrid(grid)) // 해당 그리드의 방이 존재하면 반투명
         {
             TranslucentWall otherSideWall = MapRooms[GridToIndex(grid)].transform.GetChild(0).GetComponent<TranslucentWall>();
@@ -590,7 +591,7 @@ public class MapGenerator : MonoBehaviour
         currentWall.DeactiveTranslucent();
 
         // 맞은편 벽 반투명
-        Vector2Int grid = new Vector2Int(index / width - 1, index % width);
+        Vector2Int grid = new Vector2Int(index % width, index / width - 1);
         if (IsVaildGrid(grid)) // 해당 그리드의 방이 존재하면 반투명
         {
             TranslucentWall otherSideWall = MapRooms[GridToIndex(grid)].transform.GetChild(0).GetComponent<TranslucentWall>();

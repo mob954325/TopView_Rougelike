@@ -730,7 +730,7 @@ MonoBehaviour:
   currentState: 0
   tracingSpeed: 10
   range: 6
-  type: 1
+  type: 0
   attackPower: 5
   defencePower: 3
   currentHealth: 0

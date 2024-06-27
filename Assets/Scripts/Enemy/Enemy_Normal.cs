@@ -8,7 +8,6 @@ using UnityEngine;
 /// </summary>
 public enum EnemyNormalType
 {
-    None = 0, // 정의되지않음
     Warrior,
     Mage
 }

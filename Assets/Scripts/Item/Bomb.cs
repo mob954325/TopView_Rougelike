@@ -25,7 +25,12 @@ public class Bomb : PoolObject
     {
         yield return new WaitForSeconds(duration);
         effect.Stop();
-        Instantiate(explosionEffect); // 나중에 팩토리로 변경할 것
+
+        // 이펙트 오브젝트 설정
+        GameObject effectObj = Instantiate(explosionEffect);
+        effectObj.transform.position = this.transform.localPosition;
+        effectObj.transform.parent = null;
+        Destroy(effectObj, 3f);
 
         // boom
         RaycastHit[] hits;

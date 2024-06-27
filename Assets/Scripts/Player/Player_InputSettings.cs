@@ -33,6 +33,11 @@ public class Player_InputSettings : MonoBehaviour
     /// </summary>
     public Action onHeavyAttack;
 
+    /// <summary>
+    /// 플레이어가 폭탄을 사용할 때 호출되는 델리게이트
+    /// </summary>
+    public Action<uint> onUseBomb;
+
     void Awake()
     {
         playerInputAction = new PlayerInputActions();
@@ -48,10 +53,12 @@ public class Player_InputSettings : MonoBehaviour
         playerInputAction.Player.Sprint.canceled += OnSprintInput;
         playerInputAction.Player.Attack.performed += OnAttackInput;
         playerInputAction.Player.HeavyAttack.performed += OnHeavyAttackInput;
+        playerInputAction.Player.UseBomb.performed += OnUseBomb;
     }
 
     void OnDisable()
     {
+        playerInputAction.Player.UseBomb.performed -= OnUseBomb;
         playerInputAction.Player.HeavyAttack.performed -= OnHeavyAttackInput;
         playerInputAction.Player.Attack.performed -= OnAttackInput;
         playerInputAction.Player.Sprint.canceled -= OnSprintInput;
@@ -85,6 +92,11 @@ public class Player_InputSettings : MonoBehaviour
     private void OnHeavyAttackInput(InputAction.CallbackContext context)
     {
         onHeavyAttack?.Invoke();
+    }
+
+    private void OnUseBomb(InputAction.CallbackContext context)
+    {
+        onUseBomb?.Invoke(1);
     }
 
     /// <summary>

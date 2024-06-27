@@ -213,13 +213,15 @@ public class RoomObject : MonoBehaviour
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(2f, maxSpawnRange),
-                                                0,
-                                                UnityEngine.Random.Range(2f, maxSpawnRange));
+            int enemyCode = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnemyNormalType)).Length);
 
-            GameObject obj = Factory.Instance.SpawnEnemyMage(cellPos + spawnPosition, Quaternion.identity); // 적 생성
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-maxSpawnRange, maxSpawnRange),
+                                                0,
+                                                UnityEngine.Random.Range(-maxSpawnRange, maxSpawnRange));
+
+            GameObject obj = Factory.Instance.SpawnEnemyByCode((EnemyNormalType)enemyCode, cellPos + spawnPosition, Quaternion.identity); // 적 생성
             roomObjects[i] = obj;
-            roomObjects[i].GetComponent<PoolObject>().onDisable += () => EnemyCount--;
+            roomObjects[i].GetComponent<PoolObject>().onDisable += () => { EnemyCount--; };
         }    
     }
 

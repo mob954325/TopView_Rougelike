@@ -168,6 +168,7 @@ public class Enemy_Boss_Warrior : Enemy_Normal
         {
             Vector3 spawnPoint = new ((Random.insideUnitCircle * range).x, 0, (Random.insideUnitCircle * range).y);
             GameObject obj = Factory.Instance.SpawnEnemyByCode(EnemyNormalType.Warrior, spawnPoint, Quaternion.identity);
+            obj.transform.localPosition = this.transform.localPosition + spawnPoint;
             spawnedEnemy.Add(obj);
         }
     }

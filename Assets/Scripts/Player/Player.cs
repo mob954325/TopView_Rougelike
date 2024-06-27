@@ -246,6 +246,7 @@ public class Player : MonoBehaviour, IHealth, IBattler
         CurrentHealth = MaxHealth;
 
         onDie += OnDie;
+        playerInput.onUseBomb += UseBomb;
     }
 
     // Movement =============================================================
@@ -406,20 +407,13 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// </summary>
     /// <param name="count">감소시킬 폭탄 개수</param>
     /// <returns>사용 성공 여부 (true : 성공적으로 사용함, false : 개수 부족)</returns>
-    public bool UseBomb(uint count = 1)
+    public void UseBomb(uint count = 1)
     {
-        bool result = true;
+        if (BombCount < 1)
+            return;
 
-        if (BombCount <= 0)
-        {
-            result = false;
-        }
-        else
-        {
-            BombCount -= count;
-        }
-
-        return result;
+        BombCount -= count;
+        Factory.Instance.SpawnBomb(transform.position, Quaternion.identity);
     }
     // 업그레이드 함수 ==========================================================
 
