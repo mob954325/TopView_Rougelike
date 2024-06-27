@@ -26,6 +26,11 @@ public enum RoomType
 public class RoomObject : MonoBehaviour
 {
     /// <summary>
+    /// 불투명화 할 벽 클래스들
+    /// </summary>
+    TranslucentWall[] translucentWalls;
+
+    /// <summary>
     /// 해당 방 인덱스
     /// </summary>
     int roomIndex;
@@ -121,6 +126,14 @@ public class RoomObject : MonoBehaviour
         Transform child;
         entranceWalls = new GameObject[4];
         entranceGates = new Locked_Gate[4];
+
+        translucentWalls = GetComponentsInChildren<TranslucentWall>();
+
+        foreach(var c in translucentWalls)
+        {
+            c.Initialize(); // 벽면 클래스 초기화
+        }
+
 
         for (int i = 0; i < 4; i++)
         {

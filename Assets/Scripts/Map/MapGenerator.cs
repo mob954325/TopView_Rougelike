@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Mathematics;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 /// <summary>
@@ -199,15 +196,17 @@ public class MapGenerator : MonoBehaviour
 
                     chestRoomCandidates.Remove(mapRooms[index]);    // 상자방 후보 제거
                 }
-                // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함)
-                else if ((y == 0 || y == height - 1 || x == 0 || x == width - 1))
-                {
-                    bossRoomCandidates.Add(mapRooms[index]);        // 보스방 후보 추가
-                    currnetBossRoomCount++;
-                }
                 else // 노말방 생성
                 {
                     mapRooms[index].Initialize(RoomType.Normal, randomEnemyNum, index);
+
+
+                    // 보스 방 위치 맵 끝 방 중 하나 (path가 하나라도 열려있어야함) -> 노말 방 중 하나 변경
+                    if ((y == 0 || y == height - 1 || x == 0 || x == width - 1))
+                    {
+                        bossRoomCandidates.Add(mapRooms[index]);        // 보스방 후보 추가
+                        currnetBossRoomCount++;
+                    }
                 }
 
                 // 방 오브젝트 초기화
@@ -235,8 +234,7 @@ public class MapGenerator : MonoBehaviour
                             }
 
                             // 밑의 벽 반투명 설정
-                            TranslucentWall downWall = MapRooms[index].GetComponentInChildren<TranslucentWall>();
-                            downWall.ActiveTranslucent();
+                            TranslucenWall(index);
                         }
                     };
 
@@ -257,14 +255,12 @@ public class MapGenerator : MonoBehaviour
                         }
 
                         // 반투명 설정 해제
-                        TranslucentWall downWall = MapRooms[index].GetComponentInChildren<TranslucentWall>();
-                        downWall.DeactiveTranslucent();
+                        OpaqueWall(index);
                     };
 
                     // 모든 방문 초기화
                     CloseAroundDoor(index);
                 }
-
             }
         }
 
@@ -561,6 +557,44 @@ public class MapGenerator : MonoBehaviour
             {
                 Destroy(item.gameObject);
             }
+        }
+    }
+
+    /// <summary>
+    /// 방의 아랫면을 반투명하게 설정하는 함수
+    /// </summary>
+    /// <param name="index">방 인덱스</param>
+    void TranslucenWall(int index)
+    {
+        // 해당 방 벽 반투명
+        TranslucentWall currentWall = MapRooms[index].transform.GetChild(1).GetComponent<TranslucentWall>();
+        currentWall.ActiveTranslucent();
+
+        // 맞은편 벽 반투명
+        Vector2Int grid = new Vector2Int(index / width - 1, index % width);
+        if(IsVaildGrid(grid)) // 해당 그리드의 방이 존재하면 반투명
+        {
+            TranslucentWall otherSideWall = MapRooms[GridToIndex(grid)].transform.GetChild(0).GetComponent<TranslucentWall>();
+            otherSideWall.ActiveTranslucent();
+        }
+    }
+
+    /// <summary>
+    /// 방의 아랫면을 불투명하게 설정하는 함수
+    /// </summary>
+    /// <param name="index">방 인덱스</param>
+    void OpaqueWall(int index)
+    {
+        // 해당 방 벽 반투명
+        TranslucentWall currentWall = MapRooms[index].transform.GetChild(1).GetComponent<TranslucentWall>();
+        currentWall.DeactiveTranslucent();
+
+        // 맞은편 벽 반투명
+        Vector2Int grid = new Vector2Int(index / width - 1, index % width);
+        if (IsVaildGrid(grid)) // 해당 그리드의 방이 존재하면 반투명
+        {
+            TranslucentWall otherSideWall = MapRooms[GridToIndex(grid)].transform.GetChild(0).GetComponent<TranslucentWall>();
+            otherSideWall.DeactiveTranslucent();
         }
     }
 

@@ -8,29 +8,38 @@ using UnityEngine;
 public class TranslucentWall : MonoBehaviour
 {
     // 무조건 3번째 벽은 문이 있는 벽
-    Material[] wallMaterials;
+    public Material[] wallMaterials;
 
     const float activeAlphaValue = 0.2f;
     const float deactiveAlphaValue = 1.0f;
 
-    void Awake()
+    public void Initialize()
     {
         wallMaterials = new Material[transform.childCount + 1];
-        Transform child = transform.GetChild(0);    
+        Transform child;
 
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            child = transform.GetChild(i).GetChild(0);
-            child.GetComponent<MeshRenderer>().material = wallMaterials[i];
-            if(i == 2) // 문이 있는 벽
+        for (int i = 0; i < wallMaterials.Length - 1; i++)
+        { 
+            if (i == 2) // 문이 있는 벽
             {
-                continue;
-                child = transform.GetChild(i).GetChild(1);
-                child.GetComponent<MeshRenderer>().material = wallMaterials[i];
+                child = transform.GetChild(i).GetChild(0).GetChild(1);
+                wallMaterials[i] = child.GetComponent<MeshRenderer>().material;
+            }
+            else
+            {
+                child = transform.GetChild(i).GetChild(0);
+                wallMaterials[i] = child.GetComponent<MeshRenderer>().material;
             }
         }
+
+        // 문 쪽 머터리얼 따로 찾기 
+        child = transform.GetChild(2).GetChild(1);
+        wallMaterials[transform.childCount] = child.GetComponent<MeshRenderer>().material;
     }
 
+    /// <summary>
+    /// 벽을 반투명하게 만드는 함수
+    /// </summary>
     public void ActiveTranslucent()
     {
         foreach(var item in wallMaterials)
@@ -39,6 +48,9 @@ public class TranslucentWall : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 벽을 불투명하게 만드는 함수
+    /// </summary>
     public void DeactiveTranslucent()
     {
         foreach (var item in wallMaterials)

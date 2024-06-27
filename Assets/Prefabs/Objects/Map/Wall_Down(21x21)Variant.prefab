@@ -21,7 +21,7 @@ PrefabInstance:
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5000095
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
@@ -31,7 +31,7 @@ PrefabInstance:
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.500004
+      value: 10.000004
       objectReference: {fileID: 0}
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
@@ -73,6 +73,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_BottomLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 6652063796516726492, guid: ae333be69603eb24aa39eefacc0cbec1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 557672d969582554784dcd7c199ed869, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2346162516540151015, guid: ae333be69603eb24aa39eefacc0cbec1, type: 3}
@@ -119,7 +124,7 @@ PrefabInstance:
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.499989
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
@@ -129,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.500019
+      value: 10.000019
       objectReference: {fileID: 0}
     - target: {fileID: 1070193642726065532, guid: ae333be69603eb24aa39eefacc0cbec1,
         type: 3}
@@ -171,6 +176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_BottomRight
       objectReference: {fileID: 0}
+    - target: {fileID: 6652063796516726492, guid: ae333be69603eb24aa39eefacc0cbec1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 557672d969582554784dcd7c199ed869, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2346162516540151015, guid: ae333be69603eb24aa39eefacc0cbec1, type: 3}
@@ -497,7 +507,7 @@ PrefabInstance:
     - target: {fileID: 6225775348128933228, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_Name
-      value: Wall_Down Variant
+      value: Wall_Down(21x21)Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6225775348128933228, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
@@ -612,7 +622,7 @@ PrefabInstance:
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.000004
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 8244177307318706293, guid: 28b95ef33763f3541a6da2bbdbacc4ae,
         type: 3}
@@ -849,3 +859,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d340a36193e38945bf8a49e5c97e871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallMaterials: []
