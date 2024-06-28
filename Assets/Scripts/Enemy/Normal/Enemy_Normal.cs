@@ -110,7 +110,6 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     protected override void Awake()
     {
         base.Awake();
-        currentHealth = maxHealth;
 
         // 무기 찾기
         weapon = GetComponentInChildren<WeaponBase>();
@@ -127,6 +126,12 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
         // 센서로 플레이어 찾기
         onFindPlayer = OnFindTarget;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        currentHealth = maxHealth;
     }
 
     protected override void OnReady()

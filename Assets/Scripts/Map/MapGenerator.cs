@@ -268,7 +268,7 @@ public class MapGenerator : MonoBehaviour
         SetRandomRoomType(RoomType.Boss, ref bossRoomCandidates, 1);  // 보스방 생성
 
 
-        ShowRoomTypeCount();
+        //ShowRoomTypeCount();
         isGenerated = true; // 미로 생성 여부 체크
     }
 
