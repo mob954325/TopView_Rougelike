@@ -37,6 +37,7 @@ public class EnemyBase : PoolObject
         {
             currentState = value;
 
+            OnEnterState();
             switch (currentState)
             {
                 case EnemyState.Ready:
@@ -62,6 +63,7 @@ public class EnemyBase : PoolObject
                     Speed = 0f;
                     break;
             }
+            OnExitState();
             animator.SetFloat(HashToSpeed, Speed);
         }
     }
@@ -206,5 +208,20 @@ public class EnemyBase : PoolObject
     protected virtual void OnDead()
     {
         animator.SetTrigger(HashToDeath);   // 사망 애니메이션 활성화
+    }
+
+    /// <summary>
+    /// 상태 변경 후 실행하는 함수
+    /// </summary>
+    protected virtual void OnExitState()
+    {
+    }
+
+    /// <summary>
+    /// 상태 진입시 실행하는 함수
+    /// </summary>
+    protected virtual void OnEnterState()
+    {
+
     }
 }

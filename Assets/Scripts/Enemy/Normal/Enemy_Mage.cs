@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Mage : MonoBehaviour
+public class Enemy_Mage : Enemy_Normal
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnAttackStart()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Weapon_Staff currnetWeapon = weapon as Weapon_Staff;
+        if (currnetWeapon != null)
+        {
+            currnetWeapon.CastingSpell(target.transform.position);
+        }
     }
 }

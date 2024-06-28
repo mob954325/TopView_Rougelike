@@ -18,7 +18,7 @@ public enum EnemyNormalType
 /// </summary>
 public class Enemy_Normal : EnemyBase, IHealth, IBattler
 {
-    WeaponBase weapon;
+    protected WeaponBase weapon;
 
     [Header("Enemy Normal Settings")]
     public EnemyNormalType type;
@@ -209,19 +209,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     /// </summary>
     public virtual void OnAttackStart()
     {
-        if(type == EnemyNormalType.Mage) // 마법사 공격 임시 추가 ( 적 타입별 공격 함수 )
-        {
-            Weapon_Staff currnetWeapon = weapon as Weapon_Staff;
-            if (currnetWeapon != null)
-            {
-                currnetWeapon.CastingSpell(target.transform.position);
-                //Debug.Log(target.transform.position);
-            }
-        }
-        else
-        {
-            weapon.ActiveWeapon();
-        }
+        weapon.ActiveWeapon();
     }
 
     /// <summary>
