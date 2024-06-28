@@ -15,7 +15,7 @@ public class EnemySensor : Sensor
     {
         if (enemy == null)
         {
-            Debug.LogWarning($"{gameObject.name}의 상위 오브젝트에 EnemyBase가 존재하지 않습니다");
+            //Debug.LogWarning($"{gameObject.name}의 상위 오브젝트에 EnemyBase가 존재하지 않습니다");
             return;
         }
 

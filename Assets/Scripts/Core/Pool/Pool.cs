@@ -132,7 +132,7 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
             index++;
         }
 
-        Debug.LogWarning($"{this.gameObject.name} 크기 증가 [{prevCount} -> {totalCount}]");
+        //Debug.LogWarning($"{this.gameObject.name} 크기 증가 [{prevCount} -> {totalCount}]");
     }
 
     /// <summary>

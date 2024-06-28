@@ -10,7 +10,7 @@ public class Test_01_Break : TestBase
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
-        Debug.Log("누름");
+        //Debug.Log("누름");
         _break.OnBreak(transform.GetChild(0));
     }
 }

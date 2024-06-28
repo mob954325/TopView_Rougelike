@@ -494,7 +494,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{mapRooms[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
+            //Debug.LogWarning($"{mapRooms[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
         }
     }
 
@@ -540,7 +540,7 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{mapRooms[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
+            //Debug.LogWarning($"{mapRooms[GridToIndex(grid)].gameObject.name}에 {dir}방향 길이 없습니다.");
         }
     }
 
@@ -704,7 +704,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        Debug.Log($"상자 방 : {currentChestRoomCount}\n 기본 방 : {currnetNormalRoomCount}");
+        ////Debug.Log($"상자 방 : {currentChestRoomCount}\n 기본 방 : {currnetNormalRoomCount}");
     }
 
     public void Test_CreateCell()

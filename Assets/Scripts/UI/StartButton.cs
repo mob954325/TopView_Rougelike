@@ -18,7 +18,7 @@ public class StartButton : MonoBehaviour
         {
             GameManager.Instance.StartGame();
             this.gameObject.SetActive(false);
-            Debug.Log("게임 시작");
+            //Debug.Log("게임 시작");
         });
     }
 }

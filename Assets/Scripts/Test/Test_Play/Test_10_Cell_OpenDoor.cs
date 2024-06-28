@@ -32,13 +32,13 @@ public class Test_10_Cell_OpenDoor : TestBase
     {
         if (x >= width || y >= height)
         {
-            Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
+            //Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
             return;
         }
 
         if (dir == (Direction.UP | Direction.DOWN | Direction.LEFT | Direction.RIGHT))
         {
-            Debug.LogWarning($"잘못된 dir, 한 반향만 설정해주세요");           
+            //Debug.LogWarning($"잘못된 dir, 한 반향만 설정해주세요");           
             return;
         }
 
@@ -49,13 +49,13 @@ public class Test_10_Cell_OpenDoor : TestBase
     {
         if (x >= width || y >= height)
         {
-            Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
+            //Debug.LogWarning($"존재하지 않는 그리드 값입니다. [{x},{y}]");
             return;
         }
 
         if (dir == (Direction.UP | Direction.DOWN | Direction.LEFT | Direction.RIGHT))
         {
-            Debug.LogWarning($"잘못된 dir, 한 반향만 설정해주세요");
+            //Debug.LogWarning($"잘못된 dir, 한 반향만 설정해주세요");
             return;
         }
 
