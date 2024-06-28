@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -872,6 +872,69 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3608270885272540909, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7b3876a2b72c44540a4bbd5aaba9e506,
+        type: 3}
+    - target: {fileID: 3608270885272540909, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608270885272540909, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608270885272540909, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058519317364569, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e30e7f1121c83ed469e6242c11d18e05,
+        type: 3}
+    - target: {fileID: 4798058519317364569, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058519317364569, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058519317364569, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5886851074146319019, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4605338a5a51383478a6b8eb3707e90c,
+        type: 3}
+    - target: {fileID: 5886851074146319019, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5886851074146319019, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5886851074146319019, guid: 17d4d55ad86c96845b39c4600e26d16d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009075201496372719, guid: 17d4d55ad86c96845b39c4600e26d16d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1046,7 +1109,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518729731}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
