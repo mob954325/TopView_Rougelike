@@ -13,6 +13,7 @@ public class Factory : Singleton<Factory>
     Pool_Bomb bombPool;
     Pool_Item itemPool;
     Pool_Chest chestPool;
+    Pool_BillBoardText billBoardTextPool;
 
     protected override void PreInitialize()
     {
@@ -41,6 +42,9 @@ public class Factory : Singleton<Factory>
 
         chestPool = GetComponentInChildren<Pool_Chest>();
         chestPool.Initialize();
+
+        billBoardTextPool = GetComponentInChildren<Pool_BillBoardText>();
+        billBoardTextPool.Initialize();
     }
 
     public GameObject SpawnEnemyMage(Vector3 position, Quaternion rotation)
@@ -67,6 +71,7 @@ public class Factory : Singleton<Factory>
     {
         GameObject result = null;
 
+        // 타입별 스폰
         switch(code)
         {
             case EnemyNormalType.Warrior:
@@ -120,14 +125,29 @@ public class Factory : Singleton<Factory>
         return chestPool.GetObject(position, rotation).gameObject;
     }
 
+    /// <summary>
+    /// 빌보드 텍스트를 생성하는 함수
+    /// </summary>
+    /// <param name="position">생성할 위치</param>
+    /// <param name="color">텍스트 색</param>
+    /// <param name="str">텍스트 내용</param>
+    /// <param name="fontSize">폰트 사이즈</param>
+    /// <returns></returns>
+    public GameObject SpawnText(Vector3 position, Color color, string str, float fontSize = 6f)
+    {
+        return billBoardTextPool.SetBillBoardText(position, color, str, fontSize);
+    }
+
     public void ResetFactory()
     {
         enemyMagePool.DisableAllObjects();
         enemyWarriorPool.DisableAllObjects();
+        enemyRougePool.DisableAllObjects();
         enemyWarriorBossPool.DisableAllObjects();
         enemyMage_ProjectilePool.DisableAllObjects();
         bombPool.DisableAllObjects();
         itemPool.DisableAllObjects();
         chestPool.DisableAllObjects();
+        billBoardTextPool.DisableAllObjects();
     }
 }

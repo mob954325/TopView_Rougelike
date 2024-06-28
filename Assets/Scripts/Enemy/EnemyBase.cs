@@ -80,7 +80,7 @@ public class EnemyBase : PoolObject
     /// <summary>
     /// 대기 시간
     /// </summary>
-    float delayTime = 1f;
+    const float delayTime = 2.5f;
 
     /// <summary>
     /// 공격 타이머 ( 공격 후 측정하는 시간 )
@@ -207,6 +207,7 @@ public class EnemyBase : PoolObject
     /// </summary>
     protected virtual void OnDead()
     {
+        onAction = null;
         animator.SetTrigger(HashToDeath);   // 사망 애니메이션 활성화
     }
 

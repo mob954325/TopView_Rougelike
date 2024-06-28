@@ -53,15 +53,19 @@ public class ItemData_Buff : ItemData, IGetable
         {            
             case 1:
                 battler.AttackPower += attackPowerIncrease;
+                Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{attackPowerIncrease}");
                 break;
             case 2:
                 battler.DefencePower += defenceIncrease;
+                Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{defenceIncrease}");
                 break;
             case 4:
                 player.InCreaseSpeed(speedIncrease);
+                Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{speedIncrease}");
                 break;
             case 8:
                 player.InCreaseMaxHealth(healthIncrease);
+                Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{healthIncrease}");
                 break;
             default:
             result = false;

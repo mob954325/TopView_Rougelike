@@ -14,5 +14,6 @@ public class ItemData_Coin : ItemData, IGetable
         Player player = owner.GetComponent<Player>();
 
         player.GetCoin(count);
+        Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{count}");
     }
 }

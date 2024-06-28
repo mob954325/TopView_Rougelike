@@ -22,6 +22,11 @@ public class Player : MonoBehaviour, IHealth, IBattler
     /// </summary>
     Sensor sensor;
 
+    /// <summary>
+    /// 빌보드 위치 세팅용 프로퍼티 ( up * 1.5f )
+    /// </summary>
+    public Vector3 BillBoardPosition => transform.localPosition + Vector3.up * 4f;
+
     // 가지고 있는 아이템 정보=============================================  
 
     [Header("플레이어 아이템 정보")]
@@ -510,5 +515,6 @@ public class Player : MonoBehaviour, IHealth, IBattler
     {
         CurrentHealth -= hitDamage - DefencePower;
         animator.SetTrigger(HashToHit);
+        Factory.Instance.SpawnText(BillBoardPosition, Color.red, $"{hitDamage - DefencePower}", 8);
     }
 }

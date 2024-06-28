@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a19f3a07d6019459099d90759798e3, type: 3}
   m_Name: Item_01_Key
   m_EditorClassIdentifier: 
-  code: 1
+  itemCode: 1
   itemName: "\uC5F4\uC1E0"
   desc: "\uBB34\uC5B8\uAC00\uB97C \uC5F4 \uC218 \uC788\uB294 \uC5F4\uC1E0\uB2E4."
   maxCount: 99

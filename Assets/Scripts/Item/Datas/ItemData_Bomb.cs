@@ -14,6 +14,7 @@ public class ItemData_Bomb : ItemData, IGetable, IUseable
         Player player = owner.GetComponent<Player>();
 
         player.GetBomb(count);
+        Factory.Instance.SpawnText(player.BillBoardPosition, Color.black, $"{itemName} +{count}");
     }
 
     public void OnUse(GameObject owner)

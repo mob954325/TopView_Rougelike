@@ -42,7 +42,7 @@ public class Enemy_Boss_Warrior : Enemy_Normal
 
     protected override void OnDisable()
     {
-        base.OnDisable();   // 
+        base.OnDisable();
     }
 
     // 행동 함수 ==============================================================================================

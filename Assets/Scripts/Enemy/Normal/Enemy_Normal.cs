@@ -82,11 +82,20 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
     public float maxHealth = 20f;
     public float MaxHealth => CurrentHealth;
 
+    /// <summary>
+    /// 빌보드 위치 세팅용 프로퍼티 ( up * 1.5f )
+    /// </summary>
+    public Vector3 BillBoardPosition => transform.localPosition + Vector3.up * 4f;
 
     /// <summary>
     /// 애니메이터 Hit 파라미터 ( 피격 )
     /// </summary>
     int HashToHit = Animator.StringToHash("Hit");
+
+    /// <summary>
+    /// 애니메이터 Deploy 파라미터 ( 스폰 애니메이션 실행 )
+    /// </summary>
+    int HashToDeploy = Animator.StringToHash("Deploy");
 
     /// <summary>
     /// 사망 시 호출되는 델리게이트
@@ -122,6 +131,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
     protected override void OnReady()
     {
+        animator.SetTrigger(HashToDeploy);
         base.OnReady();
     }
 
@@ -201,6 +211,7 @@ public class Enemy_Normal : EnemyBase, IHealth, IBattler
 
         CurrentHealth -= hitDamage - DefencePower;
         animator.SetTrigger(HashToHit);
+        Factory.Instance.SpawnText(BillBoardPosition, Color.red, $"{hitDamage - DefencePower}", 8);
     }
     // 애니메이션 함수 ======================================================================================
 
