@@ -13,3 +13,6 @@
 3. 싱글톤 매니저 생성
 4. 오브젝트 풀링을 이용한 프리팹 생성
 5. 최대한 객체 지향적 프로그래밍하기
+
+### 플레이 gif
+![TopView_Rougelike_5s](https://github.com/mob954325/TopView_Rougelike/assets/87255621/b50e8f78-7569-463a-bf52-9e29661f42a7)
